@@ -18,9 +18,9 @@
 --
 -- Table structure for table `arancels`
 --
-drop database if exists gym;
-create database gym;
-use gym;
+drop database if exists gympampa;
+create database gympampa;
+use gympampa;
 
 DROP TABLE IF EXISTS `arancels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -356,7 +356,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2014-04-12 20:48:25
-INSERT INTO `gym`.`users`
+INSERT INTO `gympampa`.`users`
 (`id`,
 `USUARIO`,
 `PASSWD`,
@@ -366,3 +366,12 @@ VALUES
 'admin',
 'tecpro',
 1);
+
+CREATE TABLE articulos(
+id int AUTO_INCREMENT,
+codigo varchar(10),
+articulo varchar(20),
+precio FLOAT,
+stock int,
+descripcion varchar(120),
+PRIMARY KEY (id));

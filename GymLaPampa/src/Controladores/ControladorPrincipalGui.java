@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.javalite.activejdbc.LazyList;
 import Controladores.ControladorJReport;
+import Interfaces.ArticulosGUI;
 import Modelos.User;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
@@ -53,6 +54,8 @@ public class ControladorPrincipalGui implements ActionListener {
     private IngresoGui ingresoGui;
     private ActualizarDatos actualizarDatos;
     private ControladorJReport impresionArancel;
+    private ArticulosGUI articulosGUI;
+    private ControladorArticulosGUI controladorArticulosGUI;
     //private String usuario;
 
     public ControladorPrincipalGui() throws Exception {
@@ -85,6 +88,9 @@ public class ControladorPrincipalGui implements ActionListener {
         impresionArancel= new ControladorJReport("precio.jasper");
         principalGui.getDesktop().add(usuarioGui);
         principalGui.setCursor(Cursor.DEFAULT_CURSOR);
+        articulosGUI = new ArticulosGUI();
+        controladorArticulosGUI = new ControladorArticulosGUI(articulosGUI);
+        principalGui.getDesktop().add(articulosGUI);
 
     }
 
@@ -194,6 +200,11 @@ public class ControladorPrincipalGui implements ActionListener {
                 Base.commitTransaction();
                 JOptionPane.showMessageDialog(principalGui, "Se ha depurado correctamente");
             }
+        }
+        
+        if(ae.getSource().equals(principalGui.getBtnArticulos())){
+            articulosGUI.setVisible(true);
+            articulosGUI.toFront();
         }
 
     }
