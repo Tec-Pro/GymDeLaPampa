@@ -88,7 +88,7 @@ public class ControladorArticulosGUI implements ActionListener{
             articulosGUI.getTxtArticulo().setText(articulo.getString("articulo"));
             articulosGUI.getTxtCodigo().setText(articulo.getString("codigo"));
             articulosGUI.getTxtPrecio().setText(articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString());
-            articulosGUI.getAreaDesc().setText(articulo.getString("desc"));
+            articulosGUI.getAreaDesc().setText(articulo.getString("descripcion"));
             articulosGUI.getTxtStock().setText(articulo.getInteger("stock").toString());
         }else{
             JOptionPane.showMessageDialog(articulosGUI, "Ocurrio un error inesperado, intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -117,7 +117,7 @@ public class ControladorArticulosGUI implements ActionListener{
         Double precio = Double.valueOf(articulosGUI.getTxtPrecio().getText());
         articulo.set("precio", BigDecimal.valueOf(precio).setScale(2, RoundingMode.CEILING));
         articulo.set("stock", articulosGUI.getTxtStock().getText());
-        articulo.set("desc", articulosGUI.getAreaDesc().getText().toUpperCase());
+        articulo.set("descripcion", articulosGUI.getAreaDesc().getText().toUpperCase());
            
         Base.close();
         return articulo;
@@ -148,7 +148,7 @@ public class ControladorArticulosGUI implements ActionListener{
         for(Articulo articulo: listaArticulos){
             Object row[] = new String[4];
             row[0] = articulo.getString("codigo");
-            row[1] = articulo.getString("producto");
+            row[1] = articulo.getString("articulo");
             row[2] = articulo.getString("stock");
             row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
             articulosGUI.getTablaArticulosDefault().addRow(row);
@@ -158,7 +158,7 @@ public class ControladorArticulosGUI implements ActionListener{
     
     public void abrirBase() {
         if (!Base.hasConnection()) {
-            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gomeria", "root", "root");
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gym", "root", "root");
         }
     }
     
