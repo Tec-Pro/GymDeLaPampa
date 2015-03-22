@@ -27,7 +27,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.javalite.activejdbc.LazyList;
 import Interfaces.ArticulosGUI;
 import Interfaces.CargarVentaGUI;
+import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
+import Interfaces.ProveedorGui;
 import Modelos.User;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
@@ -57,6 +59,13 @@ public class ControladorPrincipalGui implements ActionListener {
     private CargarVentaGUI cargarVentaGUI;
     private ControladorCargarVentaGUI controladorCargarVentaGUI;
         private CumpleaniosGui cumpleGui;
+        
+            private ControladorProveedor controladorProveedor;
+    private ProveedorGui proveedorGui;
+        private ControladorCompra controladorCompra;
+    private CompraGui compraGui;
+
+
 
     //private String usuario;
 
@@ -99,6 +108,13 @@ public class ControladorPrincipalGui implements ActionListener {
                 cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
 
                 principalGui.getDesktop().add(cumpleGui);
+
+        proveedorGui = new ProveedorGui();
+        compraGui = new CompraGui();
+        controladorCompra = new ControladorCompra(compraGui, principalGui);
+        principalGui.getDesktop().add(proveedorGui);
+        principalGui.getDesktop().add(compraGui);
+                controladorProveedor = new ControladorProveedor(proveedorGui, principalGui, articulosGUI, compraGui);
 
 
     }
@@ -225,7 +241,16 @@ public class ControladorPrincipalGui implements ActionListener {
             controladorCargarVentaGUI.ActualizarListaProductos();
             controladorCargarVentaGUI.ActualizarListaSocios();
         }
-
+        if (ae.getSource() == principalGui.getProveedores()) {
+            controladorProveedor.cargarTodos();
+            proveedorGui.setVisible(true);
+            proveedorGui.toFront();
+        }
+               if (ae.getSource() == principalGui.getRegistrarCompra()) {
+            controladorCompra.cargarTodos();
+            compraGui.setVisible(true);
+            compraGui.toFront();
+        }
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {

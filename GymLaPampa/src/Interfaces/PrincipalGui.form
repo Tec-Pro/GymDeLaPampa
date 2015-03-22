@@ -167,6 +167,22 @@
             <Property name="toolTipText" type="java.lang.String" value="registros de cumplea&#xf1;os"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="proveedores">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Iconos/proveedor.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Gesti&#xf3;n de proveedores"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="registrarCompra">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Iconos/compras.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Registrar Compra"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

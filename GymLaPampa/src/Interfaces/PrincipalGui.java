@@ -41,6 +41,9 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.btnArticulos.addActionListener(lis);
         this.btnCargarVenta.addActionListener(lis);
         this.botCumple.addActionListener(lis);
+                this.registrarCompra.addActionListener(lis);
+        this.proveedores.addActionListener(lis);
+
     }
 
     public JMenuItem getDepurar() {
@@ -97,6 +100,14 @@ public class PrincipalGui extends javax.swing.JFrame {
         return ingreso;
     }
 
+    public JButton getProveedores() {
+        return proveedores;
+    }
+
+    public JButton getRegistrarCompra() {
+        return registrarCompra;
+    }
+
 
     
 
@@ -121,6 +132,8 @@ public class PrincipalGui extends javax.swing.JFrame {
         btnArticulos = new javax.swing.JButton();
         btnCargarVenta = new javax.swing.JButton();
         botCumple = new javax.swing.JButton();
+        proveedores = new javax.swing.JButton();
+        registrarCompra = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         botDesconectar = new javax.swing.JMenuItem();
@@ -163,6 +176,14 @@ public class PrincipalGui extends javax.swing.JFrame {
         botCumple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cumple.png"))); // NOI18N
         botCumple.setToolTipText("registros de cumpleaños");
         panelBotones.add(botCumple);
+
+        proveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/proveedor.png"))); // NOI18N
+        proveedores.setToolTipText("Gestión de proveedores");
+        panelBotones.add(proveedores);
+
+        registrarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compras.png"))); // NOI18N
+        registrarCompra.setToolTipText("Registrar Compra");
+        panelBotones.add(registrarCompra);
 
         getContentPane().add(panelBotones, java.awt.BorderLayout.LINE_START);
 
@@ -236,6 +257,8 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel panelBotones;
+    private javax.swing.JButton proveedores;
+    private javax.swing.JButton registrarCompra;
     private javax.swing.JMenuItem tecPro;
     // End of variables declaration//GEN-END:variables
 }

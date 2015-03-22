@@ -6,7 +6,9 @@
 package Interfaces;
 
 import Controladores.ControladorArticulosGUI;
+import Modelos.Articulo;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -156,6 +158,28 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         txtCodigo.setText("");
         areaDesc.setText("");
         txtStock.setText("");
+    }
+    
+    public void CargarCampos(Articulo art) {
+        
+        txtCodigo.setText(art.getString("codigo"));
+        txtArticulo.setText(art.getString("articulo"));
+        txtPrecioCompra.setText(art.getBigDecimal("precio_compra").setScale(2).toString());
+        txtStock.setText(art.getString("stock"));
+        txtPrecio.setText(art.getBigDecimal("precio").setScale(2).toString());
+
+        areaDesc.setText(art.getString("descripcion"));
+       
+//        proveedores.removeAllItems();
+//        Proveedor proveedor = art.parent(Proveedor.class);
+//        if (proveedor != null) {
+//            String nombreProv = proveedor.getString("nombre");
+//            proveedores.addItem(nombreProv);
+//            proveedores.setSelectedItem(nombreProv);
+//        } else {
+//            proveedores.addItem("");
+//            proveedores.setSelectedItem("");
+//        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
