@@ -30,6 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.javalite.activejdbc.LazyList;
 import Controladores.ControladorJReport;
 import Interfaces.ArticulosGUI;
+import Interfaces.CargarVentaGUI;
 import Modelos.User;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
@@ -56,6 +57,8 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorJReport impresionArancel;
     private ArticulosGUI articulosGUI;
     private ControladorArticulosGUI controladorArticulosGUI;
+    private CargarVentaGUI cargarVentaGUI;
+    private ControladorCargarVentaGUI controladorCargarVentaGUI;
     //private String usuario;
 
     public ControladorPrincipalGui() throws Exception {
@@ -91,6 +94,9 @@ public class ControladorPrincipalGui implements ActionListener {
         articulosGUI = new ArticulosGUI();
         controladorArticulosGUI = new ControladorArticulosGUI(articulosGUI);
         principalGui.getDesktop().add(articulosGUI);
+        cargarVentaGUI = new CargarVentaGUI();
+        controladorCargarVentaGUI = new ControladorCargarVentaGUI(cargarVentaGUI, principalGui);
+        principalGui.getDesktop().add(cargarVentaGUI);
 
     }
 
@@ -207,6 +213,13 @@ public class ControladorPrincipalGui implements ActionListener {
             articulosGUI.toFront();
             articulosGUI.reClick();
             controladorArticulosGUI.ActualizarLista();
+        }
+        if(ae.getSource().equals(principalGui.getBtnCargarVenta())){
+            cargarVentaGUI.setVisible(true);
+            cargarVentaGUI.toFront();
+            cargarVentaGUI.reClick();
+            controladorCargarVentaGUI.ActualizarListaProductos();
+            controladorCargarVentaGUI.ActualizarListaSocios();
         }
 
     }

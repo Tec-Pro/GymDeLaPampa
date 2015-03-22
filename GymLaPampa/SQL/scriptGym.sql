@@ -376,3 +376,20 @@ precio_compra FLOAT,
 stock int,
 descripcion varchar(120),
 PRIMARY KEY (id));
+
+create table ventas (
+    id integer not null auto_increment,
+    monto float,
+    socio_id integer,
+    fecha date not null,
+    forma_pago varchar(20),
+    PRIMARY KEY (`id`) );
+
+
+create table articulos_ventas (
+    id integer not null auto_increment,
+    venta_id integer,
+    articulo_id integer,
+    cantidad integer not null,
+    precio_final integer,
+	  primary key(id) );
