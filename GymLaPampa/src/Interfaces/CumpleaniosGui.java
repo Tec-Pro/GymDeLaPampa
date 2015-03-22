@@ -70,7 +70,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
         cumpleHoyDefault.setRowCount(0);
         cumpleSemanaDefault.setRowCount(0);
          Base.openTransaction();
-             LazyList<Socio> clientes= Socio.where("fecha_nac = ?", dateToMySQLDate(Calendar.getInstance().getTime(),false));
+             LazyList<Socio> clientes= Socio.findBySQL("select * FROM socios WHERE DATE_FORMAT(fecha_nac, '%m%d') = DATE_FORMAT(?,'%m%d')",dateToMySQLDate(Calendar.getInstance().getTime(),false));
              Base.commitTransaction();
              Iterator<Socio> it= clientes.iterator();
                 while(it.hasNext()){
@@ -91,7 +91,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
                 date.setDate(date.getDate()+7);
                 clientes=null;
                  Base.openTransaction();
-                                clientes= Socio.where("fecha_nac > ? and fecha_nac <?", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(date,false));
+                 clientes= Socio.findBySQL("select * from socios where DATE_FORMAT(fecha_nac,'%m %d') = DATE_FORMAT( ?,'%m %d') AND DATE_FORMAT(fecha_nac, '%m%d') <> DATE_FORMAT(?,'%m%d')", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(Calendar.getInstance().getTime(),false));
                 Base.commitTransaction();
                                 it= clientes.iterator();
                 while(it.hasNext()){
