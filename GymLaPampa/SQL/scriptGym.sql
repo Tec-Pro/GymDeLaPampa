@@ -372,6 +372,7 @@ id int AUTO_INCREMENT,
 codigo varchar(10),
 articulo varchar(20),
 precio FLOAT,
+precio_compra FLOAT,
 stock int,
 descripcion varchar(120),
 PRIMARY KEY (id));

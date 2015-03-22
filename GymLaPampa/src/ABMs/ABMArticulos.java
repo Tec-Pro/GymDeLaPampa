@@ -13,51 +13,43 @@ import org.javalite.activejdbc.Base;
  * @author alan
  */
 public class ABMArticulos {
-    
+
     public void abrirBase() {
         if (!Base.hasConnection()) {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gym", "root", "root");
         }
     }
-    
-    public boolean Alta(Articulo a){
+
+    public boolean Alta(Articulo a) {
+        boolean res = true;
         abrirBase();
         Base.openTransaction();
-        if(a.saveIt()){
-            Base.commitTransaction();
-            Base.close();
-            return true;
-        }
+        res = a.saveIt() && res;
         Base.commitTransaction();
         Base.close();
-        return false;
+        return res;
+
     }
-    
-    public boolean Modificar(Articulo a){
+
+    public boolean Modificar(Articulo a) {
+        boolean res = true;
         abrirBase();
         Base.openTransaction();
-        if(a.saveIt()){
-            Base.commitTransaction();
-            Base.close();
-            return true;
-        }
+        res = a.saveIt() && res;
         Base.commitTransaction();
         Base.close();
-        return false;
+        return res;
+
     }
-    
-    public boolean Eliminar(Articulo a){
+
+    public boolean Eliminar(Articulo a) {
+        boolean res = true;
         abrirBase();
         Base.openTransaction();
-        if(a.delete()){
-            Base.commitTransaction();
-            Base.close();
-            return true;
-        }
+        res = a.delete() && res;
         Base.commitTransaction();
         Base.close();
-        return false;
+        return res;
     }
-    
-    
+
 }

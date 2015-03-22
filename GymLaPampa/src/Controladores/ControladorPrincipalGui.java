@@ -205,6 +205,8 @@ public class ControladorPrincipalGui implements ActionListener {
         if(ae.getSource().equals(principalGui.getBtnArticulos())){
             articulosGUI.setVisible(true);
             articulosGUI.toFront();
+            articulosGUI.reClick();
+            controladorArticulosGUI.ActualizarLista();
         }
 
     }
