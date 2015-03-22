@@ -40,6 +40,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.depurar.addActionListener(lis);
         this.btnArticulos.addActionListener(lis);
         this.btnCargarVenta.addActionListener(lis);
+        this.botCumple.addActionListener(lis);
     }
 
     public JMenuItem getDepurar() {
@@ -52,6 +53,10 @@ public class PrincipalGui extends javax.swing.JFrame {
 
     public JButton getBtnCargarVenta() {
         return btnCargarVenta;
+    }
+
+    public JButton getBotCumple() {
+        return botCumple;
     }
 
     public JButton getBtnArticulos() {
@@ -115,6 +120,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         ingreso = new javax.swing.JButton();
         btnArticulos = new javax.swing.JButton();
         btnCargarVenta = new javax.swing.JButton();
+        botCumple = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         botDesconectar = new javax.swing.JMenuItem();
@@ -130,62 +136,33 @@ public class PrincipalGui extends javax.swing.JFrame {
         setTitle("Gimnasio Costa Norte");
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icono.png")).getImage());
 
+        panelBotones.setLayout(new java.awt.GridLayout(0, 1));
+
         botSocios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/clients.png"))); // NOI18N
         botSocios.setToolTipText("Gestión de socios");
+        panelBotones.add(botSocios);
 
         botActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/actividad.png"))); // NOI18N
         botActividades.setToolTipText("Gestión de actividades");
+        panelBotones.add(botActividades);
 
         botUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/usuario.png"))); // NOI18N
         botUsuario.setToolTipText("Gestión de usuarios");
+        panelBotones.add(botUsuario);
 
         ingreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ingreso.png"))); // NOI18N
         ingreso.setToolTipText("Ingreso de clientes");
+        panelBotones.add(ingreso);
 
-        btnArticulos.setText("Articulos");
+        btnArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/productos.png"))); // NOI18N
+        panelBotones.add(btnArticulos);
 
-        btnCargarVenta.setText("nueva venta");
+        btnCargarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vender.png"))); // NOI18N
+        panelBotones.add(btnCargarVenta);
 
-        javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
-        panelBotones.setLayout(panelBotonesLayout);
-        panelBotonesLayout.setHorizontalGroup(
-            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCargarVenta)
-                .addContainerGap())
-        );
-
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botActividades, botSocios, botUsuario});
-
-        panelBotonesLayout.setVerticalGroup(
-            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addComponent(botSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(botActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCargarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ingreso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botActividades, botSocios, botUsuario});
+        botCumple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cumple.png"))); // NOI18N
+        botCumple.setToolTipText("registros de cumpleaños");
+        panelBotones.add(botCumple);
 
         getContentPane().add(panelBotones, java.awt.BorderLayout.LINE_START);
 
@@ -243,6 +220,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botActividades;
+    private javax.swing.JButton botCumple;
     private javax.swing.JMenuItem botDesconectar;
     private javax.swing.JMenuItem botSalir;
     private javax.swing.JButton botSocios;

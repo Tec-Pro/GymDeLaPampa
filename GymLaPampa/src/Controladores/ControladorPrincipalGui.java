@@ -4,14 +4,12 @@
  */
 package Controladores;
 
-import ABMs.ABMSocios;
 import Interfaces.ActividadesGui;
 import Interfaces.BusquedaGui;
 import Interfaces.IngresoGui;
 import Interfaces.PrincipalGui;
 import Interfaces.UsuarioGui;
 import Modelos.Arancel;
-import Modelos.Socio;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -22,15 +20,14 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.javalite.activejdbc.LazyList;
-import Controladores.ControladorJReport;
 import Interfaces.ArticulosGUI;
 import Interfaces.CargarVentaGUI;
+import Interfaces.CumpleaniosGui;
 import Modelos.User;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
@@ -59,6 +56,8 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorArticulosGUI controladorArticulosGUI;
     private CargarVentaGUI cargarVentaGUI;
     private ControladorCargarVentaGUI controladorCargarVentaGUI;
+        private CumpleaniosGui cumpleGui;
+
     //private String usuario;
 
     public ControladorPrincipalGui() throws Exception {
@@ -97,13 +96,16 @@ public class ControladorPrincipalGui implements ActionListener {
         cargarVentaGUI = new CargarVentaGUI();
         controladorCargarVentaGUI = new ControladorCargarVentaGUI(cargarVentaGUI, principalGui);
         principalGui.getDesktop().add(cargarVentaGUI);
+                cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
+
+                principalGui.getDesktop().add(cumpleGui);
+
 
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == principalGui.getBotDesconectar()) {
-            System.out.println("cerrar sesión pulsado");
             int r = JOptionPane.showConfirmDialog(principalGui, "¿Desea cerrar la sesion?", "Cerrar sesion", JOptionPane.YES_NO_OPTION);
             if (r == JOptionPane.YES_OPTION) {
                 principalGui.dispose();
@@ -125,7 +127,6 @@ public class ControladorPrincipalGui implements ActionListener {
             }
         }
         if (ae.getSource() == principalGui.getBotSocios()) {
-            System.out.println("boton socios pulsado");
             socios.setVisible(true);
             socios.toFront();
             //controladorClientes.cargarSocios();
@@ -136,7 +137,6 @@ public class ControladorPrincipalGui implements ActionListener {
             //  abm.modbase();
         }
         if (ae.getSource() == principalGui.getBotActividades()) {
-            System.out.println("actividades pulsado");
             controladorActividades.bloquearNoAdmin();
             actividadesGui.setVisible(true);
             actividadesGui.toFront();
@@ -167,11 +167,15 @@ public class ControladorPrincipalGui implements ActionListener {
             usuarioGui.toFront();
         }
         if (ae.getSource() == principalGui.getIngreso()) {
-            System.out.println("ingreso presionado wachin");
             ingresoGui.setVisible(true);
             ingresoGui.toFront();
             ingresoGui.setLocationRelativeTo(null);
         }
+                if (ae.getSource() == principalGui.getBotCumple()) {
+            cumpleGui.cargarCumple();
+            cumpleGui.setVisible(true);
+            cumpleGui.toFront();
+                }
         if (ae.getSource() == principalGui.getDeclaracion()) {
 
             try {

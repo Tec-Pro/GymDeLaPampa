@@ -1,4 +1,4 @@
-
+﻿
 <!--
 *** GENERATED FROM project.xml - DO NOT EDIT  ***
 ***         EDIT ../build.xml INSTEAD         ***
@@ -1046,7 +1046,7 @@ is divided into following sections:
                 =========================
             -->
 <target name="-post-jar">
-    <property name="store.jar.name" value="Gym"/>
+    <property name="store.jar.name" value="GymLaPampa"/>
  
     <property name="store.dir" value="dist"/>
     <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>

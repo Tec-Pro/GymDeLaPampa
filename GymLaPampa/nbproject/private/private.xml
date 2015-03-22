@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/ABMs/ABMArticulos.java</file>
-            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/ArticulosGUI.java</file>
-            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/PrincipalGui.java</file>
-            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorArticulosGUI.java</file>
-            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorPrincipalGui.java</file>
+            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/RegistrarPagoGui.java</file>
+            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/CobroACuentaGui.java</file>
+            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/FormaDePagoGui.java</file>
+            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/CalcularVueltoGui.java</file>
+            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorPrincipalGui.java</file>
         </group>
     </open-files>
 </project-private>

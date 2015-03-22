@@ -100,11 +100,8 @@ public class ControladorClientes implements ActionListener {
         actividades.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent lse) {
                 if (lse.getValueIsAdjusting()) {
-                    System.out.println("opcion siendo seleccionada,no hago nada");
                 } else {
-                    System.out.println("opcion dejo de ser seleccionada ");
                     List actividadesSelecc = actividades.getSelectedValuesList();
-                    System.out.println(actividadesSelecc.toString());
                     if (!actividadesSelecc.isEmpty()) {
                         boolean inactivo = false;
                         boolean morosos = false;
@@ -272,7 +269,6 @@ public class ControladorClientes implements ActionListener {
                     Socio s = is.next();
                     LazyList asistencias = Asistencia.where("ID_DATOS_PERS = ?", s.getInteger("ID_DATOS_PERS")).orderBy("ID_ASISTENCIA desc");
                     if (!asistencias.isEmpty()) {
-                        System.out.println(s.get("NOMBRE") + " asist: " + asistencias.get(0).getDate("FECHA") + "prox pag " + s.getDate("FECHA_PROX_PAGO"));
                         if (s.getDate("FECHA_PROX_PAGO").before(asistencias.get(0).getDate("FECHA"))) {
                             Object row[] = new Object[5];
                             row[0] = s.getString("NOMBRE");
@@ -293,7 +289,6 @@ public class ControladorClientes implements ActionListener {
                     Socio s = is.next();
                     LazyList asistencias = Asistencia.where("ID_DATOS_PERS = ?", s.getInteger("ID_DATOS_PERS")).orderBy("ID_ASISTENCIA desc");
                     if (!asistencias.isEmpty()) {
-                        System.out.println(s.get("NOMBRE") + " asist: " + asistencias.get(0).getDate("FECHA") + "prox pag " + s.getDate("FECHA_PROX_PAGO"));
                         if (s.getDate("FECHA_PROX_PAGO").before(asistencias.get(0).getDate("FECHA"))) {
                             Object row[] = new Object[5];
                             row[0] = s.getString("NOMBRE");
@@ -324,7 +319,6 @@ public class ControladorClientes implements ActionListener {
             }
             if ((!inactivo) && (!morosos)) {
                 int i = 0;
-                System.out.println("elementos en la lsita: " + lista.size());
                 LinkedList<String> h = new LinkedList();
                 while (i < lista.size()) {
                     Arancel a = Arancel.first("nombre = ?", lista.get(i));
@@ -364,7 +358,6 @@ public class ControladorClientes implements ActionListener {
             }
             if ((inactivo) && (lista.size() > 1) && (!morosos)) {
                 int i = 0;
-                System.out.println("elementos en la lsita: " + lista.size());
                 LinkedList<String> h = new LinkedList();
                 while (i < lista.size()) {
                     if (lista.get(i) != "INACTIVOS") {
@@ -411,7 +404,6 @@ public class ControladorClientes implements ActionListener {
     public void cargarSocios(String filtro) {
 
         List actividadesSelecc = actividades.getSelectedValuesList();
-        System.out.println(actividadesSelecc.toString());
         if (!actividadesSelecc.isEmpty()) {
             boolean inactivo = false;
             boolean morosos = false;
@@ -444,10 +436,7 @@ public class ControladorClientes implements ActionListener {
     }
 
     public void busquedaKeyReleased(java.awt.event.KeyEvent evt) {
-        System.out.println("apreté el caracter" + evt.getKeyChar());
-        System.out.println("opcion dejo de ser seleccionada ");
         List actividadesSelecc = actividades.getSelectedValuesList();
-        System.out.println(actividadesSelecc.toString());
         if (!actividadesSelecc.isEmpty()) {
             boolean inactivo = false;
             boolean morosos = false;
@@ -474,7 +463,6 @@ public class ControladorClientes implements ActionListener {
         clientesGui.getBotEliminarSocio().setEnabled(true);
         clientesGui.getBotRegistrosPago().setEnabled(true);
         if (evt.getClickCount() == 2) {
-            System.out.println("Hice doble click sobre un socio");
             altaClienteGui.setBotonesNuevo(false);
             altaClienteGui.bloquearCampos(true);
             altaClienteGui.limpiarCampos();
@@ -497,6 +485,7 @@ public class ControladorClientes implements ActionListener {
             altaClienteGui.getFechaNacimJDate().setDate(s.getDate("FECHA_NAC"));;
             altaClienteGui.getLabelFechaIngreso().setText(dateToMySQLDate(s.getDate("FECHA_ING"), true));
             altaClienteGui.getLabelFechaVenci().setText(dateToMySQLDate(s.getDate("FECHA_PROX_PAGO"), true));
+            altaClienteGui.getSaldoCorriente().setText(s.getBigDecimal("cuenta_corriente").toString());
             altaClienteGui.getTablaActivDefault().setRowCount(0);
             LazyList<Socioarancel> ListSocAran = Socioarancel.where("id_socio = ?", s.get("ID_DATOS_PERS"));
             Iterator<Socioarancel> ite = ListSocAran.iterator();
@@ -517,7 +506,6 @@ public class ControladorClientes implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == clientesGui.getBotAltaSocio()) {
-            System.out.println("Alta socio pulsado");
             altaClienteGui.setBotonesNuevo(true);
             altaClienteGui.bloquearCampos(false);
             altaClienteGui.limpiarCampos();
@@ -537,12 +525,10 @@ public class ControladorClientes implements ActionListener {
             }
         }
         if (ae.getSource() == clientesGui.getBotEliminarSocio()) {
-            System.out.println("eliminar socio");
             if (tablaClientes.getSelectedRow() >= 0) {
                 /*elimino el socio SELECCIONADO, pregunto y fue*/
                 int ret = JOptionPane.showConfirmDialog(clientesGui, "¿Desea eliminar a " + tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0) + " " + tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1) + " ?", null, JOptionPane.YES_NO_OPTION);
                 if (ret == JOptionPane.YES_OPTION) {
-                    System.out.println("elimino el de la fila " + tablaClientes.getSelectedRow());
                     Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
                     if (abmSocios.baja(s)) {
                         JOptionPane.showMessageDialog(clientesGui, "Socio dado de baja exitosamente!");
@@ -567,7 +553,6 @@ public class ControladorClientes implements ActionListener {
             }
         }
         if (ae.getSource() == clientesGui.getBotRegistrosPago()) {
-            System.out.println("ver registros de pago pulsado");
             verTodos = false;
             if (tablaClientes.getSelectedRow() >= 0) {
                 Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
@@ -577,24 +562,23 @@ public class ControladorClientes implements ActionListener {
 
                 while (it.hasNext()) {
                     Pago p = it.next();
-                    Object row[] = new Object[6];
+                    Object row[] = new Object[7];
                     row[0] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
                     row[1] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1);
                     row[2] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2);
                     row[3] = dateToMySQLDate(p.getDate("FECHA"), true);
                     row[4] = p.getFloat("MONTO");
                     row[5] = p.getInteger("ID_PAGOS");
+                    row[6] = p.getString("MODO");
                     pagosGui.getTablaPagosDefault().addRow(row);
                 }
                 pagosGui.setVisible(true);
                 
                 pagosGui.toFront();
-                System.out.println("pagos del gil de la fila" + tablaClientes.getSelectedRow());
             }
 
         }
         if (ae.getSource() == clientesGui.getAsistencias()) {
-            System.out.println("ver registros de pago pulsado");
             verTodas = false;
             if (tablaClientes.getSelectedRow() >= 0) {
                 Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
@@ -625,14 +609,12 @@ public class ControladorClientes implements ActionListener {
                 }
                 asisGui.setVisible(true);
                 asisGui.toFront();
-                System.out.println("asis del gil de la fila" + tablaClientes.getSelectedRow());
             }
 
         }
         if (ae.getSource() == asisGui.getBotBorrarAsis()) {
             int ret = JOptionPane.showConfirmDialog(asisGui, "¿Desea eliminar la asistencia seleccionada?", null, JOptionPane.YES_NO_OPTION);
             if (ret == JOptionPane.YES_OPTION) {
-                System.out.println("elimino el de la fila " + tablaClientes.getSelectedRow());
                 
                 Asistencia.delete("ID_ASISTENCIA = ?", asisGui.getTablaAsis().getValueAt(asisGui.getTablaAsis().getSelectedRow(), 6));
                 dateHasta= dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
@@ -650,7 +632,6 @@ public class ControladorClientes implements ActionListener {
         if (ae.getSource() == pagosGui.getBotBorrarPago()) {
             int ret = JOptionPane.showConfirmDialog(pagosGui, "¿Desea eliminar el pago seleccionado?", null, JOptionPane.YES_NO_OPTION);
             if (ret == JOptionPane.YES_OPTION) {
-                System.out.println("elimino el de la fila " + tablaClientes.getSelectedRow());
                 
                 Pago.delete("ID_PAGOS = ?", pagosGui.getTablaPagos().getValueAt(pagosGui.getTablaPagos().getSelectedRow(), 5));
                 dateHasta= dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
@@ -774,4 +755,15 @@ public class ControladorClientes implements ActionListener {
             }
         }
     }
+
+    public ControladorAbmCliente getControladorAbmCliente() {
+        return controladorAbmCliente;
+    }
+
+    public AbmClienteGui getAltaClienteGui() {
+        return altaClienteGui;
+    }
+
+ 
+    
 }

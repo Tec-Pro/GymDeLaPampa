@@ -8,14 +8,18 @@ import ABMs.ABMSocios;
 import Interfaces.AbmClienteGui;
 import Interfaces.CargarHuellaGui;
 import Interfaces.FichaMedicaGui;
+import Interfaces.FormaDePagoGui;
+import Interfaces.PagoCuentaEfectivo;
 import Interfaces.RegistrarPagoGui;
 import Interfaces.TodasAsisGui;
 import Modelos.Arancel;
 import Modelos.Ficha;
+import Modelos.Pago;
 import Modelos.Socio;
 import Modelos.Socioarancel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,7 +59,6 @@ public class ControladorAbmCliente implements ActionListener {
         s.set("APELLIDO", clienteGui.getApellido().getText().toUpperCase());
         s.set("TEL", clienteGui.getTelefono().getText().toUpperCase());
         s.set("DNI", clienteGui.getDni().getText().toUpperCase());
-        System.out.println(clienteGui.getDireccion().getText().toUpperCase());
         s.set("DIR", clienteGui.getDireccion().getText().toUpperCase());
         if(clienteGui.getFechaNacimJDate().getCalendar()!=null)
              s.set("FECHA_NAC", dateToMySQLDate(clienteGui.getFechaNacimJDate().getCalendar().getTime(),false));
@@ -267,6 +270,7 @@ public class ControladorAbmCliente implements ActionListener {
                         clienteGui.getBotGuardar().setEnabled(false);
                         clienteGui.getBotModif().setEnabled(true);
                         clienteGui.getBotPago().setEnabled(true);
+                        clienteGui.getBotPagoCuenta().setEnabled(true);
                         clienteGui.getBotHuella().setEnabled(true);
                         clienteGui.getBotFicha().setEnabled(true);
                         clienteGui.getBotEliminarCancelar().setText("Eliminar");
@@ -311,6 +315,7 @@ public class ControladorAbmCliente implements ActionListener {
                         clienteGui.getBotFicha().setEnabled(true);
                         clienteGui.getBotModif().setEnabled(true);
                         clienteGui.getBotPago().setEnabled(true);
+                        clienteGui.getBotPagoCuenta().setEnabled(true);
                         clienteGui.getBotEliminarCancelar().setText("Eliminar");
                         actualizarDatos.cargarSocios();
                         s= Socio.findFirst("DNI = ? ", clienteGui.getDni().getText());
@@ -347,6 +352,7 @@ public class ControladorAbmCliente implements ActionListener {
             clienteGui.getBotModif().setEnabled(false);
             clienteGui.getBotGuardar().setEnabled(true);
             clienteGui.getBotPago().setEnabled(false);
+            clienteGui.getBotPagoCuenta().setEnabled(false);
             clienteGui.getBotHuella().setEnabled(false);
             clienteGui.getBotFicha().setEnabled(false);
             isNuevo=false;
@@ -415,6 +421,35 @@ public class ControladorAbmCliente implements ActionListener {
             pagoGui= new RegistrarPagoGui(null, true, s);
             pagoGui.setLocationRelativeTo(null);
             pagoGui.setVisible(true);
+            cargarSocioPantalla(s);
+
+        }
+                if (ae.getSource() == clienteGui.getBotPagoCuenta()) {
+            System.out.println("Boton pago pulsado");
+            /*SE DEBERÁ MODIFICAR EL CONSTRUCTOR DE REGISTRARPAGOGUI PARA QUE TOME
+             UN CLIENTE ASÍ SE HACE EL PAGO TODO DESDE ESA CLASE*/
+            s= abmsocio.getSocio(s);
+            FormaDePagoGui formaDePago= new FormaDePagoGui(null, true,true );
+            formaDePago.setLocationRelativeTo(null);
+            formaDePago.setVisible(true);
+        int opcionFormaPago = formaDePago.getReturnStatus();
+        switch (opcionFormaPago){
+            case FormaDePagoGui.RET_EFECTIVO:
+                                            PagoCuentaEfectivo pagoEfectivo= new PagoCuentaEfectivo(null, true, s.getBigDecimal("cuenta_corriente"));
+                                            pagoEfectivo.setLocationRelativeTo(null);
+                                            pagoEfectivo.setVisible(true);  
+                                            if(PagoCuentaEfectivo.RET_OK== pagoEfectivo.getReturnStatus()){
+                                                Base.openTransaction();
+                                                s.setBigDecimal("cuenta_corriente", s.getBigDecimal("cuenta_corriente").add(pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING)));
+                                                s.saveIt();
+                                                Pago.createIt("ID_DATOS_PERS", s.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(pagoEfectivo.getFecha().getDate(), false), "MONTO", pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING),"MODO","PAGO PARA SALDAR CUENTA");
+
+                                                Base.commitTransaction();
+                                            }
+                                            break;
+            case FormaDePagoGui.RET_TARJETA:
+                                            break;
+        }
             cargarSocioPantalla(s);
 
         }
@@ -647,6 +682,7 @@ public class ControladorAbmCliente implements ActionListener {
             clienteGui.getFechaNacimJDate().setDate(s.getDate("FECHA_NAC")); ;
             clienteGui.getLabelFechaIngreso().setText(dateToMySQLDate(s.getDate("FECHA_ING"),true));
             clienteGui.getLabelFechaVenci().setText(dateToMySQLDate(s.getDate("FECHA_PROX_PAGO"), true)); 
+            clienteGui.getSaldoCorriente().setText(s.getBigDecimal("cuenta_corriente").toString());
              clienteGui.getTablaActivDefault().setRowCount(0);
             LazyList<Socioarancel> ListSocAran = Socioarancel.where("id_socio = ?", s.get("ID_DATOS_PERS"));
             Iterator<Socioarancel> ite = ListSocAran.iterator();
