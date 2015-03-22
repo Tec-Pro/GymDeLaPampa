@@ -39,6 +39,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.impresionAranceles.addActionListener(lis);
         this.depurar.addActionListener(lis);
         this.btnArticulos.addActionListener(lis);
+        this.btnCargarVenta.addActionListener(lis);
     }
 
     public JMenuItem getDepurar() {
@@ -49,9 +50,15 @@ public class PrincipalGui extends javax.swing.JFrame {
         return botDesconectar;
     }
 
+    public JButton getBtnCargarVenta() {
+        return btnCargarVenta;
+    }
+
     public JButton getBtnArticulos() {
         return btnArticulos;
     }
+
+   
 
     public JMenuItem getImpresionAranceles() {
         return impresionAranceles;
@@ -107,6 +114,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         botUsuario = new javax.swing.JButton();
         ingreso = new javax.swing.JButton();
         btnArticulos = new javax.swing.JButton();
+        btnCargarVenta = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         botDesconectar = new javax.swing.JMenuItem();
@@ -136,6 +144,8 @@ public class PrincipalGui extends javax.swing.JFrame {
 
         btnArticulos.setText("Articulos");
 
+        btnCargarVenta.setText("nueva venta");
+
         javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
         panelBotones.setLayout(panelBotonesLayout);
         panelBotonesLayout.setHorizontalGroup(
@@ -150,6 +160,10 @@ public class PrincipalGui extends javax.swing.JFrame {
                     .addComponent(botUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCargarVenta)
+                .addContainerGap())
         );
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botActividades, botSocios, botUsuario});
@@ -160,9 +174,11 @@ public class PrincipalGui extends javax.swing.JFrame {
                 .addComponent(botSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(botActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(botUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCargarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ingreso)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,6 +248,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JButton botSocios;
     private javax.swing.JButton botUsuario;
     private javax.swing.JButton btnArticulos;
+    private javax.swing.JButton btnCargarVenta;
     private javax.swing.JMenuItem declaracion;
     private javax.swing.JMenuItem depurar;
     private javax.swing.JMenuItem impresionAranceles;
