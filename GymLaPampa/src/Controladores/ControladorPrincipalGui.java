@@ -61,7 +61,7 @@ public class ControladorPrincipalGui implements ActionListener {
     public ControladorPrincipalGui() throws Exception {
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
-            com.jtattoo.plaf.aero.AeroLookAndFeel.setTheme("Green-Large-Font");
+            com.jtattoo.plaf.aero.AeroLookAndFeel.setTheme("Gold");
 
             UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {

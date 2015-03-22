@@ -5,11 +5,13 @@
 package Interfaces;
 
 import ABMs.ABMSocios;
+import Controladores.CobroACuentaGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
 import Modelos.Pago;
 import Modelos.Socio;
 import Modelos.Socioarancel;
+import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
@@ -51,11 +53,9 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
             }
         });
         fecha.setDate(Calendar.getInstance().getTime());
-        System.out.println(fecha.getDate());
         nombreCliente.setText(socio.getString("NOMBRE") + " " + socio.getString("APELLIDO"));
         cargarActividades();
         calcularTotal();
-        System.out.println("esta todo legal");
         tablaActividades.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -70,7 +70,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
             Asistencia ultAsistencia = asistencias.get(asistencias.size() - 1); //ultima asistencia
             labelAsistio.setText(dateToMySQLDate(ultAsistencia.getDate("fecha"), true));
         }
-        asistencias= Asistencia.where("ID_DATOS_PERS = ? and FECHA > ?", socio.get("ID_DATOS_PERS"), socio.getDate("FECHA_PROX_PAGO"));
+        asistencias = Asistencia.where("ID_DATOS_PERS = ? and FECHA > ?", socio.get("ID_DATOS_PERS"), socio.getDate("FECHA_PROX_PAGO"));
         asistencias.orderBy("FECHA");
         Iterator<Asistencia> it = asistencias.iterator();
         if (asistencias.size() > 0) {
@@ -88,41 +88,165 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
             Asistencia ultAsistencia = asistencias.get(asistencias.size() - 1); //ultima asistencia
             Date fechaVencimiento = socio.getDate("FECHA_PROX_PAGO");
             boolean sePasoPeroNoTanto = ultAsistencia.getDate("fecha").before(Calendar.getInstance().getTime()) && ultAsistencia.getDate("fecha").after(fechaVencimiento);
-            boolean sePasoYActivo= sePasoPeroNoTanto&& socio.getBoolean("activo");
+            boolean sePasoYActivo = sePasoPeroNoTanto && socio.getBoolean("activo");
             if (sePasoYActivo) {
-                if (!medioMes.isSelected()) {
-                    Calendar cal = fecha.getCalendar();
-                    cal.setTime(primAsistencia.getDate("fecha"));
-                    cal.add(Calendar.MONTH, 1);
+                int i = cantidadMembresia.getSelectedIndex();
+                Calendar cal = fecha.getCalendar();
+                switch (i) {
+                    case 0:
+
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 1);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 1:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 2);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 2:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 3);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 3:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 4);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 4:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 5);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 5:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 6);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 6:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 7);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 7:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 10);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 8:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.DATE, 15);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 9:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.MONTH, 1);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 10:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.MONTH, 2);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 11:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.MONTH, 3);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 12:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.MONTH, 6);
+                        fechaVence.setCalendar(cal);
+                        break;
+                    case 13:
+                        cal.setTime(primAsistencia.getDate("fecha"));
+                        cal.add(Calendar.YEAR, 1);
+                        fechaVence.setCalendar(cal);
+                        break;
+                }
+
+            }
+
+        } else {
+            int i = cantidadMembresia.getSelectedIndex();
+            Calendar cal = fecha.getCalendar();
+            switch (i) {
+                case 0:
+
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 1);
                     fechaVence.setCalendar(cal);
-                    System.out.println("fue algún día entre los 5 quetiene permitido");
-                } else {
-                    Calendar cal = fecha.getCalendar();
-                    cal.setTime(primAsistencia.getDate("fecha"));
+                    break;
+                case 1:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 2);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 2:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 3);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 3:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 4);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 4:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 5);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 5:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 6);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 6:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 7);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 7:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.DATE, 10);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 8:
+                    cal.setTime(fecha.getDate());
                     cal.add(Calendar.DATE, 15);
                     fechaVence.setCalendar(cal);
-                    System.out.println("fue algún día entre los 5 quetiene permitido (medio mes)");
-                }
+                    break;
+                case 9:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.MONTH, 1);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 10:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.MONTH, 2);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 11:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.MONTH, 3);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 12:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.MONTH, 6);
+                    fechaVence.setCalendar(cal);
+                    break;
+                case 13:
+                    cal.setTime(fecha.getDate());
+                    cal.add(Calendar.YEAR, 1);
+                    fechaVence.setCalendar(cal);
+                    break;
             }
 
         }
-        else{
-            if(!medioMes.isSelected()){
-            Calendar cal = fecha.getCalendar();
-            cal.setTime(fecha.getDate());
-            cal.add(Calendar.MONTH, 1);
-            fechaVence.setCalendar(cal);
-            System.out.println("NO FUE después de que se le venció");
-            }
-            else{
-            Calendar cal = fecha.getCalendar();
-            cal.setTime(fecha.getDate());
-            cal.add(Calendar.DATE, 15);
-            fechaVence.setCalendar(cal);
-                        System.out.println("NO FUE después de que se le venció(medio mes)");
 
-            }
-        }
     }
 
     private void calcularTotal() {
@@ -138,11 +262,57 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                     }
                 }
             }
-            if (!medioMes.isSelected()) {
-                total.setText(totalB.setScale(2, RoundingMode.CEILING).toString());
-            } else {
-                total.setText(totalB.divide(new BigDecimal(2)).setScale(2, RoundingMode.CEILING).toString());
+            int i = cantidadMembresia.getSelectedIndex();
+            switch (i) {
+                case 0:
+                    total.setText(totalB.divide(new BigDecimal(30)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 1:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(2)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 2:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(3)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 3:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(4)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 4:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(5)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 5:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(6)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 6:
+                    total.setText(totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(7)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 7:
+                    total.setText(totalB.divide(new BigDecimal(3)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 8:
+                    total.setText(totalB.divide(new BigDecimal(2)).setScale(2, RoundingMode.CEILING).toString());
+                    break;
+                case 9:
+                    total.setText(totalB.setScale(2, RoundingMode.CEILING).toString());
+
+                    break;
+                case 10:
+                    total.setText(totalB.multiply(new BigDecimal(2)).setScale(2, RoundingMode.CEILING).toString());
+
+                    break;
+                case 11:
+                    total.setText(totalB.multiply(new BigDecimal(3)).setScale(2, RoundingMode.CEILING).toString());
+
+                    break;
+                case 12:
+                    total.setText(totalB.multiply(new BigDecimal(6)).setScale(2, RoundingMode.CEILING).toString());
+
+                    break;
+                case 13:
+                    total.setText(totalB.multiply(new BigDecimal(12)).setScale(2, RoundingMode.CEILING).toString());
+
+                    break;
             }
+
         }
     }
 
@@ -191,16 +361,15 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
     /*va true si se quiere usar para mostrarla por pantalla es decir 12/12/2014 y false si va 
      para la base de datos, es decir 2014/12/12*/
     public String dateToMySQLDate(Date fecha, boolean paraMostrar) {
-        if(fecha!=null){
-        if (paraMostrar) {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-            return sdf.format(fecha);
+        if (fecha != null) {
+            if (paraMostrar) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                return sdf.format(fecha);
+            } else {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                return sdf.format(fecha);
+            }
         } else {
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-            return sdf.format(fecha);
-        }
-        }
-        else{
             return "";
         }
     }
@@ -235,7 +404,6 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         fechaVence = new com.toedter.calendar.JDateChooser();
-        medioMes = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         labelVencio = new javax.swing.JLabel();
@@ -243,6 +411,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
         labelAsistio = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         primAsis = new javax.swing.JLabel();
+        cantidadMembresia = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Realizar cobro");
@@ -326,13 +495,6 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
 
         jLabel4.setText("Vence");
 
-        medioMes.setText("Abona medio mes");
-        medioMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medioMesActionPerformed(evt);
-            }
-        });
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Información adicional"));
 
         jLabel5.setText("Próximo vencimiento:");
@@ -368,7 +530,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(primAsis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(primAsis, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
                 .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
@@ -388,6 +550,14 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                     .addComponent(primAsis)))
         );
 
+        cantidadMembresia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 Día", "2 Días", "3 Días", "4 Días", "5 Días", "6 Días", "7 Días", "10 Días", "15 Días", "1 Mes", "2 Meses", "3 Meses", "6 Meses", "1 Año" }));
+        cantidadMembresia.setSelectedIndex(9);
+        cantidadMembresia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidadMembresiaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -395,34 +565,33 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(realizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancelar))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fechaVence, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(medioMes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cantidadMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fechaVence, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelar, realizar});
@@ -436,23 +605,21 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                     .addComponent(fechaVence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(medioMes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cantidadMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
-                    .addComponent(realizar)))
+                    .addComponent(realizar)
+                    .addComponent(total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cancelar, realizar});
@@ -468,7 +635,10 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void realizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarActionPerformed
-        /*ACA VA TODA LA GILADA DEL PAGO, NO SE PUEDE AHCER EN UN CONTROLADOR*/
+        FormaDePagoGui formaDePagoGui = new FormaDePagoGui((Frame) this.getParent(), true);
+        formaDePagoGui.setLocationRelativeTo(null);
+        formaDePagoGui.setVisible(true);
+        int opcionFormaPago = formaDePagoGui.getReturnStatus();
         BigDecimal totalB = new BigDecimal(0);
         int rows = tablaDefault.getRowCount();
         LinkedList listaran = new LinkedList();
@@ -478,31 +648,106 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                     Arancel a = Arancel.first("nombre = ?", tablaActividades.getValueAt(i, 0));
                     listaran.add(a);
                     BigDecimal precio = (BigDecimal) tablaActividades.getValueAt(i, 1);
-                    System.out.println(precio);
                     totalB = totalB.add(BigDecimal.valueOf(precio.doubleValue()));
                 }
             }
         }
-        if (medioMes.isSelected()) {
-            totalB = totalB.divide(new BigDecimal(2));
-        }
-        //Object o = clienteGui.getTablaActividades().getValueAt(1, 1).equals(true);
-        ABMSocios abmsocio = new ABMSocios();
-        Base.openTransaction();
-        Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING));
-   
-    
-                socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
-                socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
-          
-        socio.setBoolean("ACTIVO", true);
-        socio.saveIt();
-        Base.commitTransaction();
-        if (abmsocio.modificar(socio, listaran, socio.getString("DNI"))) {
-            JOptionPane.showMessageDialog(this, "Socio dado de alta correctamente!");
+        int i = cantidadMembresia.getSelectedIndex();
+        switch (i) {
+            case 0:
+                totalB = totalB.divide(new BigDecimal(30)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 1:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(2)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 2:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(3)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 3:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(4)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 4:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(5)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 5:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(6)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 6:
+                totalB = totalB.divide(new BigDecimal(30)).multiply(new BigDecimal(7)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 7:
+                totalB = totalB.divide(new BigDecimal(3)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 8:
+                totalB = totalB.divide(new BigDecimal(2)).setScale(2, RoundingMode.CEILING);
+                break;
+            case 9:
+                totalB = totalB.setScale(2, RoundingMode.CEILING);
 
-            System.out.println("pago realizado!");
-            this.dispose();
+                break;
+            case 10:
+                totalB = totalB.multiply(new BigDecimal(2)).setScale(2, RoundingMode.CEILING);
+
+                break;
+            case 11:
+                totalB = totalB.multiply(new BigDecimal(3)).setScale(2, RoundingMode.CEILING);
+
+                break;
+            case 12:
+                totalB = totalB.multiply(new BigDecimal(6)).setScale(2, RoundingMode.CEILING);
+
+                break;
+            case 13:
+                totalB = totalB.multiply(new BigDecimal(12)).setScale(2, RoundingMode.CEILING);
+
+                break;
+
+        }
+        ABMSocios abmsocio = new ABMSocios();
+        switch (opcionFormaPago) {
+            case (FormaDePagoGui.RET_EFECTIVO):
+                CalcularVueltoGui calVueltoGui = new CalcularVueltoGui(null, true, totalB.setScale(2, RoundingMode.CEILING));
+                calVueltoGui.setLocationRelativeTo(null);
+                calVueltoGui.setVisible(true);
+                int retCalVuelto = calVueltoGui.getReturnStatus();
+                if (retCalVuelto == CalcularVueltoGui.RET_OK) {
+                    Base.openTransaction();
+                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO");
+
+                    socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
+                    socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
+
+                    socio.setBoolean("ACTIVO", true);
+                    socio.saveIt();
+                    Base.commitTransaction();
+                    if (abmsocio.modificar(socio, listaran, socio.getString("DNI"))) {
+                        JOptionPane.showMessageDialog(this, "Socio dado de alta correctamente!");
+                        this.dispose();
+                    }
+                }
+                break;
+            case FormaDePagoGui.RET_CUENTA:
+                CobroACuentaGui cobroAcuentaGui= new CobroACuentaGui(null, true,socio.getBigDecimal("cuenta_corriente").setScale(2, RoundingMode.CEILING) ,totalB.setScale(2, RoundingMode.CEILING));
+                 cobroAcuentaGui.setLocationRelativeTo(null);
+                cobroAcuentaGui.setVisible(true);
+                retCalVuelto = cobroAcuentaGui.getReturnStatus();
+                if (retCalVuelto == CobroACuentaGui.RET_OK) {
+                    Base.openTransaction();
+                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO", "CUENTA");
+
+                    socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
+                    socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
+
+                    socio.setBoolean("ACTIVO", true);
+                    socio.setBigDecimal("cuenta_corriente", socio.getBigDecimal("cuenta_corriente").subtract(totalB).setScale(2, RoundingMode.CEILING));
+                    socio.saveIt();
+                    Base.commitTransaction();
+                    if (abmsocio.modificar(socio, listaran, socio.getString("DNI"))) {
+                        JOptionPane.showMessageDialog(this, "Socio dado de alta correctamente!");
+                        this.dispose();
+                    }
+                }
+                    break;
         }
     }//GEN-LAST:event_realizarActionPerformed
 
@@ -511,14 +756,15 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
 
     }//GEN-LAST:event_tablaActividadesPropertyChange
 
-    private void medioMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medioMesActionPerformed
+    private void cantidadMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadMembresiaActionPerformed
         calcularTotal();
         calcularFechavence();
-    }//GEN-LAST:event_medioMesActionPerformed
+    }//GEN-LAST:event_cantidadMembresiaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
+    private javax.swing.JComboBox cantidadMembresia;
     private com.toedter.calendar.JDateChooser fecha;
     private com.toedter.calendar.JDateChooser fechaVence;
     private javax.swing.JLabel jLabel1;
@@ -533,7 +779,6 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAsistio;
     private javax.swing.JLabel labelVencio;
-    private javax.swing.JCheckBox medioMes;
     private javax.swing.JLabel nombreCliente;
     private javax.swing.JLabel primAsis;
     private javax.swing.JButton realizar;

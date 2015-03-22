@@ -27,31 +27,15 @@
           <Component id="jPanel4" alignment="1" pref="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="total" min="-2" pref="147" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="realizar" linkSize="1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cancelar" linkSize="1" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
-              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="fecha" min="-2" pref="151" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="fechaVence" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="total" min="-2" pref="171" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-              <Component id="medioMes" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="138" max="-2" attributes="0"/>
@@ -59,7 +43,23 @@
               <Component id="nombreCliente" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="cantidadMembresia" min="-2" pref="98" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="fecha" min="-2" pref="151" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fechaVence" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -71,26 +71,23 @@
                   <Component id="fechaVence" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="medioMes" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cantidadMembresia" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nombreCliente" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jPanel4" pref="155" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel2" max="32767" attributes="0"/>
-                  <Component id="total" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel4" min="-2" pref="212" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cancelar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="realizar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="total" alignment="3" max="32767" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -225,14 +222,6 @@
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="fechaVence">
     </Component>
-    <Component class="javax.swing.JCheckBox" name="medioMes">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Abona medio mes"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medioMesActionPerformed"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -262,7 +251,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="primAsis" max="32767" attributes="0"/>
+                          <Component id="primAsis" pref="239" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -333,5 +322,31 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JComboBox" name="cantidadMembresia">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="14">
+            <StringItem index="0" value="1 D&#xed;a"/>
+            <StringItem index="1" value="2 D&#xed;as"/>
+            <StringItem index="2" value="3 D&#xed;as"/>
+            <StringItem index="3" value="4 D&#xed;as"/>
+            <StringItem index="4" value="5 D&#xed;as"/>
+            <StringItem index="5" value="6 D&#xed;as"/>
+            <StringItem index="6" value="7 D&#xed;as"/>
+            <StringItem index="7" value="10 D&#xed;as"/>
+            <StringItem index="8" value="15 D&#xed;as"/>
+            <StringItem index="9" value="1 Mes"/>
+            <StringItem index="10" value="2 Meses"/>
+            <StringItem index="11" value="3 Meses"/>
+            <StringItem index="12" value="6 Meses"/>
+            <StringItem index="13" value="1 A&#xf1;o"/>
+          </StringArray>
+        </Property>
+        <Property name="selectedIndex" type="int" value="9"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cantidadMembresiaActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
