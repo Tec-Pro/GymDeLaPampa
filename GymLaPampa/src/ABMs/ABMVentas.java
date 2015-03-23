@@ -36,14 +36,14 @@ public class ABMVentas {
         if(venta.saveIt()){
             idVenta = venta.getInteger("id");
             Base.commitTransaction();
-            Base.close();
+             
             result = result && cargarArticulosVentas(v.getArticulos());
             result = result && actualizarStock(v.getArticulos());
            // result = result && crearCobros(v);
             return result;
         }
         Base.commitTransaction();
-        Base.close();
+         
         return false;
     }
     
@@ -52,11 +52,11 @@ public class ABMVentas {
         Base.openTransaction();
         if(v.saveIt()){
             Base.commitTransaction();
-            Base.close();
+             
             return true;
         }
         Base.commitTransaction();
-        Base.close();
+         
         return false;
     }
     
@@ -68,11 +68,11 @@ public class ABMVentas {
             eliminarArticulosVentas(id);
             //Cobro.delete("venta_id = ?", id);
             Base.commitTransaction();
-            Base.close();
+             
             return true;
         }
         Base.commitTransaction();
-        Base.close();
+         
         return false;
     }
     
@@ -98,7 +98,7 @@ public class ABMVentas {
             result = result && articulosVentas.saveIt();
         }
         Base.commitTransaction();
-        Base.close();
+         
         return result;
     }
     
@@ -117,12 +117,12 @@ public class ABMVentas {
                 System.out.println(newStock);
             }else{
                 Base.commitTransaction();
-                Base.close();
+                 
                 return false;
             } 
         }
         Base.commitTransaction();
-        Base.close();
+         
         return result;
     }
     

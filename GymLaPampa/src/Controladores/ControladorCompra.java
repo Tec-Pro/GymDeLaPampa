@@ -15,11 +15,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -55,6 +53,7 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
     private JTextField textProvCompra;
     private List prodlista;
     private List provlista;
+    private JTextField txtCodigoBus;
 
     public ControladorCompra(CompraGui compraGui, PrincipalGui apgui) {
         this.busqueda = new Busqueda();
@@ -73,7 +72,13 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
                 busquedaProveedorKeyReleased(evt);
             }
         });
-
+        txtCodigoBus= compraGui.getTxtCodigoBusqueda();
+        txtCodigoBus.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                busquedaPorCodigo(evt);
+            }
+        });
         tablaprov = compraGui.getTablaProveedores();
         tablaprov.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -118,6 +123,32 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
         actualizarListaProd();
     }
 
+    private void busquedaPorCodigo(java.awt.event.KeyEvent evt){
+         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        Base.openTransaction();
+                    Articulo p = Articulo.findFirst("codigo = ?", txtCodigoBus.getText());
+                    Base.commitTransaction();
+                    if(p!=null){
+                    Object cols[] = new Object[8];
+                    BigDecimal bd = new BigDecimal(1);
+                    cols[0] = p.get("id");
+                    cols[1] = p.get("codigo");
+                    cols[2] = BigDecimal.valueOf(1).setScale(2, RoundingMode.CEILING);
+                    cols[3] = p.get("articulo");
+                    cols[4] = p.get("descripcion");
+                    cols[5] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
+                    cols[6] = BigDecimal.valueOf(p.getFloat("precio")).setScale(2, RoundingMode.CEILING);
+                    cols[7] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
+                    compraGui.getTablaCompraDefault().addRow(cols);
+                    this.setCellEditor();
+                    actualizarPrecio();
+                    txtCodigoBus.setText("");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(compraGui, "codigo de articulo no encontrado", "codigo inexistente", JOptionPane.INFORMATION_MESSAGE);
+                    }
+    }
+    }
     public void busquedaProveedorKeyReleased(java.awt.event.KeyEvent evt) {
         actualizarListaProveedor();
     }
@@ -143,21 +174,20 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
                     Base.openTransaction();
                     Articulo p = Articulo.findFirst("id = ?", (tablaprod.getValueAt(rows[i], 0)));
                     Base.commitTransaction();
-                    Object cols[] = new Object[7];
+                    Object cols[] = new Object[8];
                     BigDecimal bd = new BigDecimal(1);
                     cols[0] = p.get("id");
-                    cols[1] = BigDecimal.valueOf(1).setScale(2, RoundingMode.CEILING);
-                    cols[2] = p.get("codigo");
-                    cols[3] = p.get("descripcion");
-                    cols[4] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
-                    cols[5] = BigDecimal.valueOf(p.getFloat("precio")).setScale(2, RoundingMode.CEILING);
-                    cols[6] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
+                    cols[1] = p.get("codigo");
+                    cols[2] = BigDecimal.valueOf(1).setScale(2, RoundingMode.CEILING);
+                    cols[3] = p.get("articulo");
+                    cols[4] = p.get("descripcion");
+                    cols[5] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
+                    cols[6] = BigDecimal.valueOf(p.getFloat("precio")).setScale(2, RoundingMode.CEILING);
+                    cols[7] = BigDecimal.valueOf(p.getFloat("precio_compra")).setScale(2, RoundingMode.CEILING);
                     compraGui.getTablaCompraDefault().addRow(cols);
                     setCellEditor();
                     actualizarPrecio();
-                } else {
-                    System.out.println("que hace guacho");
-                }
+                } 
             }
         }
     }
@@ -243,7 +273,7 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
                 for (int i = 0; i < rows.length; i++) {
                     idABorrar[i] = (Integer) tablafac.getValueAt(rows[i], 0);
                 }
-                int i = 0;
+                int i = 1;
                 int cantABorrar = 0;
                 while (cantABorrar < rows.length) {
                     while (i < compraGui.getTablaCompra().getRowCount()) {
@@ -280,9 +310,9 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
                         Base.openTransaction();
                         Articulo producto = Articulo.findFirst("id = ?", tablafac.getValueAt(i, 0));
                         Base.commitTransaction();
-                        BigDecimal cantidad = ((BigDecimal) tablafac.getValueAt(i, 1)).setScale(2, RoundingMode.CEILING); //saco la cantidad
-                        BigDecimal precioFinal = ((BigDecimal) tablafac.getValueAt(i, 4)).setScale(2, RoundingMode.CEILING);
-                        BigDecimal precioVentaFinal = ((BigDecimal) tablafac.getValueAt(i, 5)).setScale(2, RoundingMode.CEILING);
+                        BigDecimal cantidad = ((BigDecimal) tablafac.getValueAt(i, 2)).setScale(2, RoundingMode.CEILING); //saco la cantidad
+                        BigDecimal precioFinal = ((BigDecimal) tablafac.getValueAt(i, 5)).setScale(2, RoundingMode.CEILING);
+                        BigDecimal precioVentaFinal = ((BigDecimal) tablafac.getValueAt(i, 6)).setScale(2, RoundingMode.CEILING);
                         producto.set("precio_compra", precioFinal);
                         producto.set("precio",precioVentaFinal);
                         producto.saveIt();
@@ -344,7 +374,8 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
     private boolean existeProdFacc(int id) {
         boolean ret = false;
         for (int i = 0; i < tablafac.getRowCount() && !ret; i++) {
-            ret = (Integer) tablafac.getValueAt(i, 0) == id;
+            if(tablafac.getValueAt(i, 0)!=null)
+                ret = (Integer) tablafac.getValueAt(i, 0) == id;
         }
         return ret;
     }
@@ -352,8 +383,8 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
     public void setCellEditor() {
         for (int i = 0; i < tablafac.getRowCount(); i++) {
             tablafac.getCellEditor(i, 1).addCellEditorListener(this);
-            tablafac.getCellEditor(i, 4).addCellEditorListener(this);
             tablafac.getCellEditor(i, 5).addCellEditorListener(this);
+            tablafac.getCellEditor(i, 6).addCellEditorListener(this);
         }
     }
 
@@ -361,11 +392,15 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
         BigDecimal importe;
         BigDecimal total = new BigDecimal(0);
         for (int i = 0; i < tablafac.getRowCount(); i++) {
-            importe = ((BigDecimal) tablafac.getValueAt(i, 1)).multiply((BigDecimal) compraGui.getTablaCompra().getValueAt(i, 4)).setScale(2, RoundingMode.CEILING);
-            tablafac.setValueAt(importe, i, 6);
+            if(tablafac.getValueAt(i,0)!=null){
+            importe = ((BigDecimal) tablafac.getValueAt(i, 2)).multiply((BigDecimal) compraGui.getTablaCompra().getValueAt(i, 5)).setScale(2, RoundingMode.CEILING);
+            tablafac.setValueAt(importe, i, 7);
+            }
         }
         for (int i = 0; i < tablafac.getRowCount(); i++) {
-            total = total.add((BigDecimal) tablafac.getValueAt(i, 6)).setScale(2, RoundingMode.CEILING);;
+                        if(tablafac.getValueAt(i,0)!=null){
+            total = total.add((BigDecimal) tablafac.getValueAt(i, 7)).setScale(2, RoundingMode.CEILING);
+                        }
         }
         compraGui.getTotalCompra().setText(total.toString());
     }
@@ -386,6 +421,7 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
 //                a.saveIt();
 //            }
         }
+   
     }
 
     @Override

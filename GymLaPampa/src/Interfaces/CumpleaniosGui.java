@@ -61,11 +61,8 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
         }
         }
         
-                public void cerrarBase(){
-         if (Base.hasConnection()) {
-            Base.close();
-        }
-                }
+
+                
     public void cargarCumple(){
         cumpleHoyDefault.setRowCount(0);
         cumpleSemanaDefault.setRowCount(0);
@@ -91,7 +88,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
                 date.setDate(date.getDate()+7);
                 clientes=null;
                  Base.openTransaction();
-                 clientes= Socio.findBySQL("select * from socios where DATE_FORMAT(fecha_nac,'%m %d') = DATE_FORMAT( ?,'%m %d') AND DATE_FORMAT(fecha_nac, '%m%d') <> DATE_FORMAT(?,'%m%d')", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(Calendar.getInstance().getTime(),false));
+                 clientes= Socio.findBySQL("select * from socios where DATE_FORMAT(fecha_nac,'%m %d') <> DATE_FORMAT( ?,'%m %d') AND DATE_FORMAT(fecha_nac, '%m%d') <> DATE_FORMAT(?,'%m%d')", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(Calendar.getInstance().getTime(),false));
                 Base.commitTransaction();
                                 it= clientes.iterator();
                 while(it.hasNext()){

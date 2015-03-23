@@ -76,7 +76,7 @@ public class ControladorArticulosGUI implements ActionListener {
      row[5] = articulo.getBigDecimal("precio_venta").setScale(2, RoundingMode.CEILING).toString();
      articulosGUI.getTablaArticulosDefault().addRow(row);
      }
-     Base.close();
+      
      }*/
     //Trae de la base de datos todos los datos del articulo seleccionado en la tabla y los pone en la interfaz
     public void CargarDatosArticuloSeleccionado(String idArticulo) {
@@ -92,7 +92,7 @@ public class ControladorArticulosGUI implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(articulosGUI, "Ocurrio un error inesperado, intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        Base.close();
+         
     }
 
     public boolean DatosObligatoriosOK() {
@@ -122,7 +122,7 @@ public class ControladorArticulosGUI implements ActionListener {
         articulo.set("stock", articulosGUI.getTxtStock().getText());
         articulo.set("descripcion", articulosGUI.getAreaDesc().getText().toUpperCase());
 
-        Base.close();
+         
         return articulo;
     }
 
@@ -158,7 +158,7 @@ public class ControladorArticulosGUI implements ActionListener {
             row[4] = articulo.getBigDecimal("precio_compra").setScale(2, RoundingMode.CEILING).toString();
             articulosGUI.getTablaArticulosDefault().addRow(row);
         }
-        Base.close();
+         
     }
 
     public void abrirBase() {
@@ -170,7 +170,7 @@ public class ControladorArticulosGUI implements ActionListener {
     private boolean CodigoOK() {
         abrirBase();
         Articulo a = Articulo.first("codigo = ?", articulosGUI.getTxtCodigo().getText());
-        Base.close();
+         
         if (a != null) {
             return false;
         }

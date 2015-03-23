@@ -26,7 +26,7 @@ public class ABMArticulos {
         Base.openTransaction();
         res = a.saveIt() && res;
         Base.commitTransaction();
-        Base.close();
+         
         return res;
 
     }
@@ -37,7 +37,7 @@ public class ABMArticulos {
         Base.openTransaction();
         res = a.saveIt() && res;
         Base.commitTransaction();
-        Base.close();
+         
         return res;
 
     }
@@ -48,7 +48,7 @@ public class ABMArticulos {
         Base.openTransaction();
         res = a.delete() && res;
         Base.commitTransaction();
-        Base.close();
+         
         return res;
     }
 

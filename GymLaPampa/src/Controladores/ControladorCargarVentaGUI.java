@@ -82,7 +82,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
          row[2] = socio.getString("direccion") + " - " + socio.getString("ciudad");
          cargarVentaGUI.getTablaSociosDefault().addRow(row);
          }
-         Base.close();
+          
          */
     }
 
@@ -109,7 +109,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
                 row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
                 row[4] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
                 cargarVentaGUI.getTablaVentaDefault().addRow(row);
-                Base.close();
+                 
             } else {
                 // Lo que se hace dentro de este else es sumar en uno a la cantidad del articulo si ya estaba en el carrito.
                 Double viejaCantidad = new Double(String.valueOf(cargarVentaGUI.getTablaVentaDefault().getValueAt(lineaArticulo, 2)));
@@ -150,7 +150,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         v.set("fecha", dateToMySQLDate(cargarVentaGUI.getCalendario().getDate(), false));
         v.setBigDecimal("monto", cargarVentaGUI.getTotalTxt().getText());
         v.set("forma_pago", cargarVentaGUI.getFormaPagoBox().getSelectedItem());
-        Base.close();
+         
         return v;
     }
 
@@ -199,7 +199,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             row[3] = a.getBigDecimal("precio").setScale(2, RoundingMode.CEILING);
             cargarVentaGUI.getTablaArticulosDefault().addRow(row);
         }
-        Base.close();
+         
     }
     
     public void ActualizarListaSocios(){
@@ -213,7 +213,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             row[2] = a.getString("DIR");
             cargarVentaGUI.getTablaSociosDefault().addRow(row);
         }
-        Base.close();
+         
     }
 
     /* private void VerCargarCuotasGUI() {

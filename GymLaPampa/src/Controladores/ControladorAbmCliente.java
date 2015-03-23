@@ -658,11 +658,7 @@ public class ControladorAbmCliente implements ActionListener {
         }
         }
         
-                public void cerrarBase(){
-         if (Base.hasConnection()) {
-            Base.close();
-        }
-        }
+
 
     public void setSocio(Socio s) {
         this.s = s;
