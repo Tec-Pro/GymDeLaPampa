@@ -7,6 +7,7 @@ package Controladores;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
@@ -43,5 +44,18 @@ public class ControladorJReport {
         connection.close();
     }
 
+        //listado de clientes productos y proveedores.
+    public void mostrarReporteGastos(Date desde, Date hasta) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        parametros.put("logo", this.getClass().getResourceAsStream(logo));
+        parametros.put("desde", desde);
+        parametros.put("hasta", hasta);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        JasperViewer.viewReport(jasperPrint, false);
+        connection.close();
+    }
 
 }

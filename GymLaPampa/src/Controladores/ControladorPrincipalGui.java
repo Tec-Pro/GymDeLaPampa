@@ -29,6 +29,7 @@ import Interfaces.ArticulosGUI;
 import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
+import Interfaces.GastosGui;
 import Interfaces.ProveedorGui;
 import Modelos.User;
 import java.sql.SQLException;
@@ -58,17 +59,16 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorArticulosGUI controladorArticulosGUI;
     private CargarVentaGUI cargarVentaGUI;
     private ControladorCargarVentaGUI controladorCargarVentaGUI;
-        private CumpleaniosGui cumpleGui;
-        
-            private ControladorProveedor controladorProveedor;
+    private CumpleaniosGui cumpleGui;
+
+    private ControladorProveedor controladorProveedor;
     private ProveedorGui proveedorGui;
-        private ControladorCompra controladorCompra;
+    private ControladorCompra controladorCompra;
     private CompraGui compraGui;
-
-
+    private GastosGui gastosGui;
+    private controladores.ControladorGastos controladorGastos;
 
     //private String usuario;
-
     public ControladorPrincipalGui() throws Exception {
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
@@ -87,8 +87,8 @@ public class ControladorPrincipalGui implements ActionListener {
         principalGui.setCursor(Cursor.WAIT_CURSOR); //cambio el cursor por si se inicia sesión antes de cargar las cosas
 
         socios = new BusquedaGui();
-        this.actualizarDatos= new ActualizarDatos(socios);
-        controladorClientes = new ControladorClientes(socios, principalGui.getDesktop(),actualizarDatos);
+        this.actualizarDatos = new ActualizarDatos(socios);
+        controladorClientes = new ControladorClientes(socios, principalGui.getDesktop(), actualizarDatos);
         principalGui.setActionListener(this);
         principalGui.getDesktop().add(socios);
         actividadesGui = new ActividadesGui();
@@ -96,7 +96,7 @@ public class ControladorPrincipalGui implements ActionListener {
         principalGui.getDesktop().add(actividadesGui);
         usuarioGui = new UsuarioGui();
         controladorUsuario = new ControladorUsuario(usuarioGui);
-        impresionArancel= new ControladorJReport("precio.jasper");
+        impresionArancel = new ControladorJReport("precio.jasper");
         principalGui.getDesktop().add(usuarioGui);
         principalGui.setCursor(Cursor.DEFAULT_CURSOR);
         articulosGUI = new ArticulosGUI();
@@ -105,17 +105,19 @@ public class ControladorPrincipalGui implements ActionListener {
         cargarVentaGUI = new CargarVentaGUI();
         controladorCargarVentaGUI = new ControladorCargarVentaGUI(cargarVentaGUI, principalGui);
         principalGui.getDesktop().add(cargarVentaGUI);
-                cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
+        cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
 
-                principalGui.getDesktop().add(cumpleGui);
+        principalGui.getDesktop().add(cumpleGui);
 
         proveedorGui = new ProveedorGui();
         compraGui = new CompraGui();
         controladorCompra = new ControladorCompra(compraGui, principalGui);
         principalGui.getDesktop().add(proveedorGui);
         principalGui.getDesktop().add(compraGui);
-                controladorProveedor = new ControladorProveedor(proveedorGui, principalGui, articulosGUI, compraGui);
-
+        controladorProveedor = new ControladorProveedor(proveedorGui, principalGui, articulosGUI, compraGui);
+        gastosGui = new GastosGui();
+        principalGui.getDesktop().add(gastosGui);
+        controladorGastos = new controladores.ControladorGastos(gastosGui);
 
     }
 
@@ -133,7 +135,7 @@ public class ControladorPrincipalGui implements ActionListener {
                 controladorLogin.getLog().getTextUsuario().setText("");
                 controladorLogin.getLog().getTextPass().setText("");
             }
-            
+
             //Aca debe ir para que se cierre la sesión
         }
         if (ae.getSource() == principalGui.getBotSalir()) {
@@ -172,13 +174,13 @@ public class ControladorPrincipalGui implements ActionListener {
             LazyList listUsuarios = User.findAll();
             usuarioGui.getTablaUsuarioDefault().setRowCount(0);
             Iterator<User> itusu = listUsuarios.iterator();
-            while(itusu.hasNext()){
+            while (itusu.hasNext()) {
                 User u = itusu.next();
                 Object row[] = new Object[1];
                 row[0] = u.get("USUARIO");
                 usuarioGui.getTablaUsuarioDefault().addRow(row);
             }
-            
+
             usuarioGui.setVisible(true);
             usuarioGui.toFront();
         }
@@ -187,11 +189,11 @@ public class ControladorPrincipalGui implements ActionListener {
             ingresoGui.toFront();
             ingresoGui.setLocationRelativeTo(null);
         }
-                if (ae.getSource() == principalGui.getBotCumple()) {
+        if (ae.getSource() == principalGui.getBotCumple()) {
             cumpleGui.cargarCumple();
             cumpleGui.setVisible(true);
             cumpleGui.toFront();
-                }
+        }
         if (ae.getSource() == principalGui.getDeclaracion()) {
 
             try {
@@ -203,10 +205,10 @@ public class ControladorPrincipalGui implements ActionListener {
                     Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(principalGui, "Corrobore si tiene instalado un lector PDF \n "+ex, "¡Error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(principalGui, "Corrobore si tiene instalado un lector PDF \n " + ex, "¡Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if(ae.getSource()==principalGui.getImpresionAranceles()){
+        if (ae.getSource() == principalGui.getImpresionAranceles()) {
             try {
                 impresionArancel.mostrarReporte();
             } catch (ClassNotFoundException ex) {
@@ -216,25 +218,25 @@ public class ControladorPrincipalGui implements ActionListener {
             } catch (JRException ex) {
                 Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
             }
-       
+
         }
-        if(ae.getSource()==principalGui.getDepurar()){
-            int ret= JOptionPane.showConfirmDialog(principalGui, "¿Desea continuar con la depuración de la base de datos?, se borraran los usuarios inactivos, y todos sus datos relacionados", "Depuración de datos", JOptionPane.YES_NO_OPTION);
-            if(ret==JOptionPane.YES_OPTION){
+        if (ae.getSource() == principalGui.getDepurar()) {
+            int ret = JOptionPane.showConfirmDialog(principalGui, "¿Desea continuar con la depuración de la base de datos?, se borraran los usuarios inactivos, y todos sus datos relacionados", "Depuración de datos", JOptionPane.YES_NO_OPTION);
+            if (ret == JOptionPane.YES_OPTION) {
                 Base.openTransaction();
                 Base.exec("DELETE FROM `gym`.`socios`\n" + "WHERE activo=0;");
                 Base.commitTransaction();
                 JOptionPane.showMessageDialog(principalGui, "Se ha depurado correctamente");
             }
         }
-        
-        if(ae.getSource().equals(principalGui.getBtnArticulos())){
+
+        if (ae.getSource().equals(principalGui.getBtnArticulos())) {
             articulosGUI.setVisible(true);
             articulosGUI.toFront();
             articulosGUI.reClick();
             controladorArticulosGUI.ActualizarLista();
         }
-        if(ae.getSource().equals(principalGui.getBtnCargarVenta())){
+        if (ae.getSource().equals(principalGui.getBtnCargarVenta())) {
             cargarVentaGUI.setVisible(true);
             cargarVentaGUI.toFront();
             cargarVentaGUI.reClick();
@@ -246,10 +248,14 @@ public class ControladorPrincipalGui implements ActionListener {
             proveedorGui.setVisible(true);
             proveedorGui.toFront();
         }
-               if (ae.getSource() == principalGui.getRegistrarCompra()) {
+        if (ae.getSource() == principalGui.getRegistrarCompra()) {
             controladorCompra.cargarTodos();
             compraGui.setVisible(true);
             compraGui.toFront();
+        }
+                if (ae.getSource() == principalGui.getBtnGastos()) {
+            gastosGui.setVisible(true);
+            gastosGui.toFront();
         }
     }
 

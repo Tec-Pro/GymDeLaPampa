@@ -386,3 +386,31 @@ CREATE TABLE `ventas` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2015-03-23 15:39:37
+
+CREATE  TABLE `gym`.`categoria` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) );
+
+CREATE  TABLE `gym`.`datos` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `descripcion` VARCHAR(200) NULL ,
+  `categoria_id` INT NULL ,
+  `ingreso_egreso` VARCHAR(7) NULL ,
+  PRIMARY KEY (`id`) );
+
+CREATE  TABLE `gym`.`gastos` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `dato_id` INT NULL ,
+  `monto` FLOAT NULL ,
+  `fecha` DATE NULL ,
+  `descrip` VARCHAR (200),
+  PRIMARY KEY (`id`) );
+
+ALTER TABLE `gym`.`categoria` RENAME TO  `gym`.`categorias` ;
+
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('1', 'AEROBICO');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('2', 'PILATES');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('3', 'SPINNING');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('4', 'MUSCULACION');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('5', 'COMBO');
