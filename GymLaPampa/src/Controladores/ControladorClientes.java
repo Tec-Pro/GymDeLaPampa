@@ -569,7 +569,7 @@ public class ControladorClientes implements ActionListener {
                     row[3] = dateToMySQLDate(p.getDate("FECHA"), true);
                     row[4] = p.getFloat("MONTO");
                     row[5] = p.getInteger("ID_PAGOS");
-                    row[6] = p.getString("MODO");
+                    row[6] = p.getString("DESCRIPCION");
                     pagosGui.getTablaPagosDefault().addRow(row);
                 }
                 pagosGui.setVisible(true);

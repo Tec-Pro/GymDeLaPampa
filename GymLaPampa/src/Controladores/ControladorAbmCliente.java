@@ -442,7 +442,7 @@ public class ControladorAbmCliente implements ActionListener {
                                                 Base.openTransaction();
                                                 s.setBigDecimal("cuenta_corriente", s.getBigDecimal("cuenta_corriente").add(pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING)));
                                                 s.saveIt();
-                                                Pago.createIt("ID_DATOS_PERS", s.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(pagoEfectivo.getFecha().getDate(), false), "MONTO", pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING),"MODO","PAGO PARA SALDAR CUENTA");
+                                                Pago.createIt("ID_DATOS_PERS", s.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(pagoEfectivo.getFecha().getDate(), false), "MONTO", pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO ANTERIOR","DESCRIPCION","PAGO PARA SALDAR CUENTA CUENTA CORRIENTE");
 
                                                 Base.commitTransaction();
                                             }

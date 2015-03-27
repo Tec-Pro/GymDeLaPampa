@@ -422,3 +422,6 @@ INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`
 INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('3', 'ARANCEL', '3', 'ingreso');
 INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('4', 'ARANCEL', '4', 'ingreso');
 INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('5', 'ARANCEL', '5', 'ingreso');
+
+ALTER TABLE `gym`.`pagos` 
+ADD COLUMN `DESCRIPCION` VARCHAR(100) NULL AFTER `MODO`;

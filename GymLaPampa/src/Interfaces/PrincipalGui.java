@@ -44,6 +44,7 @@ public class PrincipalGui extends javax.swing.JFrame {
                 this.registrarCompra.addActionListener(lis);
         this.proveedores.addActionListener(lis);
         this.btnGastos.addActionListener(lis);
+        this.btnCaja.addActionListener(lis);
     }
 
     public JMenuItem getDepurar() {
@@ -68,6 +69,10 @@ public class PrincipalGui extends javax.swing.JFrame {
 
     public JButton getBtnGastos() {
         return btnGastos;
+    }
+
+    public JButton getBtnCaja() {
+        return btnCaja;
     }
 
    
@@ -138,6 +143,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         botCumple = new javax.swing.JButton();
         proveedores = new javax.swing.JButton();
         registrarCompra = new javax.swing.JButton();
+        btnCaja = new javax.swing.JButton();
         btnGastos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -189,6 +195,9 @@ public class PrincipalGui extends javax.swing.JFrame {
         registrarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compras.png"))); // NOI18N
         registrarCompra.setToolTipText("Registrar Compra");
         panelBotones.add(registrarCompra);
+
+        btnCaja.setText("Caja");
+        panelBotones.add(btnCaja);
 
         btnGastos.setText("GAstos");
         panelBotones.add(btnGastos);
@@ -255,6 +264,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JButton botSocios;
     private javax.swing.JButton botUsuario;
     private javax.swing.JButton btnArticulos;
+    private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JButton btnGastos;
     private javax.swing.JMenuItem declaracion;

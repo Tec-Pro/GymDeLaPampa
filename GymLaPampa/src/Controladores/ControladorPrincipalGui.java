@@ -30,6 +30,7 @@ import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
 import Interfaces.GastosGui;
+import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
 import Modelos.User;
 import java.sql.SQLException;
@@ -67,6 +68,7 @@ public class ControladorPrincipalGui implements ActionListener {
     private CompraGui compraGui;
     private GastosGui gastosGui;
     private controladores.ControladorGastos controladorGastos;
+    private MovimientosDelDiaGui movimientosGui;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
@@ -118,7 +120,8 @@ public class ControladorPrincipalGui implements ActionListener {
         gastosGui = new GastosGui();
         principalGui.getDesktop().add(gastosGui);
         controladorGastos = new controladores.ControladorGastos(gastosGui);
-
+        movimientosGui= new MovimientosDelDiaGui();
+        principalGui.getDesktop().add(movimientosGui);
     }
 
     @Override
@@ -257,6 +260,10 @@ public class ControladorPrincipalGui implements ActionListener {
             gastosGui.setVisible(true);
             gastosGui.toFront();
         }
+                 if (ae.getSource() == principalGui.getBtnCaja()) {
+            movimientosGui.setVisible(true);
+            movimientosGui.toFront();
+        }               
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {

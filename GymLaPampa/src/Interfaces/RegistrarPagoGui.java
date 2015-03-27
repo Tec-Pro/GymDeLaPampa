@@ -712,7 +712,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 int retCalVuelto = calVueltoGui.getReturnStatus();
                 if (retCalVuelto == CalcularVueltoGui.RET_OK) {
                     Base.openTransaction();
-                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","MEMBRESIA PAGADA EN EFECTIVO");
+                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO", "descripcion","membresia pagada en efectivo");
 
                     socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
                     socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
@@ -733,7 +733,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 retCalVuelto = cobroAcuentaGui.getReturnStatus();
                 if (retCalVuelto == CobroACuentaGui.RET_OK) {
                     Base.openTransaction();
-                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO", "MEMBRESIA AGREGADA A CUENTA");
+                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO", "CUENTA", "DESCRIPCION", "MEMBRESIA AGREGADA A LA CUENTA");
 
                     socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
                     socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
