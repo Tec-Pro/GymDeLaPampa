@@ -414,3 +414,11 @@ INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('2', 'PILATES');
 INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('3', 'SPINNING');
 INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('4', 'MUSCULACION');
 INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('5', 'COMBO');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('6', 'COMPRAS');
+INSERT INTO `gym`.`categorias` (`id`, `nombre`) VALUES ('7', 'VENTAS');
+
+INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('1', 'ARANCEL', '1', 'ingreso');
+INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('2', 'ARANCEL', '2', 'ingreso');
+INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('3', 'ARANCEL', '3', 'ingreso');
+INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('4', 'ARANCEL', '4', 'ingreso');
+INSERT INTO `gym`.`datos` (`id`, `descripcion`, `categoria_id`, `ingreso_egreso`) VALUES ('5', 'ARANCEL', '5', 'ingreso');
