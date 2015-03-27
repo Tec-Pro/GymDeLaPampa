@@ -219,16 +219,19 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblEfecDia.setForeground(new java.awt.Color(255, 102, 0));
         lblEfecDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEfecDia.setText("0.00");
+        lblEfecDia.setToolTipText("Pagos de clientes en efectivo por compras o membresia de hoy");
 
         lblEfecAnterior.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEfecAnterior.setForeground(new java.awt.Color(255, 102, 0));
         lblEfecAnterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEfecAnterior.setText("0.00");
+        lblEfecAnterior.setToolTipText("Pagos de clientes de hoy para saldar la cuenta corriente");
 
         lblTotalEfec.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTotalEfec.setForeground(new java.awt.Color(255, 102, 0));
         lblTotalEfec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalEfec.setText("0.00");
+        lblTotalEfec.setToolTipText("Total ganado en efectivo");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("TARJETA");
@@ -240,16 +243,19 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblTarjetaDia.setForeground(new java.awt.Color(255, 102, 0));
         lblTarjetaDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTarjetaDia.setText("0.00");
+        lblTarjetaDia.setToolTipText("Pagos realizados con tarjeta de crédito/debito");
 
         lblTarjetaAnterior.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTarjetaAnterior.setForeground(new java.awt.Color(255, 102, 0));
         lblTarjetaAnterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTarjetaAnterior.setText("0.00");
+        lblTarjetaAnterior.setToolTipText("Pagos para saldar la cuenta corriente realizado con tarjetas");
 
         lblTotalTarjeta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTotalTarjeta.setForeground(new java.awt.Color(255, 102, 0));
         lblTotalTarjeta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalTarjeta.setText("0.00");
+        lblTotalTarjeta.setToolTipText("Total ganado con tarjetas de credito hoy");
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         jLabel18.setText("(SIN CONTAR LO QUE SE ANOTO)");
@@ -258,6 +264,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblTotalSinAnotado.setForeground(new java.awt.Color(255, 102, 0));
         lblTotalSinAnotado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalSinAnotado.setText("0.00");
+        lblTotalSinAnotado.setToolTipText("Total de ganancias en efectivo y tarjeta sin contar lo que se anotó");
 
         jButton1.setText("Cargar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -273,6 +280,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblAnotadoHoy.setForeground(new java.awt.Color(255, 102, 0));
         lblAnotadoHoy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnotadoHoy.setText("0.00");
+        lblAnotadoHoy.setToolTipText("Cantidad de dinero anotado a cuentas de los clientes");
 
         lblAnotadoTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblAnotadoTotal.setForeground(new java.awt.Color(255, 102, 0));
@@ -286,6 +294,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblTotalGanancias.setForeground(new java.awt.Color(255, 102, 0));
         lblTotalGanancias.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalGanancias.setText("0.00");
+        lblTotalGanancias.setToolTipText("Total de ganancias en efectivo y tarjeta y lo que se anotó");
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel20.setText("TOTAL GANANCIAS");
@@ -297,6 +306,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblEfecDiaProv.setForeground(new java.awt.Color(255, 102, 0));
         lblEfecDiaProv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEfecDiaProv.setText("0.00");
+        lblEfecDiaProv.setToolTipText("Cantidad de dinero pagago hoy a los proveedores");
 
         lblTotalEfecProv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTotalEfecProv.setForeground(new java.awt.Color(255, 102, 0));
@@ -310,6 +320,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblTotal.setForeground(new java.awt.Color(255, 102, 0));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotal.setText("0.00");
+        lblTotal.setToolTipText("Total de todo");
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel23.setText("TOTAL ");
@@ -318,6 +329,7 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
         lblTotalConProvsSinAnota.setForeground(new java.awt.Color(255, 102, 0));
         lblTotalConProvsSinAnota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalConProvsSinAnota.setText("0.00");
+        lblTotalConProvsSinAnota.setToolTipText("Total en caja, lo que se ganó en efectivo menos lo que se pago a proveedores");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,12 +339,8 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -347,13 +355,12 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
                     .addComponent(lblTarjetaDia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addComponent(lblEfecDia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblTotalEfecProv, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblTarjetaAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -419,27 +426,30 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEfecDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEfecAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotalEfec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEfecDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblEfecAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalEfec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTarjetaDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTarjetaAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotalTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTarjetaDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTarjetaAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(lblAnotadoHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAnotadoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEfecDiaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotalEfecProv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEfecDiaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalEfecProv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)

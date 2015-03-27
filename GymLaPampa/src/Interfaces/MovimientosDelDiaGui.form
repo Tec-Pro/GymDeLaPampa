@@ -29,14 +29,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jLabel10" min="-2" pref="96" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jLabel9" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel10" min="-2" pref="96" max="-2" attributes="0"/>
+                          <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -57,14 +51,13 @@
                   <Component id="jLabel3" alignment="0" pref="148" max="32767" attributes="0"/>
                   <Component id="lblEfecDia" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="lblTotalEfecProv" min="-2" pref="152" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTarjetaAnterior" max="32767" attributes="0"/>
@@ -152,18 +145,22 @@
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblEfecDia" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lblEfecAnterior" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lblTotalEfec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel10" alignment="0" pref="30" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblEfecDia" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblEfecAnterior" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblTotalEfec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTarjetaDia" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lblTarjetaAnterior" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lblTotalTarjeta" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel9" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblTarjetaDia" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblTarjetaAnterior" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblTotalTarjeta" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -172,10 +169,12 @@
                   <Component id="lblAnotadoTotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblEfecDiaProv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lblTotalEfecProv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel11" alignment="0" pref="30" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblEfecDiaProv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblTotalEfecProv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -255,6 +254,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Pagos de clientes en efectivo por compras o membresia de hoy"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEfecAnterior">
@@ -267,6 +267,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Pagos de clientes de hoy para saldar la cuenta corriente"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotalEfec">
@@ -279,6 +280,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total ganado en efectivo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -307,6 +309,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Pagos realizados con tarjeta de cr&#xe9;dito/debito"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTarjetaAnterior">
@@ -319,6 +322,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Pagos para saldar la cuenta corriente realizado con tarjetas"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotalTarjeta">
@@ -331,6 +335,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total ganado con tarjetas de credito hoy"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -353,6 +358,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total de ganancias en efectivo y tarjeta sin contar lo que se anot&#xf3;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
@@ -381,6 +387,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cantidad de dinero anotado a cuentas de los clientes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAnotadoTotal">
@@ -413,6 +420,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total de ganancias en efectivo y tarjeta y lo que se anot&#xf3;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel20">
@@ -441,6 +449,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cantidad de dinero pagago hoy a los proveedores"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotalEfecProv">
@@ -473,6 +482,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total de todo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel23">
@@ -493,6 +503,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="0.00"/>
+        <Property name="toolTipText" type="java.lang.String" value="Total en caja, lo que se gan&#xf3; en efectivo menos lo que se pago a proveedores"/>
       </Properties>
     </Component>
   </SubComponents>
