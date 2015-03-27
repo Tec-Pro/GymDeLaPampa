@@ -61,8 +61,11 @@ public class GastosGui extends javax.swing.JInternalFrame {
             while (it.hasNext()) {
                 Categoria cate = it.next();
                 categorias.addItem(cate.get("nombre"));
+                BoxCategoria.addItem(cate.get("nombre"));
             }
             categorias.setSelectedItem("Todos");
+            
+
             Calendar cal = Calendar.getInstance();
             Date date = cal.getTime();
             date.setDate(cal.getActualMinimum(Calendar.DAY_OF_MONTH));;

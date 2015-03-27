@@ -68,6 +68,7 @@ public class ControladorGastos implements ActionListener {
         gastosGui.getBoxCategoria().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gastosGui.getBoxArea().removeAllItems();
+
                 changeValue();
                 if (gastosGui.getBoxArea().getItemCount() <= 0) {
                     JOptionPane.showMessageDialog(gastosGui, "No posee servicios en esta categoria, cargue uno");
@@ -84,6 +85,7 @@ public class ControladorGastos implements ActionListener {
                     gastosGui.getBoxTipo().setSelectedItem(d.get("ingreso_egreso"));
             }
         });
+   
     }
     
 
@@ -212,6 +214,7 @@ public class ControladorGastos implements ActionListener {
                 gastosGui.getBotEliminar().setEnabled(true);
                 nuevoApretado = true;
                 modApretado = false;
+                           
                 gastosGui.getBoxCategoria().setSelectedIndex(0);
                 gastosGui.getBoxArea().setSelectedIndex(0);
                 Calendar cal = Calendar.getInstance();

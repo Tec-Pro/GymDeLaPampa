@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Controladores.TratamientoString;
+import Modelos.Categoria;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Modelos.Compra;
+import Modelos.Dato;
+import Modelos.Gasto;
 import Modelos.Pagoproveedor;
 import Modelos.Proveedor;
 import Modelos.Venta;
@@ -394,6 +397,17 @@ public class RealizarPagoGui extends javax.swing.JDialog {
         Base.openTransaction();
         java.sql.Date sqlFecha = new java.sql.Date(fecha.getDate().getTime());
         Pagoproveedor pago = Pagoproveedor.createIt("fecha", sqlFecha, "monto", monto.getText().replaceAll(",", "."), "descripcion",descripcion.getText());
+        Dato datoGasto= Dato.findFirst("descripcion = ?", prov.getId() +"-"+prov.getString("nombre"));
+        if(datoGasto == null){
+            datoGasto =Dato.createIt("descripcion", prov.getId() +"-"+prov.getString("nombre"),"categoria_id", Categoria.findFirst("nombre =?", "COMPRAS").getId(),"ingreso_egreso","egreso");
+        }
+        String descrip="";
+        if(compra== null){
+            descrip="Pago para saldar cuenta corriente";
+        }else{
+            descrip= "Pago total de compra id =  "+ compra.getId();
+        }
+        Gasto gasto= Gasto.createIt("dato_id",datoGasto.getId(),"monto","-"+monto.getText().replaceAll(",", "."),"fecha",sqlFecha,"descrip",descrip);
         pago.saveIt();
          Base.commitTransaction();
         prov.add(pago);
