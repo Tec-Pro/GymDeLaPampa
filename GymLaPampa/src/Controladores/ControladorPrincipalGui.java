@@ -67,7 +67,7 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorCompra controladorCompra;
     private CompraGui compraGui;
     private GastosGui gastosGui;
-    private controladores.ControladorGastos controladorGastos;
+     ControladorGasto controladorGastos;
     private MovimientosDelDiaGui movimientosGui;
 
     //private String usuario;
@@ -119,7 +119,7 @@ public class ControladorPrincipalGui implements ActionListener {
         controladorProveedor = new ControladorProveedor(proveedorGui, principalGui, articulosGUI, compraGui);
         gastosGui = new GastosGui();
         principalGui.getDesktop().add(gastosGui);
-        controladorGastos = new controladores.ControladorGastos(gastosGui);
+        controladorGastos = new ControladorGasto(gastosGui);
         movimientosGui= new MovimientosDelDiaGui();
         principalGui.getDesktop().add(movimientosGui);
     }

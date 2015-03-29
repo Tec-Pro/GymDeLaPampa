@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package controladores;
+package Controladores;
+
+
 
 import ABMs.ABMGastos;
 import Interfaces.AddCategoriaGui;
@@ -12,15 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,13 +23,9 @@ import Modelos.Dato;
 import Modelos.Gasto;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 
-/**
- *
- * @author alan
- */
-public class ControladorGastos implements ActionListener {
+
+public class ControladorGasto implements ActionListener {
 
     private GastosGui gastosGui;
     private AddCategoriaGui addCat;
@@ -51,7 +41,7 @@ public class ControladorGastos implements ActionListener {
     private boolean modAreaApretado = false;
     private String nombreArea;
 
-    public ControladorGastos(GastosGui p) {
+    public ControladorGasto(GastosGui p) {
         this.gastosGui = p;
         this.gastosGui.setActionListener(this);
 

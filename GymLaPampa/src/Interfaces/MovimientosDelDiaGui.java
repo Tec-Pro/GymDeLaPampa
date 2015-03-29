@@ -30,12 +30,8 @@ public class MovimientosDelDiaGui extends javax.swing.JInternalFrame {
     public MovimientosDelDiaGui() {
         initComponents();
             fecha.getDateEditor().setEnabled(false);
-            Calendar cal = Calendar.getInstance();
-            Date date = cal.getTime();
-            date.setDate(cal.getActualMinimum(Calendar.DAY_OF_MONTH));;
-            Date dateH = cal.getTime();
-            dateH.setDate(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-            fecha.setDate(dateH);
+            Calendar cal = Calendar.getInstance();            
+            fecha.setDate(cal.getTime());
             cargarMovimientos();
             
     }

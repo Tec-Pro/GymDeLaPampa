@@ -126,9 +126,12 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
     private void busquedaPorCodigo(java.awt.event.KeyEvent evt){
          if(evt.getKeyCode()==KeyEvent.VK_ENTER){
         Base.openTransaction();
-                    Articulo p = Articulo.findFirst("codigo = ?", txtCodigoBus.getText());
+        Articulo p = Articulo.findFirst("codigo = ?", txtCodigoBus.getText());
+        
+                    
                     Base.commitTransaction();
                     if(p!=null){
+                        if (!existeProdFacc(p.getInteger("id"))) {
                     Object cols[] = new Object[8];
                     BigDecimal bd = new BigDecimal(1);
                     cols[0] = p.get("id");
@@ -145,8 +148,9 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
                     txtCodigoBus.setText("");
                     }
                     else{
-                        JOptionPane.showMessageDialog(compraGui, "codigo de articulo no encontrado", "codigo inexistente", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(compraGui, "codigo de articulo no encontrado o articulo ya cargado", "codigo inexistente", JOptionPane.INFORMATION_MESSAGE);
                     }
+        }
     }
     }
     public void busquedaProveedorKeyReleased(java.awt.event.KeyEvent evt) {

@@ -8,6 +8,9 @@ import ABMs.ABMSocios;
 import Controladores.CobroACuentaGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
+import Modelos.Categoria;
+import Modelos.Dato;
+import Modelos.Gasto;
 import Modelos.Pago;
 import Modelos.Socio;
 import Modelos.Socioarancel;
@@ -749,6 +752,29 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 }
                     break;
         }
+        Iterator<Arancel> itAran=listaran.iterator();
+        while(itAran.hasNext()){
+            Arancel ar= itAran.next();
+            Base.openTransaction();
+            String categoria=ar.getString("categoria");
+            Dato dato= Dato.findFirst("descripcion = ? and categoria_id =?", "ARANCEL", Categoria.findFirst("nombre = ? ", categoria).getId() );
+            if(dato!=null){
+                Gasto gasto=Gasto.findFirst("fecha = ? and dato_id = ?", dateToMySQLDate(fecha.getDate(), false), dato.getId());
+                if(gasto != null){
+                    Base.openTransaction();
+                    gasto.setBigDecimal("monto", gasto.getBigDecimal("monto").add(totalB).setScale(2, RoundingMode.CEILING));
+                    gasto.save();
+                    Base.commitTransaction();
+                }
+                else{
+                    Base.openTransaction();
+                    Gasto.createIt("dato_id",dato.getId(),"monto", totalB.setScale(2, RoundingMode.CEILING),"fecha",dateToMySQLDate(fecha.getDate(), false),"descrip","pagos de membresia" );
+                    Base.commitTransaction();
+                }
+            }
+            
+        }
+    
     }//GEN-LAST:event_realizarActionPerformed
 
     private void tablaActividadesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablaActividadesPropertyChange

@@ -196,10 +196,12 @@ public class PrincipalGui extends javax.swing.JFrame {
         registrarCompra.setToolTipText("Registrar Compra");
         panelBotones.add(registrarCompra);
 
-        btnCaja.setText("Caja");
+        btnCaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rsz_cash_register.png"))); // NOI18N
+        btnCaja.setToolTipText("caja del dia");
         panelBotones.add(btnCaja);
 
-        btnGastos.setText("GAstos");
+        btnGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/andromoney.png"))); // NOI18N
+        btnGastos.setToolTipText("Reporte de gastos e ingresos");
         panelBotones.add(btnGastos);
 
         getContentPane().add(panelBotones, java.awt.BorderLayout.LINE_START);
