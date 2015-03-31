@@ -332,7 +332,7 @@ public class IngresoGui extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Costa Norte logo-centro.jpg"))); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo_chico.png"))); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -345,7 +345,7 @@ public class IngresoGui extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Costa Norte logo-centro.jpg"))); // NOI18N
+        panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo_chico.png"))); // NOI18N
 
         javax.swing.GroupLayout panelImage2Layout = new javax.swing.GroupLayout(panelImage2);
         panelImage2.setLayout(panelImage2Layout);

@@ -221,7 +221,7 @@ public class BusquedaGui extends javax.swing.JInternalFrame {
         botRegistrosPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/money.png"))); // NOI18N
         botRegistrosPago.setText("Registros de pago");
 
-        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Costa Norte logo-centro.jpg"))); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo_chico.png"))); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);

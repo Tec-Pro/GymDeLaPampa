@@ -297,7 +297,7 @@
             <Container class="org.edisoncor.gui.panel.PanelImage" name="panelImage1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Costa Norte logo-centro.jpg"/>
+                  <Image iconType="3" name="/Imagenes/logo_chico.png"/>
                 </Property>
               </Properties>
 

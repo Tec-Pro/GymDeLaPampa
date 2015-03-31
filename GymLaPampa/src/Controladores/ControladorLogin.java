@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import ABMs.ManejoUsuario;
 import Interfaces.IngresoGui;
 import Interfaces.LoginGUI;
 import Interfaces.PrincipalGui;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Iterator;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -36,6 +38,10 @@ public class ControladorLogin extends Thread implements ActionListener {
     private IngresoGui ingreso;
     //private String usuario;
     static boolean esAdmin;
+    
+        private ManejoUsuario mu;
+
+
     public ControladorLogin(PrincipalGui app, IngresoGui ingresoGui) {
         this.app = app;
         this.ingreso = ingresoGui;
@@ -43,6 +49,13 @@ public class ControladorLogin extends Thread implements ActionListener {
 
     public void run() {
 
+        //ESTO ES PARA CORRER LA DEMO
+                            abrirBase();
+
+        mu = new ManejoUsuario();
+        
+        //
+        if(mu.crearUser()){
         log = new LoginGUI();
         log.setActionListener(this);
         log.setLocationRelativeTo(null);
@@ -69,11 +82,11 @@ public class ControladorLogin extends Thread implements ActionListener {
                         if (!u.getBoolean("ADMINIS")) {
                             app.getBotUsuario().setEnabled(false);
                             app.getDepurar().setEnabled(false);
-                            esAdmin=false;
+                            esAdmin = false;
                         } else {
                             app.getBotUsuario().setEnabled(true);
                             app.getDepurar().setEnabled(true);
-                            esAdmin=true;
+                            esAdmin = true;
                         }
                         log.dispose();
                         app.getBotDesconectar().setText("Cerrar sesión  (" + user + ")");
@@ -90,6 +103,7 @@ public class ControladorLogin extends Thread implements ActionListener {
                 }
             }
         });
+        }
     }
 
     @Override
@@ -105,16 +119,16 @@ public class ControladorLogin extends Thread implements ActionListener {
                 log.getTextUsuario().setText("");
                 log.getTextPass().setText("");
             } else {
-                                        User u = User.first("USUARIO = ?", user);
-                        if (!u.getBoolean("ADMINIS")) {
-                            app.getBotUsuario().setEnabled(false);
-                            app.getDepurar().setEnabled(false);
-                            esAdmin=false;
-                        } else {
-                            app.getBotUsuario().setEnabled(true);
-                            app.getDepurar().setEnabled(true);
-                            esAdmin=true;
-                        }
+                User u = User.first("USUARIO = ?", user);
+                if (!u.getBoolean("ADMINIS")) {
+                    app.getBotUsuario().setEnabled(false);
+                    app.getDepurar().setEnabled(false);
+                    esAdmin = false;
+                } else {
+                    app.getBotUsuario().setEnabled(true);
+                    app.getDepurar().setEnabled(true);
+                    esAdmin = true;
+                }
                 log.dispose();
                 app.getBotDesconectar().setText("Cerrar sesión  (" + user + ")");
                 ingreso.setVisible(true);
@@ -151,4 +165,5 @@ public class ControladorLogin extends Thread implements ActionListener {
         return false;
     }
 
+   
 }

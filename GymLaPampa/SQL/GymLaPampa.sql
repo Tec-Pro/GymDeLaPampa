@@ -1,3 +1,4 @@
+drop database if exists `gym`;
 CREATE DATABASE  IF NOT EXISTS `gym` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `gym`;
 -- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
@@ -283,7 +284,7 @@ CREATE TABLE `datos` (
 
 LOCK TABLES `datos` WRITE;
 /*!40000 ALTER TABLE `datos` DISABLE KEYS */;
-INSERT INTO `datos` VALUES (1,'ARANCEL',1,'ingreso'),(2,'ARANCEL',2,'ingreso'),(3,'ARANCEL',3,'ingreso'),(4,'ARANCEL',4,'ingreso'),(5,'ARANCEL',5,'ingreso'),(6,'ARANCEL',6,'ingreso');
+INSERT INTO `datos` VALUES (1,'ARANCEL',1,'ingreso'),(2,'ARANCEL',2,'ingreso'),(3,'ARANCEL',3,'ingreso'),(4,'ARANCEL',4,'ingreso'),(5,'ARANCEL',5,'ingreso');
 /*!40000 ALTER TABLE `datos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -625,3 +626,11 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2015-03-29 15:28:11
+
+
+CREATE  TABLE `gym`.`demos` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `fecha` DATE NULL ,
+  `dias` INT NULL DEFAULT 7 ,
+  PRIMARY KEY (`id`) );
+ALTER TABLE `gym`.`demos` ADD COLUMN `activado` INT(1) NULL  AFTER `dias` ;
