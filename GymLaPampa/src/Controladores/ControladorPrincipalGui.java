@@ -30,6 +30,7 @@ import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
 import Interfaces.GastosGui;
+import Interfaces.GuiCrearRutina;
 import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
@@ -73,6 +74,9 @@ public class ControladorPrincipalGui implements ActionListener {
     
     private GuiEjercicios guiEjercicios;
     private ControladorEjercicios controladorEjercicios;
+    
+    private GuiCrearRutina guiCrearRutina;
+    private ControladorGuiCrearRutina controladorGuiCrearRutina;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
@@ -130,6 +134,10 @@ public class ControladorPrincipalGui implements ActionListener {
         guiEjercicios = new GuiEjercicios();
         controladorEjercicios = new ControladorEjercicios(guiEjercicios);
         principalGui.getDesktop().add(guiEjercicios);
+        
+        guiCrearRutina = new GuiCrearRutina();
+        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina, principalGui);
+        principalGui.getDesktop().add(guiCrearRutina);
     }
 
     @Override
@@ -277,6 +285,12 @@ public class ControladorPrincipalGui implements ActionListener {
             guiEjercicios.setVisible(true);
             guiEjercicios.toFront();
             guiEjercicios.reClick();
+        }
+        if(ae.getSource().equals(principalGui.getBtnCrearRutina())){
+            controladorGuiCrearRutina.ActualizarListaEjercicios();
+            controladorGuiCrearRutina.ActualizarListaSocios();
+            guiCrearRutina.setVisible(true);
+            guiCrearRutina.toFront();
         }
     }
 

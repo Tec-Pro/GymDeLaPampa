@@ -73,12 +73,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gestion ejercicios"/>
+            <Property name="text" type="java.lang.String" value="Gestion de rutinas y ejercicios"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="btnGestionEjercicios">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gestion de ejercicios"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="btnCrearRutina">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Crear rutina"/>
               </Properties>
             </MenuItem>
           </SubComponents>
