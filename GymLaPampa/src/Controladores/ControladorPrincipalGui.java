@@ -30,6 +30,7 @@ import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
 import Interfaces.GastosGui;
+import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
 import Modelos.User;
@@ -69,6 +70,9 @@ public class ControladorPrincipalGui implements ActionListener {
     private GastosGui gastosGui;
      ControladorGasto controladorGastos;
     private MovimientosDelDiaGui movimientosGui;
+    
+    private GuiEjercicios guiEjercicios;
+    private ControladorEjercicios controladorEjercicios;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
@@ -122,6 +126,10 @@ public class ControladorPrincipalGui implements ActionListener {
         controladorGastos = new ControladorGasto(gastosGui);
         movimientosGui= new MovimientosDelDiaGui();
         principalGui.getDesktop().add(movimientosGui);
+        
+        guiEjercicios = new GuiEjercicios();
+        controladorEjercicios = new ControladorEjercicios(guiEjercicios);
+        principalGui.getDesktop().add(guiEjercicios);
     }
 
     @Override
@@ -263,7 +271,13 @@ public class ControladorPrincipalGui implements ActionListener {
                  if (ae.getSource() == principalGui.getBtnCaja()) {
             movimientosGui.setVisible(true);
             movimientosGui.toFront();
-        }               
+        }  
+        if(ae.getSource().equals(principalGui.getBtnGestionEjercicios())){
+            controladorEjercicios.ActualizarLista();
+            guiEjercicios.setVisible(true);
+            guiEjercicios.toFront();
+            guiEjercicios.reClick();
+        }
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {

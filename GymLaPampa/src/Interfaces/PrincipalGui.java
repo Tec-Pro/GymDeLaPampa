@@ -45,6 +45,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.proveedores.addActionListener(lis);
         this.btnGastos.addActionListener(lis);
         this.btnCaja.addActionListener(lis);
+        this.btnGestionEjercicios.addActionListener(lis);
     }
 
     public JMenuItem getDepurar() {
@@ -57,6 +58,10 @@ public class PrincipalGui extends javax.swing.JFrame {
 
     public JButton getBtnCargarVenta() {
         return btnCargarVenta;
+    }
+
+    public JMenuItem getBtnGestionEjercicios() {
+        return btnGestionEjercicios;
     }
 
     public JButton getBotCumple() {
@@ -155,6 +160,8 @@ public class PrincipalGui extends javax.swing.JFrame {
         impresionAranceles = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         tecPro = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        btnGestionEjercicios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gimnasio Costa Norte");
@@ -246,6 +253,13 @@ public class PrincipalGui extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu4.setText("Gestion ejercicios");
+
+        btnGestionEjercicios.setText("Gestion de ejercicios");
+        jMenu4.add(btnGestionEjercicios);
+
+        jMenuBar1.add(jMenu4);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -269,6 +283,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JButton btnGastos;
+    private javax.swing.JMenuItem btnGestionEjercicios;
     private javax.swing.JMenuItem declaracion;
     private javax.swing.JMenuItem depurar;
     private javax.swing.JMenuItem impresionAranceles;
@@ -276,6 +291,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JButton proveedores;

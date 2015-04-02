@@ -636,3 +636,9 @@ CREATE  TABLE `gym`.`demos` (
   `dias` INT NULL DEFAULT 7 ,
   PRIMARY KEY (`id`) );
 ALTER TABLE `gym`.`demos` ADD COLUMN `activado` INT(1) NULL  AFTER `dias` ;
+
+CREATE  TABLE `gym`.`ejercicios` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `ejercicio` VARCHAR(120) ,
+  `grupo` VARCHAR (20) ,
+  PRIMARY KEY (`id`) );
