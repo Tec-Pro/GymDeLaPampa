@@ -110,6 +110,7 @@ public class ControladorGuiCrearRutina implements ActionListener, CellEditorList
             row[2] = e.getString("ejercicio");
             guiCrearRutina.getTablaEjerciciosDefault().addRow(row);
         }
+        guiCrearRutina.getTablaEjercicios().getRowSorter().toggleSortOrder(1);
     }
 
     private void tablaSocioMouseClicked(MouseEvent evt) {
@@ -200,19 +201,6 @@ public class ControladorGuiCrearRutina implements ActionListener, CellEditorList
         return false;
     }
 
-   /* public void actualizarMonto() {
-        BigDecimal importe;
-        BigDecimal total = new BigDecimal(0);
-        for (int i = 0; i < guiCrearRutina.getTablaRutina().getRowCount(); i++) {
-            BigDecimal precio_unit = new BigDecimal(String.valueOf(guiCrearRutina.getTablaRutina().getValueAt(i, 3)));
-            importe = ((BigDecimal) guiCrearRutina.getTablaRutina().getValueAt(i, 2)).multiply(precio_unit).setScale(2, RoundingMode.CEILING);
-            guiCrearRutina.getTablaRutinaDefault().setValueAt(importe, i, 4);
-            total = total.add((BigDecimal) guiCrearRutina.getTablaRutinaDefault().getValueAt(i, 4)).setScale(2, RoundingMode.CEILING);
-        }
-        guiCrearRutina.getTotalTxt().setText(total.toString());
-
-    }*/
-
     public void abrirBase() {
         if (!Base.hasConnection()) {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gym", "root", "root");
@@ -230,7 +218,7 @@ public class ControladorGuiCrearRutina implements ActionListener, CellEditorList
             row[2] = a.getString("ejercicio");
             guiCrearRutina.getTablaEjerciciosDefault().addRow(row);
         }
-         
+         guiCrearRutina.getTablaEjercicios().getRowSorter().toggleSortOrder(1);
     }
     
     public void ActualizarListaSocios(){

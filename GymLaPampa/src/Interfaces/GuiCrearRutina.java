@@ -12,7 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -31,6 +34,11 @@ public class GuiCrearRutina extends javax.swing.JInternalFrame {
         tablaEjerciciosDefault = (DefaultTableModel) tablaEjercicios.getModel();
         tablaMusculacionDefault = (DefaultTableModel) tablaMusculacion.getModel();
         tablaSociosDefault = (DefaultTableModel) tablaSocios.getModel();
+        
+        //Esto me sirve para despues poder ordenar los ejercicios por grupo
+        RowSorter<TableModel> sorter = new TableRowSorter<TableModel> (tablaEjerciciosDefault);
+        tablaEjercicios.setRowSorter(sorter);
+        //
         
         tablaEjercicios.getColumnModel().getColumn(0).setPreferredWidth(20);
         tablaEjercicios.getColumnModel().getColumn(1).setPreferredWidth(100);

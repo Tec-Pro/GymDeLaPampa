@@ -98,7 +98,7 @@ public class ControladorPrincipalGui implements ActionListener {
 
         socios = new BusquedaGui();
         this.actualizarDatos = new ActualizarDatos(socios);
-        controladorClientes = new ControladorClientes(socios, principalGui.getDesktop(), actualizarDatos);
+        controladorClientes = new ControladorClientes(socios, principalGui, actualizarDatos);
         principalGui.setActionListener(this);
         principalGui.getDesktop().add(socios);
         actividadesGui = new ActividadesGui();
