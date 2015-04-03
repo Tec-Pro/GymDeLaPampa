@@ -20,7 +20,7 @@ public class ManejoUsuario {
     public boolean crearUser() {
         boolean ret=true;
         if (User.findAll().isEmpty()) {
-            User.createIt("USUARIO","gym","PASSWD","gym","ADMINIS",1);
+            User.createIt("USUARIO","admin","PASSWD","tecpro","ADMINIS",1);
             Demo demo = new Demo();
             demo = Demo.createIt("fecha", Calendar.getInstance().getTime(), "activado", false);
             JOptionPane.showMessageDialog(null, "Se a creado usuario por defecto,nombre de usuario: gym contraseña: gym Quedan "+demo.getString("dias")+" días de prueba");
