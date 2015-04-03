@@ -70,6 +70,7 @@ public class ControladorEjercicios implements ActionListener {
     }
     
     private void buscar(){
+        abrirBase();
         guiEjercicios.getTablaEjerciciosDefault().setRowCount(0);
         List<Ejercicio> resul;
         resul = Ejercicio.where("ejercicio like ?", "%" + guiEjercicios.getTxtBuscar().getText() + "%");

@@ -642,3 +642,21 @@ CREATE  TABLE `gym`.`ejercicios` (
   `ejercicio` VARCHAR(120) ,
   `grupo` VARCHAR (20) ,
   PRIMARY KEY (`id`) );
+
+CREATE  TABLE `gym`.`rutinas` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `dia` VARCHAR(20),
+  `socio_id` INT(10),
+  `objetivo` VARCHAR(200),
+  `fecha_inicio` DATE DEFAULT NULL,
+  `fecha_fin` DATE DEFAULT NULL,
+  PRIMARY KEY (`id`) );
+
+CREATE  TABLE `gym`.`rutinas_ejercicios` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `rutina_id` INT(10) ,
+  `ejercicio_id` INT(10),
+  `series` INT(10),
+  `repeticiones` INT(10),
+  `tiempo` VARCHAR(100),
+  PRIMARY KEY (`id`) );

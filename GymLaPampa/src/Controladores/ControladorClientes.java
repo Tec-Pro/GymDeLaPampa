@@ -9,6 +9,7 @@ import Interfaces.AbmClienteGui;
 import Interfaces.BusquedaGui;
 import Interfaces.DesktopPaneImage;
 import Interfaces.PagosGui;
+import Interfaces.PrincipalGui;
 import Interfaces.TodasAsisGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
@@ -20,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.LazyList;
 
 /**
@@ -60,15 +63,17 @@ public class ControladorClientes implements ActionListener {
     private boolean verTodos = false;
     private boolean verTodas = false;
 
-    public ControladorClientes(BusquedaGui clientes, DesktopPaneImage desktop, ActualizarDatos actualizarDatos) {
-
+    PrincipalGui principal;
+    
+    public ControladorClientes(BusquedaGui clientes, PrincipalGui prin, ActualizarDatos actualizarDatos) throws JRException, ClassNotFoundException, SQLException {
+        principal = prin;
         this.clientesGui = clientes;
         clientes.setActionListener(this);
         altaClienteGui = new AbmClienteGui();
         abmSocios = new ABMSocios();
         this.actualizarDAtos = actualizarDatos;
-        controladorAbmCliente = new ControladorAbmCliente(altaClienteGui, actualizarDatos);
-        desktop.add(altaClienteGui);
+        controladorAbmCliente = new ControladorAbmCliente(altaClienteGui, actualizarDatos, principal);
+        principal.getDesktop().add(altaClienteGui);
         pagosGui = new PagosGui();
         
        // pagosGui.getCActiv().addItem("TODOS");
@@ -79,8 +84,8 @@ public class ControladorClientes implements ActionListener {
        // }}); 
         asisGui = new TodasAsisGui();
         asisGui.setActionListener(this);
-        desktop.add(asisGui);
-        desktop.add(pagosGui);
+        principal.getDesktop().add(asisGui);
+        principal.getDesktop().add(pagosGui);
         pagosGui.setActionListener(this);
         tablaClientes = this.clientesGui.getTablaClientes();
         tablaSocDefault = this.clientesGui.getTablaClientesDefault();

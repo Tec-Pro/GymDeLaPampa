@@ -9,12 +9,16 @@ import Interfaces.AbmClienteGui;
 import Interfaces.CargarHuellaGui;
 import Interfaces.FichaMedicaGui;
 import Interfaces.FormaDePagoGui;
+import Interfaces.GuiCrearRutina;
+import Interfaces.GuiRutinas;
 import Interfaces.PagoCuentaEfectivo;
+import Interfaces.PrincipalGui;
 import Interfaces.RegistrarPagoGui;
 import Interfaces.TodasAsisGui;
 import Modelos.Arancel;
 import Modelos.Ficha;
 import Modelos.Pago;
+import Modelos.Rutina;
 import Modelos.Socio;
 import Modelos.Socioarancel;
 import java.awt.event.ActionEvent;
@@ -27,8 +31,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -46,12 +52,25 @@ public class ControladorAbmCliente implements ActionListener {
     private boolean fichaNueva;
     private ActualizarDatos actualizarDatos;
     private String dniViejo;
-
-    public ControladorAbmCliente(AbmClienteGui clienteGui, ActualizarDatos actualizarDatos) {
+    private PrincipalGui principal;
+    GuiCrearRutina guiCrearRutina;
+    ControladorGuiCrearRutina controladorGuiCrearRutina;
+    GuiRutinas guiRutinas;
+    ControladorGuiRutinas controladorGuiRutinas;
+    
+    public ControladorAbmCliente(AbmClienteGui clienteGui, ActualizarDatos actualizarDatos, PrincipalGui p) throws JRException, ClassNotFoundException, SQLException {
+        principal = p;
         this.clienteGui = clienteGui;
         this.clienteGui.setActionListener(this);
         abmsocio = new ABMSocios();
         this.actualizarDatos= actualizarDatos;
+        guiCrearRutina = new GuiCrearRutina();
+        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina, principal);
+        principal.getDesktop().add(guiCrearRutina);
+        
+        guiRutinas = new GuiRutinas();
+        controladorGuiRutinas = new ControladorGuiRutinas(guiRutinas);
+        principal.getDesktop().add(guiRutinas);
     }
     
     private void CargarDatosSocio(Socio s){
@@ -499,6 +518,34 @@ public class ControladorAbmCliente implements ActionListener {
                  }
     }    
     }
+        if(ae.getSource().equals(clienteGui.getBtnVerRutina())){
+            abrirBase();
+            LazyList<Rutina> listaRutinas = Rutina.where("socio_id = ?", clienteGui.getDni().getText());
+            if(listaRutinas.isEmpty()){
+                int ret=JOptionPane.showConfirmDialog(null, "Este socio no posee rutinas. Decea agregar una?",null,JOptionPane.YES_NO_OPTION);
+                if(ret == JOptionPane.YES_OPTION){
+                    guiCrearRutina.setVisible(true);
+                    controladorGuiCrearRutina.ActualizarListaEjercicios();
+                    controladorGuiCrearRutina.ActualizarListaSocios();
+                    guiCrearRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                    guiCrearRutina.getTxtIdSocio().setText(clienteGui.getDni().getText());
+                }
+            }else{
+                guiRutinas.getTablaRutinasDefault().setRowCount(0);
+                guiRutinas.setVisible(true);
+                guiRutinas.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                guiRutinas.getTxtSocioID().setText(clienteGui.getDni().getText());
+                guiRutinas.setTitle("Rutinas de "+clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                for(Rutina r : listaRutinas){
+                    Object[] row = new Object[4];
+                    row[0] = r.get("id");
+                    row[1] = r.get("dia");
+                    row[2] = dateToMySQLDate(r.getDate("fecha_inicio"), true);
+                    row[3] = dateToMySQLDate(r.getDate("fecha_fin"), true);
+                    guiRutinas.getTablaRutinasDefault().addRow(row);
+                }
+            }
+        }
     }
     private boolean eliminarFicha(Ficha f){
         f.delete();
