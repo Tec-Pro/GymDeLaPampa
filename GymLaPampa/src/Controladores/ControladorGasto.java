@@ -1,7 +1,5 @@
 package Controladores;
 
-
-
 import ABMs.ABMGastos;
 import Interfaces.AddCategoriaGui;
 import Interfaces.AreaGui;
@@ -24,7 +22,6 @@ import Modelos.Gasto;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 
-
 public class ControladorGasto implements ActionListener {
 
     private GastosGui gastosGui;
@@ -35,8 +32,6 @@ public class ControladorGasto implements ActionListener {
     private ABMGastos abmGastos;
     private boolean nuevoApretado = false;
     private boolean modApretado = false;
-    private File archivoBackup;
-    private int selecEnviarBack = 0;
     private boolean nuevoAreaApretado = false;
     private boolean modAreaApretado = false;
     private String nombreArea;
@@ -70,14 +65,14 @@ public class ControladorGasto implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-               Dato d= Dato.findFirst("descripcion = ?", gastosGui.getBoxArea().getSelectedItem());
-               if(d!=null)
+                Dato d = Dato.findFirst("descripcion = ?", gastosGui.getBoxArea().getSelectedItem());
+                if (d != null) {
                     gastosGui.getBoxTipo().setSelectedItem(d.get("ingreso_egreso"));
+                }
             }
         });
-   
+
     }
-    
 
     private void changeValue() {
         abrirBase();
@@ -105,17 +100,15 @@ public class ControladorGasto implements ActionListener {
         gastosGui.getBotMod().setEnabled(true);
         gastosGui.getBotEliminar().setEnabled(true);
         nuevoApretado = false;
-                modApretado = false;
-                
-                
-                
-                gastosGui.BloquearCampos(false);
-                gastosGui.BotonesNuevo(true);
-                
-                
-                gastosGui.getBotNuevo().setEnabled(true);
-                
-                
+        modApretado = false;
+        nuevoAreaApretado = false;
+        modAreaApretado = false;
+
+        gastosGui.BloquearCampos(false);
+        gastosGui.BotonesNuevo(true);
+
+        gastosGui.getBotNuevo().setEnabled(true);
+
     }
 
     private void tablaMouseClickedArea(MouseEvent evt) {
@@ -134,9 +127,7 @@ public class ControladorGasto implements ActionListener {
         areaGui.getBotNuevo().setText("Nuevo");
         modAreaApretado = false;
         nuevoAreaApretado = false;
-        
-        
-        
+
     }
 
     @Override
@@ -179,22 +170,24 @@ public class ControladorGasto implements ActionListener {
             }
             areaGui.setLocationRelativeTo(gastosGui);
             areaGui.setVisible(true);
-             gastosGui.BloquearCampos(false);
-                gastosGui.BotonesNuevo(true);
-                gastosGui.getBotEliminar().setEnabled(false);
-                gastosGui.getBotMod().setEnabled(false);
-                gastosGui.getBotNuevo().setEnabled(true);
-                gastosGui.getBoxCategoria().setSelectedIndex(0);
-                gastosGui.getBoxArea().setSelectedIndex(0);
-                Calendar cal = Calendar.getInstance();
-                Date date = cal.getTime();
-                // date.setDate(cal.getActualMinimum(Calendar.DAY_OF_MONTH));;
-                gastosGui.getFecha().setDate(date);
-                gastosGui.getTextMonto().setText("");
-                gastosGui.getDesc().setText("");
-                nuevoApretado = false;
-                modApretado = false;
-            
+            gastosGui.BloquearCampos(false);
+            gastosGui.BotonesNuevo(true);
+            gastosGui.getBotEliminar().setEnabled(false);
+            gastosGui.getBotMod().setEnabled(false);
+            gastosGui.getBotNuevo().setEnabled(true);
+            gastosGui.getBoxCategoria().setSelectedIndex(0);
+            gastosGui.getBoxArea().setSelectedIndex(0);
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            // date.setDate(cal.getActualMinimum(Calendar.DAY_OF_MONTH));;
+            gastosGui.getFecha().setDate(date);
+            gastosGui.getTextMonto().setText("");
+            gastosGui.getDesc().setText("");
+            nuevoApretado = false;
+            modApretado = false;
+            modAreaApretado = false;
+        nuevoAreaApretado = false;
+
         }
         if (e.getSource() == gastosGui.getBotNuevo()) {
             if (!nuevoApretado && !modApretado) {
@@ -204,7 +197,7 @@ public class ControladorGasto implements ActionListener {
                 gastosGui.getBotEliminar().setEnabled(true);
                 nuevoApretado = true;
                 modApretado = false;
-                           
+
                 gastosGui.getBoxCategoria().setSelectedIndex(0);
                 gastosGui.getBoxArea().setSelectedIndex(0);
                 Calendar cal = Calendar.getInstance();
@@ -379,32 +372,20 @@ public class ControladorGasto implements ActionListener {
             if (e.getSource() == addCat.getjButton1()) { //boton agregar
                 int ret = JOptionPane.showConfirmDialog(gastosGui, "¿Desea agregar la categoria " + addCat.getjTextField1().getText() + "?", null, JOptionPane.YES_NO_OPTION);
                 if (ret == JOptionPane.YES_OPTION) {
-                    Categoria c = new Categoria();
-                    c.set("nombre", addCat.getjTextField1().getText().toUpperCase());
-                    c.saveIt();
-                    c = Categoria.first("nombre = ?", addCat.getjTextField1().getText().toUpperCase());
+                    Categoria c = Categoria.createIt("nombre", addCat.getjTextField1().getText().toUpperCase());
+
                     if (c != null) {
                         JOptionPane.showMessageDialog(gastosGui, "Categoria creada exitosamente.");
                         addCat.dispose();
-                        LazyList<Categoria> cats = Categoria.findAll();
-                        Iterator<Categoria> i = cats.iterator();
-                        gastosGui.getBoxCategoria().removeAllItems();
-                        while (i.hasNext()) {
-                            Categoria ca = i.next();
-                            gastosGui.getBoxCategoria().addItem(ca.get("nombre"));
-                        }
-                        
-                         LazyList<Categoria> categoriasBase = Categoria.findAll();
-        Iterator<Categoria> it = categoriasBase.iterator();
-        String selec=gastosGui.getCategorias().getSelectedItem().toString();
-        gastosGui.getCategorias().removeAllItems();
-        gastosGui.getCategorias().addItem("Todos");
-        while (it.hasNext()) {
-            Categoria cate = it.next();
-            gastosGui.getCategorias().addItem(cate.get("nombre"));
-        }
-        gastosGui.getCategorias().setSelectedItem(selec);
-                        
+                        gastosGui.getBoxCategoria().addItem(c.get("nombre"));
+                        gastosGui.getBoxCategoria().setSelectedItem(c.get("nombre"));
+                        gastosGui.getCategorias().addItem(c.get("nombre"));
+                        nuevoApretado = false;
+                        modApretado = false;
+                        nuevoAreaApretado = false;
+                        modAreaApretado = false;
+                        gastosGui.BotonesNuevo(true);
+                        gastosGui.BloquearCampos(false);
                     } else {
                         JOptionPane.showMessageDialog(gastosGui, "Ocurrio un error intente nuevamente.");
                     }
@@ -541,11 +522,6 @@ public class ControladorGasto implements ActionListener {
         }
         ////
 
-
-
-       
- 
-
     }
 
     public String dateToMySQLDate(Date fecha, boolean paraMostrar) {
@@ -567,7 +543,5 @@ public class ControladorGasto implements ActionListener {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gym", "root", "root");
         }
     }
-
-
 
 }

@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Interfaces.AbmAlimentosGui;
 import Interfaces.ActividadesGui;
 import Interfaces.BusquedaGui;
 import Interfaces.IngresoGui;
@@ -73,6 +74,8 @@ public class ControladorPrincipalGui implements ActionListener {
     
     private GuiEjercicios guiEjercicios;
     private ControladorEjercicios controladorEjercicios;
+    private AbmAlimentosGui alimentosGui;
+    private ControladorAlimentos controladorAlimentos;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
@@ -130,6 +133,9 @@ public class ControladorPrincipalGui implements ActionListener {
         guiEjercicios = new GuiEjercicios();
         controladorEjercicios = new ControladorEjercicios(guiEjercicios);
         principalGui.getDesktop().add(guiEjercicios);
+        alimentosGui = new AbmAlimentosGui();
+        controladorAlimentos= new ControladorAlimentos(alimentosGui);
+        principalGui.getDesktop().add(alimentosGui);
     }
 
     @Override
@@ -278,6 +284,11 @@ public class ControladorPrincipalGui implements ActionListener {
             guiEjercicios.toFront();
             guiEjercicios.reClick();
         }
+                if(ae.getSource().equals(principalGui.getBtnAlimentos())){
+            controladorAlimentos.busqueda();
+            alimentosGui.setVisible(true);
+            alimentosGui.toFront();
+                }
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {
