@@ -48,10 +48,15 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.btnGestionEjercicios.addActionListener(lis);
         this.btnAlimentos.addActionListener(lis);
         this.btnCrearRutina.addActionListener(lis);
+        this.btnDietas.addActionListener(lis);
     }
 
     public JMenuItem getDepurar() {
         return depurar;
+    }
+
+    public JMenuItem getBtnDietas() {
+        return btnDietas;
     }
 
     public JMenuItem getBotDesconectar() {
@@ -172,9 +177,10 @@ public class PrincipalGui extends javax.swing.JFrame {
         tecPro = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         btnGestionEjercicios = new javax.swing.JMenuItem();
+        btnCrearRutina = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         btnAlimentos = new javax.swing.JMenuItem();
-        btnCrearRutina = new javax.swing.JMenuItem();
+        btnDietas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gimnasio Costa Norte");
@@ -276,10 +282,13 @@ public class PrincipalGui extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setText("Gestión Alimento");
+        jMenu5.setText("Gestion dietas");
 
         btnAlimentos.setText("Gestión alimentos");
         jMenu5.add(btnAlimentos);
+
+        btnDietas.setText("Gestión dietas");
+        jMenu5.add(btnDietas);
 
         jMenuBar1.add(jMenu5);
 
@@ -307,6 +316,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JMenuItem btnCrearRutina;
+    private javax.swing.JMenuItem btnDietas;
     private javax.swing.JButton btnGastos;
     private javax.swing.JMenuItem btnGestionEjercicios;
     private javax.swing.JMenuItem declaracion;

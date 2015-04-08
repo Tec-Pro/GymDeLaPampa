@@ -90,12 +90,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Alimento"/>
+            <Property name="text" type="java.lang.String" value="Gestion dietas"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="btnAlimentos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n alimentos"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="btnDietas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n dietas"/>
               </Properties>
             </MenuItem>
           </SubComponents>
