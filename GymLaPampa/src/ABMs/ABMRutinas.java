@@ -49,7 +49,7 @@ public class ABMRutinas {
         int id = v.getInteger("id");
         boolean result = true;
         result = v.delete() && result;
-        RutinasEjercicios.delete("id_rutina", id);
+        RutinasEjercicios.delete("rutina_id", id);
         return result;
     }
     
