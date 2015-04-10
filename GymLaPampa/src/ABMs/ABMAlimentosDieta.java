@@ -21,15 +21,15 @@ public class ABMAlimentosDieta {
     
     Object idDieta;
     
-    public boolean Alta(String nombre,String descripcion, LinkedList<Pair<Integer,Pair<String,Float>>> listaAlimentos){
+    public boolean Alta(String nombre,String descripcion, LinkedList<Object[]> listaAlimentos){
         boolean result = false;
         abrirBase();
         Base.openTransaction();
         Dieta dieta = Dieta.createIt("nombre", nombre,"descripcion",descripcion);
         if(dieta!=null){
             idDieta = dieta.getId();
-            for(Pair<Integer,Pair<String,Float>> t: listaAlimentos){
-                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t.first(), "dieta_id",idDieta,"hora",t.second().first(),"porcion",t.second().second());
+            for(Object[] t: listaAlimentos){
+                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",t[1],"porcion",t[2],"dia",t[3]);
         }
             result= true;
         }
@@ -37,7 +37,7 @@ public class ABMAlimentosDieta {
         return result;
     }
     
-    public boolean Modificar(Integer id,String nombre,String descripcion, LinkedList<Pair<Integer,Pair<String,Float>>> listaAlimentos){
+    public boolean Modificar(Integer id,String nombre,String descripcion, LinkedList<Object[]> listaAlimentos){
         boolean result = false;
         abrirBase();
         Base.openTransaction();
@@ -50,8 +50,8 @@ public class ABMAlimentosDieta {
             }
             dieta.set("nombre",nombre);
             dieta.set("descripcion",descripcion);
-            for(Pair<Integer,Pair<String,Float>> t: listaAlimentos){
-                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t.first(), "dieta_id",idDieta,"hora",t.second().first(),"porcion",t.second().second());
+            for(Object[] t: listaAlimentos){
+                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",t[1],"porcion",t[2],"dia",t[3]);
         }
             result=dieta.saveIt();
         }
@@ -59,13 +59,13 @@ public class ABMAlimentosDieta {
         return result;
     }
     
-    public boolean Eliminar(Dieta v){
+    public boolean Eliminar(Integer id){
         abrirBase();
         Base.openTransaction();
-        int id = v.getInteger("id");
+        Dieta d= Dieta.findById(id);
         boolean result = true;
-        result = v.delete() && result;
-        AlimentosDietas.delete("id_rutina", id);
+        result = d.delete() ;
+        AlimentosDietas.delete("dieta_id = ?", id);
         return result;
     }
    

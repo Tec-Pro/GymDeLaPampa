@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
@@ -38,10 +40,11 @@ public class ControladorAlimentos implements ActionListener {
         abmAlimentos = new ABMAlimento();
         tblAlimentos = alimentosGui.getTblAlimentos();
         tblDefaultAlimentos = alimentosGui.getTblDefaultAlimento();
-        tblAlimentos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAlimentos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaMouseClicked(evt);
+            public void valueChanged(ListSelectionEvent e) {
+                tablaMouseClicked();
+
             }
         });
 
@@ -108,12 +111,17 @@ public class ControladorAlimentos implements ActionListener {
 
     }
 
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {
-        if (evt.getClickCount() == 2) {
+    private void tablaMouseClicked() {
+        if (alimentosGui.getTblAlimentos().getSelectedRow() != -1) {
             int row = tblAlimentos.getSelectedRow();
             alimento = abmAlimentos.getAlimento((Integer) tblAlimentos.getValueAt(row, 0));
             cargarEnCampos(alimento);
             alimentosGui.setBotonesClickTabla();
+        }
+        else{
+            alimentosGui.setBotonesInicial();
+            alimentosGui.limpiarCampos();
+
         }
     }
 

@@ -41,9 +41,14 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         this.botPago.addActionListener(lis);
         this.botPagoCuenta.addActionListener(lis);
         this.btnVerRutina.addActionListener(lis);
+        this.btnDietas.addActionListener(lis);
     }
     public JButton getBotHuella() {
         return BotHuella;
+    }
+
+    public JButton getBtnDietas() {
+        return btnDietas;
     }
 
     public JTextField getApellido() {
@@ -121,6 +126,8 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         this.BotHuella.setEnabled(!si);
         this.botNuevo.setEnabled(si);
         this.botGuardar.setEnabled(si);
+        this.btnDietas.setEnabled(!si);
+        this.btnVerRutina.setEnabled(!si);
         if(si)
         this.botEliminarCancelar.setText("Cancelar");
         else
@@ -215,6 +222,7 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         boxConocio = new javax.swing.JComboBox();
         btnVerRutina = new javax.swing.JButton();
+        btnDietas = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         botNuevo = new javax.swing.JButton();
         botModif = new javax.swing.JButton();
@@ -297,6 +305,8 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
 
         btnVerRutina.setText("Ver rutina");
 
+        btnDietas.setText("Dietas");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -336,13 +346,6 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                             .addComponent(sexo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 19, Short.MAX_VALUE)
-                        .addComponent(btnVerRutina, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botFicha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BotHuella))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(4, 4, 4)
@@ -356,7 +359,17 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(10, 10, 10)
-                        .addComponent(apellido)))
+                        .addComponent(apellido))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 19, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDietas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnVerRutina, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botFicha)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotHuella)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -394,17 +407,19 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(txtFacebook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtFacebook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(boxConocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botFicha)
                             .addComponent(BotHuella)
-                            .addComponent(btnVerRutina))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(boxConocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnVerRutina))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDietas)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -577,6 +592,7 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
     private javax.swing.JButton botPago;
     private javax.swing.JButton botPagoCuenta;
     private javax.swing.JComboBox boxConocio;
+    private javax.swing.JButton btnDietas;
     private javax.swing.JButton btnVerRutina;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField dni;

@@ -5,27 +5,28 @@
  */
 package Interfaces;
 
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import Modelos.Alimento;
+import Modelos.AlimentosDietas;
+import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
+import org.javalite.activejdbc.LazyList;
 
 /**
  *
  * @author NicoOrcasitas
  */
-public class DietaGui extends javax.swing.JInternalFrame {
+public class VerDietaGui extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DietaGui
-     */
-    DefaultTableModel tblDefaultAlimento;
-    DefaultTableModel tblDefaultDietas;
-
+        private float aguaG = 0;
+    private float proteinasG = 0;
+    private float hcG = 0;
+    private float lipidosG = 0;
+    private float aguaL = 0;
+    private float proteinasKcal = 0;
+    private float hcKcal = 0;
+    private float lipidosKcal = 0;
+    private float calorias = 0;
+    
     DefaultTableModel tblDefaultAlimentoDietaLunes;
     DefaultTableModel tblDefaultAlimentoDietaMartes;
     DefaultTableModel tblDefaultAlimentoDietaMiercoles;
@@ -33,12 +34,13 @@ public class DietaGui extends javax.swing.JInternalFrame {
     DefaultTableModel tblDefaultAlimentoDietaViernes;
     DefaultTableModel tblDefaultAlimentoDietaSabado;
     DefaultTableModel tblDefaultAlimentoDietaDomingo;
-
-    public DietaGui() {
+    LazyList<AlimentosDietas> lista ;
+    /**
+     * Creates new form VerRutinasGui
+     */
+    public VerDietaGui(java.awt.Frame parent, boolean modal,LazyList<AlimentosDietas> lista,String nombre, String descripcion ) {
+        super(parent, modal);
         initComponents();
-        bloquearCampos(true);
-        tblDefaultAlimento = (DefaultTableModel) tblAlimentos.getModel();
-        tblDefaultDietas = (DefaultTableModel) tblDietas.getModel();
         tblDefaultAlimentoDietaLunes = (DefaultTableModel) tblAlimentosDietaLunes.getModel();
         tblDefaultAlimentoDietaMartes = (DefaultTableModel) tblAlimentosDietaMartes.getModel();
         tblDefaultAlimentoDietaMiercoles = (DefaultTableModel) tblAlimentosDietaMiercoles.getModel();
@@ -46,248 +48,100 @@ public class DietaGui extends javax.swing.JInternalFrame {
         tblDefaultAlimentoDietaViernes = (DefaultTableModel) tblAlimentosDietaViernes.getModel();
         tblDefaultAlimentoDietaSabado = (DefaultTableModel) tblAlimentosDietaSabado.getModel();
         tblDefaultAlimentoDietaDomingo = (DefaultTableModel) tblAlimentosDietaDomingo.getModel();
-
-        setBotonesInicial();
-
-    }
-//si hago click en en nuevo
-
-    public void setBotonesNuevo() {
-        this.botModif.setEnabled(false);
-        this.botGuardar.setEnabled(true);
-        this.botEliminarCancelar.setEnabled(true);
-        this.botEliminarCancelar.setText("Cancelar");
-        this.botNuevo.setEnabled(true);
-        limpiarCampos();
-        bloquearCampos(false);
-
+        this.lista= lista;
+        this.tblAlimentosDietaLunes.setEnabled(false);
+        this.tblAlimentosDietaMartes.setEnabled(false);
+        this.tblAlimentosDietaMiercoles.setEnabled(false);
+        this.tblAlimentosDietaJueves.setEnabled(false);
+        this.tblAlimentosDietaViernes.setEnabled(false);
+        this.tblAlimentosDietaSabado.setEnabled(false);
+        this.tblAlimentosDietaDomingo.setEnabled(false);
+        this.txtNombre.setEnabled(false);
+        this.txtDescripcion.setEnabled(false);
+        cargarEnTablaDietaAliemtos(lista);
+        txtNombre.setText(nombre);
+        txtDescripcion.setText(descripcion);
     }
 
-    //si hago click en modificar
-    public void setBotonesModificar() {
-        this.botModif.setEnabled(false);
-        this.botGuardar.setEnabled(true);
-        this.botEliminarCancelar.setEnabled(true);
-        this.botEliminarCancelar.setText("Cancelar");
-        this.botNuevo.setEnabled(true);
-        bloquearCampos(false);
+        private void cargarEnTablaDietaAliemtos(LazyList<AlimentosDietas> lista) {
+        tblDefaultAlimentoDietaLunes.setRowCount(0);
+        tblDefaultAlimentoDietaMartes.setRowCount(0);
+        tblDefaultAlimentoDietaMiercoles.setRowCount(0);
+        tblDefaultAlimentoDietaJueves.setRowCount(0);
+        tblDefaultAlimentoDietaViernes.setRowCount(0);
+        tblDefaultAlimentoDietaSabado.setRowCount(0);
+        tblDefaultAlimentoDietaDomingo.setRowCount(0);
+
+        aguaG = 0;
+        proteinasG = 0;
+        hcG = 0;
+        lipidosG = 0;
+        aguaL = 0;
+        hcKcal = 0;
+        lipidosKcal = 0;
+        proteinasKcal = 0;
+        calorias = 0;
+        Iterator<AlimentosDietas> it = lista.iterator();
+        while (it.hasNext()) {
+
+            AlimentosDietas a = it.next();
+            Alimento alim =Alimento.findById(a.getInteger("alimento_id"));
+            Object row[] = new Object[9];
+            row[0] = a.getString("hora");
+            row[1] = alim.getString("nombre");
+            row[2] = alim.getFloat("agua") * a.getFloat("porcion");
+            row[3] = alim.getFloat("prot") * a.getFloat("porcion");
+            row[4] = alim.getFloat("hc") * a.getFloat("porcion");
+            row[5] = alim.getFloat("grasa") * a.getFloat("porcion");
+            row[6] = (alim.getFloat("prot") * a.getFloat("porcion") * 4) + (alim.getFloat("hc") * a.getFloat("porcion") * 4) + (alim.getFloat("grasa") * a.getFloat("porcion") * 9);
+            row[7] = a.getFloat("porcion");
+            row[8] = alim.getInteger("id");
+            String dia = a.getString("dia");
+            switch (dia) {
+                case "LUNES":
+                    tblDefaultAlimentoDietaLunes.addRow(row);
+                    break;
+                case "MARTES":
+                    tblDefaultAlimentoDietaMartes.addRow(row);
+                    break;
+                case "MIERCOLES":
+                    tblDefaultAlimentoDietaMiercoles.addRow(row);
+                    break;
+                case "JUEVES":
+                    tblDefaultAlimentoDietaJueves.addRow(row);
+                    break;
+                case "VIERNES":
+                    tblDefaultAlimentoDietaViernes.addRow(row);
+                    break;
+                case "SABADO":
+                    tblDefaultAlimentoDietaSabado.addRow(row);
+                    break;
+                case "DOMINGO":
+                    tblDefaultAlimentoDietaDomingo.addRow(row);
+                    break;
+            }
+
+            aguaG += alim.getFloat("agua") * a.getFloat("porcion");
+            proteinasG += alim.getFloat("prot") * a.getFloat("porcion");
+            hcG += alim.getFloat("hc") * a.getFloat("porcion");
+            lipidosG += alim.getFloat("grasa") * a.getFloat("porcion");
+            aguaL += 0;
+            hcKcal = hcG * 4;
+            lipidosKcal = lipidosG * 9;
+            proteinasKcal = proteinasG * 4;
+            calorias = hcKcal + lipidosKcal + proteinasKcal;
+
+        }
+        lblAguaL.setText(String.valueOf(aguaL) + " lts");
+        lblAguag.setText(String.valueOf(aguaG) + " grs");
+        lblCalorias.setText(String.valueOf(calorias) + " Kcal");
+        lblHCG.setText(String.valueOf(hcG) + " grs");
+        lblHCK.setText(String.valueOf(hcKcal) + " Kcal");
+        lblLipidoG.setText(String.valueOf(lipidosG) + " grs");
+        lblLipidoK.setText(String.valueOf(lipidosKcal) + " Kcal");
+        lblProtG.setText(String.valueOf(proteinasG) + " grs");
+        lblProtK.setText(String.valueOf(proteinasKcal) + " Kcal");
     }
-
-    //cuando no hice click en ningun lado
-    public void setBotonesInicial() {
-        this.botModif.setEnabled(false);
-        this.botGuardar.setEnabled(false);
-        this.botEliminarCancelar.setEnabled(false);
-        this.botEliminarCancelar.setText("Eliminar");
-        this.botNuevo.setEnabled(true);
-        limpiarCampos();
-        bloquearCampos(true);
-    }
-
-    //cuando no hice click en ningun lado
-    public void setBotonesClickTabla() {
-        this.botModif.setEnabled(true);
-        this.botGuardar.setEnabled(false);
-        this.botEliminarCancelar.setEnabled(true);
-        this.botEliminarCancelar.setText("Eliminar");
-        this.botNuevo.setEnabled(true);
-        this.bloquearCampos(true);
-    }
-
-    private void bloquearCampos(boolean si) {
-        this.tblAlimentos.setEnabled(!si);
-        this.tblAlimentosDietaLunes.setEnabled(!si);
-        this.tblAlimentosDietaMartes.setEnabled(!si);
-        this.tblAlimentosDietaMiercoles.setEnabled(!si);
-        this.tblAlimentosDietaJueves.setEnabled(!si);
-        this.tblAlimentosDietaViernes.setEnabled(!si);
-        this.tblAlimentosDietaSabado.setEnabled(!si);
-        this.tblAlimentosDietaDomingo.setEnabled(!si);
-        this.txtNombre.setEnabled(!si);
-        this.txtDescripcion.setEnabled(!si);
-    }
-
-    public void limpiarCampos() {
-        this.lblAguaL.setText("");
-        this.lblAguag.setText("");
-        this.lblCalorias.setText("");
-        this.lblHCG.setText("");
-        this.lblHCK.setText("");
-        this.lblLipidoG.setText("");
-        this.lblLipidoK.setText("");
-        this.lblProtG.setText("");
-        this.lblProtK.setText("");
-        this.txtNombre.setText("");
-        this.txtDescripcion.setText("");
-        this.tblDefaultAlimentoDietaLunes.setRowCount(0);
-        this.tblDefaultAlimentoDietaMartes.setRowCount(0);
-        this.tblDefaultAlimentoDietaMiercoles.setRowCount(0);
-        this.tblDefaultAlimentoDietaJueves.setRowCount(0);
-        this.tblDefaultAlimentoDietaViernes.setRowCount(0);
-        this.tblDefaultAlimentoDietaSabado.setRowCount(0);
-        this.tblDefaultAlimentoDietaDomingo.setRowCount(0);
-
-    }
-
-    public JTextField getTxtBusquedaDietas() {
-        return txtBusquedaDietas;
-    }
-
-    public void setActionListener(ActionListener lis) {
-        this.botEliminarCancelar.addActionListener(lis);
-        this.botGuardar.addActionListener(lis);
-        this.botModif.addActionListener(lis);
-        this.botNuevo.addActionListener(lis);
-    }
-
-    public JButton getBotEliminarCancelar() {
-        return botEliminarCancelar;
-    }
-
-    public JButton getBotGuardar() {
-        return botGuardar;
-    }
-
-    public JButton getBotModif() {
-        return botModif;
-    }
-
-    public JButton getBotNuevo() {
-        return botNuevo;
-    }
-
-    public JLabel getLblAguaL() {
-        return lblAguaL;
-    }
-
-    public JLabel getLblAguag() {
-        return lblAguag;
-    }
-
-    public JLabel getLblCalorias() {
-        return lblCalorias;
-    }
-
-    public JLabel getLblHCG() {
-        return lblHCG;
-    }
-
-    public JLabel getLblHCK() {
-        return lblHCK;
-    }
-
-    public JLabel getLblLipidoG() {
-        return lblLipidoG;
-    }
-
-    public JLabel getLblLipidoK() {
-        return lblLipidoK;
-    }
-
-    public JLabel getLblProtG() {
-        return lblProtG;
-    }
-
-    public JLabel getLblProtK() {
-        return lblProtK;
-    }
-
-    public JTable getTblAlimentos() {
-        return tblAlimentos;
-    }
-
-    public JTable getTblAlimentosDieta() {
-        return tblAlimentosDietaLunes;
-    }
-
-    public JTextField getTxtBusqueda() {
-        return txtBusqueda;
-    }
-
-    public JTextField getTxtNombre() {
-        return txtNombre;
-    }
-
-    public DefaultTableModel getTblDefaultAlimento() {
-        return tblDefaultAlimento;
-    }
-
- 
-
-    public DefaultTableModel getTblDefaultDietas() {
-        return tblDefaultDietas;
-    }
-
-    public JTable getTblDietas() {
-        return tblDietas;
-    }
-
-    public JTextArea getTxtDescripcion() {
-        return txtDescripcion;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaLunes() {
-        return tblDefaultAlimentoDietaLunes;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaMartes() {
-        return tblDefaultAlimentoDietaMartes;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaMiercoles() {
-        return tblDefaultAlimentoDietaMiercoles;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaJueves() {
-        return tblDefaultAlimentoDietaJueves;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaViernes() {
-        return tblDefaultAlimentoDietaViernes;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaSabado() {
-        return tblDefaultAlimentoDietaSabado;
-    }
-
-    public DefaultTableModel getTblDefaultAlimentoDietaDomingo() {
-        return tblDefaultAlimentoDietaDomingo;
-    }
-
-    public JTable getTblAlimentosDietaDomingo() {
-        return tblAlimentosDietaDomingo;
-    }
-
-    public JTable getTblAlimentosDietaJueves() {
-        return tblAlimentosDietaJueves;
-    }
-
-    public JTable getTblAlimentosDietaLunes() {
-        return tblAlimentosDietaLunes;
-    }
-
-    public JTable getTblAlimentosDietaMartes() {
-        return tblAlimentosDietaMartes;
-    }
-
-    public JTable getTblAlimentosDietaMiercoles() {
-        return tblAlimentosDietaMiercoles;
-    }
-
-    public JTable getTblAlimentosDietaSabado() {
-        return tblAlimentosDietaSabado;
-    }
-
-    public JTable getTblAlimentosDietaViernes() {
-        return tblAlimentosDietaViernes;
-    }
-
-    public JTabbedPane getPnlTab() {
-        return pnlTab;
-    }
-    
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -301,15 +155,6 @@ public class DietaGui extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblAlimentos = new javax.swing.JTable();
-        txtBusqueda = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        botNuevo = new javax.swing.JButton();
-        botModif = new javax.swing.JButton();
-        botEliminarCancelar = new javax.swing.JButton();
-        botGuardar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
@@ -329,11 +174,6 @@ public class DietaGui extends javax.swing.JInternalFrame {
         lblProtK = new javax.swing.JLabel();
         lblAguaL = new javax.swing.JLabel();
         lblHCK = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblDietas = new javax.swing.JTable();
-        txtBusquedaDietas = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
@@ -353,57 +193,10 @@ public class DietaGui extends javax.swing.JInternalFrame {
         jScrollPane11 = new javax.swing.JScrollPane();
         tblAlimentosDietaDomingo = new javax.swing.JTable();
 
-        setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle("Dietas");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout());
 
         jLabel1.setText("Nombre");
-
-        jLabel8.setText("BUSQUEDA");
-
-        tblAlimentos.setAutoCreateRowSorter(true);
-        tblAlimentos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Alimento", "% PC", "Agua", "Proteina", "CH", "Lipidos", "Colesterol", "Fibra", "Sodio", "Potasio", "Magnesio", "Calcio", "Fosforo", "Hierro"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblAlimentos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(tblAlimentos);
-
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
-
-        botNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar.png"))); // NOI18N
-        jPanel6.add(botNuevo);
-
-        botModif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificar.png"))); // NOI18N
-        jPanel6.add(botModif);
-
-        botEliminarCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/borrar.png"))); // NOI18N
-        jPanel6.add(botEliminarCancelar);
-
-        botGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardar.png"))); // NOI18N
-        jPanel6.add(botGuardar);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -519,52 +312,6 @@ public class DietaGui extends javax.swing.JInternalFrame {
                                     .addComponent(lblLipidoK, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Dietas"));
-
-        tblDietas.setAutoCreateRowSorter(true);
-        tblDietas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Descripcion", "ID"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblDietas.setRowSorter(null);
-        tblDietas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane4.setViewportView(tblDietas);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-        );
-
-        jLabel9.setText("BUSQUEDA DE DIETAS");
 
         jLabel10.setText("descripcion");
 
@@ -772,86 +519,51 @@ public class DietaGui extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(txtBusquedaDietas)))
+                    .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBusqueda)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlTab)
-                .addContainerGap())
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)))
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel10))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBusquedaDietas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(pnlTab, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
         jScrollPane1.setViewportView(jPanel1);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botEliminarCancelar;
-    private javax.swing.JButton botGuardar;
-    private javax.swing.JButton botModif;
-    private javax.swing.JButton botNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -860,18 +572,12 @@ public class DietaGui extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -890,7 +596,6 @@ public class DietaGui extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblProtG;
     private javax.swing.JLabel lblProtK;
     private javax.swing.JTabbedPane pnlTab;
-    private javax.swing.JTable tblAlimentos;
     private javax.swing.JTable tblAlimentosDietaDomingo;
     private javax.swing.JTable tblAlimentosDietaJueves;
     private javax.swing.JTable tblAlimentosDietaLunes;
@@ -898,9 +603,6 @@ public class DietaGui extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblAlimentosDietaMiercoles;
     private javax.swing.JTable tblAlimentosDietaSabado;
     private javax.swing.JTable tblAlimentosDietaViernes;
-    private javax.swing.JTable tblDietas;
-    private javax.swing.JTextField txtBusqueda;
-    private javax.swing.JTextField txtBusquedaDietas;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

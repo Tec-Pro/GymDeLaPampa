@@ -412,10 +412,10 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
     @Override
     public void editingStopped(ChangeEvent e) {
         actualizarPrecio();
-        for (int i = 0; i < tablafac.getRowCount(); i++) {
-            Base.openTransaction();
-            Articulo a = Articulo.findById(tablafac.getValueAt(i, 0));
-            Base.commitTransaction();
+//        for (int i = 0; i < tablafac.getRowCount(); i++) {
+//            Base.openTransaction();
+//            Articulo a = Articulo.findById(tablafac.getValueAt(i, 0));
+//            Base.commitTransaction();
 //            if (!(a.getBigDecimal("precio_compra").equals(tablafac.getValueAt(i, 4)))) {
 //                a.setBigDecimal("precio_compra", tablafac.getValueAt(i, 4));
 //                a.saveIt();
@@ -424,7 +424,7 @@ public class ControladorCompra implements ActionListener, CellEditorListener {
 //                a.setBigDecimal("precio_venta", tablafac.getValueAt(i, 5));
 //                a.saveIt();
 //            }
-        }
+       // }
    
     }
 
