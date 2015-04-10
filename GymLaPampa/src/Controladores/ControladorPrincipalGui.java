@@ -30,6 +30,7 @@ import Interfaces.ArticulosGUI;
 import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
+import Interfaces.DietaGui;
 import Interfaces.GastosGui;
 import Interfaces.GuiCrearRutina;
 import Interfaces.GuiEjercicios;
@@ -82,6 +83,9 @@ public class ControladorPrincipalGui implements ActionListener {
     
     private GuiCrearRutina guiCrearRutina;
     private ControladorGuiCrearRutina controladorGuiCrearRutina;
+    
+        private DietaGui dietaGui;
+    private ControladorAltaDieta controladorDietas;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
@@ -146,6 +150,10 @@ public class ControladorPrincipalGui implements ActionListener {
         guiCrearRutina = new GuiCrearRutina();
         controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina, principalGui);
         principalGui.getDesktop().add(guiCrearRutina);
+        
+                dietaGui = new DietaGui();
+        controladorDietas = new ControladorAltaDieta(dietaGui);
+        principalGui.getDesktop().add(dietaGui);
     }
 
     @Override
@@ -305,6 +313,12 @@ public class ControladorPrincipalGui implements ActionListener {
             guiCrearRutina.setVisible(true);
             guiCrearRutina.toFront();
         }
+                        if(ae.getSource().equals(principalGui.getBtnDietas())){
+            controladorDietas.busquedaDietas();
+            controladorDietas.busqueda();
+            dietaGui.setVisible(true);
+            dietaGui.toFront();
+                }
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {

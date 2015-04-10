@@ -93,6 +93,7 @@ public class FormaDePagoGui extends javax.swing.JDialog {
         getRootPane().setDefaultButton(btnEfectivo);
 
         btnTarjeta.setText("Tarjeta");
+        btnTarjeta.setEnabled(false);
         btnTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTarjetaActionPerformed(evt);

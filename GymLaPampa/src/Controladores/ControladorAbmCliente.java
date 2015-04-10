@@ -7,6 +7,7 @@ package Controladores;
 import ABMs.ABMSocios;
 import Interfaces.AbmClienteGui;
 import Interfaces.CargarHuellaGui;
+import Interfaces.DietasSocioGui;
 import Interfaces.FichaMedicaGui;
 import Interfaces.FormaDePagoGui;
 import Interfaces.GuiCrearRutina;
@@ -15,6 +16,8 @@ import Interfaces.PagoCuentaEfectivo;
 import Interfaces.PrincipalGui;
 import Interfaces.RegistrarPagoGui;
 import Interfaces.TodasAsisGui;
+import Interfaces.VerDietaEditarGui;
+import Interfaces.VerDietaGui;
 import Modelos.Arancel;
 import Modelos.Ficha;
 import Modelos.Pago;
@@ -545,6 +548,12 @@ public class ControladorAbmCliente implements ActionListener {
                     guiRutinas.getTablaRutinasDefault().addRow(row);
                 }
             }
+        }
+        if(ae.getSource().equals(clienteGui.getBtnDietas())){
+                DietasSocioGui dietaSocioGui=new DietasSocioGui(principal, true,s.getInteger("id_datos_pers") );
+                dietaSocioGui.setLocationRelativeTo(clienteGui);
+                dietaSocioGui.setVisible(true);
+           
         }
     }
     private boolean eliminarFicha(Ficha f){
