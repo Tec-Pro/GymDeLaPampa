@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JLabel;
@@ -29,7 +28,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -715,7 +713,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 int retCalVuelto = calVueltoGui.getReturnStatus();
                 if (retCalVuelto == CalcularVueltoGui.RET_OK) {
                     Base.openTransaction();
-                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO", "descripcion","membresia pagada en efectivo");
+                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO", "descripcion","MEMBRESIA PAGADA EN EFECTIVO");
 
                     socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
                     socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
@@ -757,18 +755,18 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
             Arancel ar= itAran.next();
             Base.openTransaction();
             String categoria=ar.getString("categoria");
-            Dato dato= Dato.findFirst("descripcion = ? and categoria_id =?", "ARANCEL", Categoria.findFirst("nombre = ? ", categoria).getId() );
+            Dato dato= Dato.findFirst("descripcion = ? and categoria_id =?", "MEMBRESIA "+ar.getString("nombre"), Categoria.findFirst("nombre = ? ", categoria).getId() );
             if(dato!=null){
                 Gasto gasto=Gasto.findFirst("fecha = ? and dato_id = ?", dateToMySQLDate(fecha.getDate(), false), dato.getId());
                 if(gasto != null){
                     Base.openTransaction();
-                    gasto.setBigDecimal("monto", gasto.getBigDecimal("monto").add(totalB).setScale(2, RoundingMode.CEILING));
+                    gasto.setBigDecimal("monto", gasto.getBigDecimal("monto").add(ar.getBigDecimal("precio")).setScale(2, RoundingMode.CEILING));
                     gasto.save();
                     Base.commitTransaction();
                 }
                 else{
                     Base.openTransaction();
-                    Gasto.createIt("dato_id",dato.getId(),"monto", totalB.setScale(2, RoundingMode.CEILING),"fecha",dateToMySQLDate(fecha.getDate(), false),"descrip","pagos de membresia" );
+                    Gasto.createIt("dato_id",dato.getId(),"monto", ar.getBigDecimal("precio").setScale(2, RoundingMode.CEILING),"fecha",dateToMySQLDate(fecha.getDate(), false),"descrip","PAGOS DE MEMBRESIA "+ar.getString("nombre") );
                     Base.commitTransaction();
                 }
             }

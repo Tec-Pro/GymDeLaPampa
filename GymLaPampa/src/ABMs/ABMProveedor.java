@@ -4,6 +4,8 @@
  */
 package ABMs;
 
+import Modelos.Categoria;
+import Modelos.Dato;
 import Modelos.Proveedor;
 import org.javalite.activejdbc.Base;
 
@@ -27,6 +29,9 @@ public class ABMProveedor {
             Base.openTransaction();
             Proveedor nuevo = Proveedor.create("nombre", p.get("nombre"), "telefono", p.get("telefono"), "cuenta_corriente", p.get("cuenta_corriente"), "email", p.get("email"), "cuit", p.get("cuit"), "direccion", p.get("direccion"), "celular", p.get("celular"), "forma_de_pago", p.get("forma_de_pago"));
             ret = nuevo.saveIt();
+                        
+            Dato.createIt("descripcion", nuevo.getId() +"-"+nuevo.getString("nombre"),"categoria_id", Categoria.findFirst("nombre =?", "COMPRAS").getId(),"ingreso_egreso","egreso");
+
             Base.commitTransaction();
         }
         return ret;
@@ -48,7 +53,11 @@ public class ABMProveedor {
         Proveedor viejo = Proveedor.findById(p.getId());
         if (viejo != null) {
             Base.openTransaction();
+            Dato datoViejo= Dato.findFirst("descripcion =? ", viejo.getId() +"-"+viejo.getString("nombre"));
             ret = viejo.set("nombre", p.get("nombre"), "telefono", p.get("telefono"), "cuenta_corriente", p.get("cuenta_corriente"), "email", p.get("email"), "cuit", p.get("cuit"), "direccion", p.get("direccion"), "celular", p.get("celular"), "forma_de_pago", p.get("forma_de_pago")).saveIt();
+                        viejo.saveIt();
+            datoViejo.setString("descripcion", viejo.getId() +"-"+viejo.getString("nombre"));
+            datoViejo.saveIt();
             Base.commitTransaction();
         }
         return ret;

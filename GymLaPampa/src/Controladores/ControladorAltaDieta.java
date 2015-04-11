@@ -10,7 +10,6 @@ import ABMs.ABMAlimentosDieta;
 import Interfaces.DietaGui;
 import Modelos.Alimento;
 import Modelos.AlimentosDietas;
-import Modelos.Articulo;
 import Modelos.Dieta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +26,7 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +38,7 @@ import org.javalite.activejdbc.LazyList;
  *
  * @author NicoOrcasitas
  */
-public class ControladorAltaDieta implements ActionListener, CellEditorListener {
+public class ControladorAltaDieta implements ActionListener, CellEditorListener,ChangeListener {
 
     private DietaGui dietaGui;
     private ABMAlimentosDieta abmAlimentosDieta;
@@ -200,8 +200,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
                 calcularMacros();
             }
         });
+        dietaGui.getPnlTab().addChangeListener(this);
     }
-
 
     public void busqueda() {
         Base.openTransaction();
@@ -219,7 +219,7 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
         if (dietaGui.getTblDietas().getSelectedRow() != -1) {
             int row = tblDietas.getSelectedRow();
             Dieta dieta = abmAlimentosDieta.getDieta((Integer) tblDietas.getValueAt(row, 2));
-            idModificar= dieta.getInteger("id");
+            idModificar = dieta.getInteger("id");
             dietaGui.getTxtNombre().setText(dieta.getString("nombre"));
             dietaGui.getTxtDescripcion().setText(dieta.getString("descripcion"));
             cargarEnTablaDietaAliemtos(dieta.getAll(AlimentosDietas.class));
@@ -337,15 +337,7 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
         tblDefaultAlimentosDietaSabado.setRowCount(0);
         tblDefaultAlimentosDietaDomingo.setRowCount(0);
 
-        aguaG = 0;
-        proteinasG = 0;
-        hcG = 0;
-        lipidosG = 0;
-        aguaL = 0;
-        hcKcal = 0;
-        lipidosKcal = 0;
-        proteinasKcal = 0;
-        calorias = 0;
+
         Iterator<AlimentosDietas> it = lista.iterator();
         while (it.hasNext()) {
 
@@ -393,26 +385,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
                     break;
             }
 
-            aguaG += alim.getFloat("agua") * a.getFloat("porcion");
-            proteinasG += alim.getFloat("prot") * a.getFloat("porcion");
-            hcG += alim.getFloat("hc") * a.getFloat("porcion");
-            lipidosG += alim.getFloat("grasa") * a.getFloat("porcion");
-            aguaL += 0;
-            hcKcal = hcG * 4;
-            lipidosKcal = lipidosG * 9;
-            proteinasKcal = proteinasG * 4;
-            calorias = hcKcal + lipidosKcal + proteinasKcal;
-
         }
-        dietaGui.getLblAguaL().setText(String.valueOf(aguaL) + " lts");
-        dietaGui.getLblAguag().setText(String.valueOf(aguaG) + " grs");
-        dietaGui.getLblCalorias().setText(String.valueOf(calorias) + " Kcal");
-        dietaGui.getLblHCG().setText(String.valueOf(hcG) + " grs");
-        dietaGui.getLblHCK().setText(String.valueOf(hcKcal) + " Kcal");
-        dietaGui.getLblLipidoG().setText(String.valueOf(lipidosG) + " grs");
-        dietaGui.getLblLipidoK().setText(String.valueOf(lipidosKcal) + " Kcal");
-        dietaGui.getLblProtG().setText(String.valueOf(proteinasG) + " grs");
-        dietaGui.getLblProtK().setText(String.valueOf(proteinasKcal) + " Kcal");
+        calcularMacros();
     }
 
     private void cargarEnTablaDieta(LazyList<Dieta> lista) {
@@ -576,7 +550,7 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
                 }
             }
         }
-                if (e.getSource() == dietaGui.getBotModif()) {
+        if (e.getSource() == dietaGui.getBotModif()) {
             isNuevo = false;
             dietaGui.setBotonesModificar();
         }
@@ -611,9 +585,9 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
     public void editingStopped(ChangeEvent e) {
         calcularMacros();
     }
-    
-    private void calcularMacros(){
-                aguaG = 0;
+
+    private void calcularMacros() {
+        aguaG = 0;
         proteinasG = 0;
         hcG = 0;
         lipidosG = 0;
@@ -623,6 +597,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
         proteinasKcal = 0;
         calorias = 0;
         Alimento al;
+        switch (dietaGui.getPnlTab().getSelectedIndex()){
+        case 0:
         for (int i = 0; i < tblDefaultAlimentosDietaLunes.getRowCount(); i++) {
             float porcion;
             try {
@@ -647,7 +623,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;                
 
         }
-        //Ciclo martes
+        break;
+        case 1://Ciclo martes
         for (int i = 0; i < tblDefaultAlimentosDietaMartes.getRowCount(); i++) {
             float porcion;
             try {
@@ -671,7 +648,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaMartes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
 
         }
-        //Ciclo miercoles
+        break;
+        case 2://Ciclo miercoles
         for (int i = 0; i < tblDefaultAlimentosDietaMiercoles.getRowCount(); i++) {
             float porcion;
             try {
@@ -695,7 +673,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaMiercoles.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
 
         }
-        //Ciclo jueves
+        break;
+        case 3://Ciclo jueves
         for (int i = 0; i < tblDefaultAlimentosDietaJueves.getRowCount(); i++) {
             float porcion;
             try {
@@ -719,7 +698,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaJueves.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
 
         }
-        //Ciclo viernes
+        break;
+        case 4://Ciclo viernes
         for (int i = 0; i < tblDefaultAlimentosDietaViernes.getRowCount(); i++) {
             float porcion;
             try {
@@ -743,7 +723,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaViernes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
 
         }
-        //Ciclo sabado
+        break;
+        case 5://Ciclo sabado
         for (int i = 0; i < tblDefaultAlimentosDietaSabado.getRowCount(); i++) {
             float porcion;
             try {
@@ -767,7 +748,8 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaSabado.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
 
         }
-        //Ciclo domingo
+        break;
+        case 6://Ciclo domingo
         for (int i = 0; i < tblDefaultAlimentosDietaDomingo.getRowCount(); i++) {
             float porcion;
             try {
@@ -790,6 +772,7 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
             tblAlimentosDietaDomingo.setValueAt(al.getFloat("grasa") * porcion, i, 5);
             tblAlimentosDietaDomingo.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);
         }
+    }
         hcKcal = hcG * 4;
         lipidosKcal = lipidosG * 9;
         proteinasKcal = proteinasG * 4;
@@ -808,6 +791,11 @@ public class ControladorAltaDieta implements ActionListener, CellEditorListener 
     @Override
     public void editingCanceled(ChangeEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        calcularMacros();
     }
 
 }

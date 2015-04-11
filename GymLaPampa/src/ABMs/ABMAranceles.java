@@ -5,12 +5,15 @@
 package ABMs;
 
 import Modelos.Arancel;
+import Modelos.Categoria;
+import Modelos.Dato;
 import Modelos.Socioarancel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -30,6 +33,7 @@ public class ABMAranceles {
             Base.openTransaction();
             Arancel nuevo = Arancel.create("nombre",s.get("nombre"), "precio", s.get("precio"), "fecha", s.get("fecha"), "activo", s.get("activo"),"categoria", s.get("categoria"), "dias", s.getInteger("dias"));
             nuevo.saveIt();
+            Dato.createIt("descripcion","MEMBRESIA "+nuevo.getString("nombre"),"ingreso_egreso","ingreso","categoria_id",Categoria.findFirst("nombre = ?", nuevo.getString("categoria")).getId());
             idAlta= nuevo.get("id");
             Base.commitTransaction();
             return true;
@@ -62,8 +66,12 @@ public class ABMAranceles {
         Arancel viejo = Arancel.first("id = ?", s.getString("id"));
         if (viejo != null) {
             Base.openTransaction();
+                        Dato datoViejo= Dato.findFirst("descripcion =? ", "MEMBRESIA "+viejo.getString("nombre"));
+
             viejo.set("nombre", s.get("nombre"),"fecha", s.get("fecha"), "precio", s.get("precio"), "categoria", s.get("categoria"), "dias", s.getInteger("dias"));
-            viejo.saveIt();
+                        viejo.saveIt();
+            datoViejo.setString("descripcion", "MEMBRESIA "+viejo.getString("nombre"));
+            datoViejo.saveIt();
             Base.commitTransaction();
             return true;
         }

@@ -49,8 +49,14 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.btnAlimentos.addActionListener(lis);
         this.btnCrearRutina.addActionListener(lis);
         this.btnDietas.addActionListener(lis);
+        this.btnEstadisticasIngreso.addActionListener(lis);
     }
 
+    public JMenuItem getBtnEstadisticasIngreso() {
+        return btnEstadisticasIngreso;
+    }
+
+    
     public JMenuItem getDepurar() {
         return depurar;
     }
@@ -181,6 +187,8 @@ public class PrincipalGui extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         btnAlimentos = new javax.swing.JMenuItem();
         btnDietas = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        btnEstadisticasIngreso = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gimnasio Costa Norte");
@@ -292,6 +300,13 @@ public class PrincipalGui extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("Estadisticas");
+
+        btnEstadisticasIngreso.setText("Estadisticas de ingresos");
+        jMenu6.add(btnEstadisticasIngreso);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -317,6 +332,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JMenuItem btnCrearRutina;
     private javax.swing.JMenuItem btnDietas;
+    private javax.swing.JMenuItem btnEstadisticasIngreso;
     private javax.swing.JButton btnGastos;
     private javax.swing.JMenuItem btnGestionEjercicios;
     private javax.swing.JMenuItem declaracion;
@@ -328,6 +344,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JButton proveedores;

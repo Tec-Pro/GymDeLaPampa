@@ -4,32 +4,20 @@
  */
 package Interfaces;
 
-import Controladores.TratamientoString;
 import Modelos.Categoria;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Modelos.Compra;
 import Modelos.Dato;
 import Modelos.Gasto;
 import Modelos.Pagoproveedor;
 import Modelos.Proveedor;
-import Modelos.Venta;
-import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
-import org.jdesktop.swingx.renderer.FormatStringValue;
 
 /**
  *

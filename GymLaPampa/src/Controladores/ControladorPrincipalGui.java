@@ -40,6 +40,8 @@ import Modelos.User;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
+import java.util.Properties;
+
 
 /**
  *
@@ -91,6 +93,10 @@ public class ControladorPrincipalGui implements ActionListener {
     public ControladorPrincipalGui() throws Exception {
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
+                          Properties props = new Properties();
+            props.put("logoString", "Tec-Pro");
+            com.jtattoo.plaf.aero.AeroLookAndFeel.setTheme("Gold");
+            AeroLookAndFeel.setCurrentTheme(props);
             com.jtattoo.plaf.aero.AeroLookAndFeel.setTheme("Gold");
 
             UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
@@ -317,6 +323,12 @@ public class ControladorPrincipalGui implements ActionListener {
             controladorDietas.busqueda();
             dietaGui.setVisible(true);
             dietaGui.toFront();
+                }
+
+				if(ae.getSource().equals(principalGui.getBtnEstadisticasIngreso())){
+                	EstadisticaGui es=new EstadisticaGui(principalGui, true);
+                    es.setLocationRelativeTo(principalGui);
+                    es.setVisible(true);
                 }
     }
 
