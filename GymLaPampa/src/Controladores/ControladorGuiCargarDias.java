@@ -43,6 +43,7 @@ public class ControladorGuiCargarDias implements ActionListener, CellEditorListe
     GuiCargarDias guiCargarDias;
     ABMDia abmDias;
     PrincipalGui aplicacionGUI;
+    public Object socioId = null;
 
     public ControladorGuiCargarDias(GuiCargarDias cv, PrincipalGui ap) throws JRException, ClassNotFoundException, SQLException {
         aplicacionGUI = ap;
@@ -264,10 +265,17 @@ public class ControladorGuiCargarDias implements ActionListener, CellEditorListe
         if (e.getSource().equals(guiCargarDias.getBtnRegistrarRutina())) {
             if (DatosOK()) {
                 if (abmDias.Alta(ObtenerDatosDia())) {
-                    JOptionPane.showMessageDialog(guiCargarDias, "Dia registrado en rutina exitosamente!");
-                    // VerCargarCuotasGUI();
+                    int ret =JOptionPane.showConfirmDialog(guiCargarDias, "Dia cargado exitosamente, decea cargar otro dia a la rutina?","Operacion exitosa",JOptionPane.YES_NO_OPTION);
+                if(ret== JOptionPane.YES_OPTION){
+                    ActualizarListaRutinas(socioId);
+                    guiCargarDias.getTablaAerobicoDefault().setRowCount(0);
+                    guiCargarDias.getTablaMusculacionDefault().setRowCount(0);
+                    guiCargarDias.getBoxDia().setSelectedIndex(0);
+                }else{
+                    guiCargarDias.setVisible(false);
+                }
                 } else {
-                    JOptionPane.showMessageDialog(guiCargarDias, "Ocurrio un error, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(guiCargarDias, "Ya existe una rutina para el dia seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(guiCargarDias, "No se ingresaron ejercicios o falta seleccionar dia.", "Atencion!", JOptionPane.WARNING_MESSAGE);

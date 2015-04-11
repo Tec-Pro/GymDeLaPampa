@@ -121,7 +121,8 @@ public class ControladorGuiCrearRutinas implements ActionListener {
                 guiCrearRutinas.setVisible(false);
                 guiCargarDias.setVisible(true);
                 controladorGuiCargarDias.ActualizarListaEjercicios();
-                controladorGuiCargarDias.ActualizarListaRutinas(guiCrearRutinas.getTablaSociosDefault().getValueAt(row, 1));
+                controladorGuiCargarDias.socioId = guiCrearRutinas.getTablaSociosDefault().getValueAt(row, 1);
+                controladorGuiCargarDias.ActualizarListaRutinas(controladorGuiCargarDias.socioId);
                 guiCrearRutinas.limpiarCampos();
             }else{
                 JOptionPane.showMessageDialog(guiCrearRutinas, "Ocurrio un error!", "ERROR!", JOptionPane.ERROR_MESSAGE);

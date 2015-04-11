@@ -8,8 +8,11 @@ package ABMs;
 import Modelos.DiasEjercicios;
 import Modelos.Ejercicio;
 import Modelos.Dia;
+import Modelos.Rutina;
 import java.util.LinkedList;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -18,10 +21,26 @@ import org.javalite.activejdbc.Base;
 public class ABMDia {
     Object idDia;
     
+    private boolean diaExiste(Dia d){
+        abrirBase();
+        LazyList<Dia> dias = Dia.where("rutina_id = ?",d.get("rutina_id"));
+        if(!dias.isEmpty()){
+        for(Dia di : dias){
+            if(di.getString("dia").equals(d.getString("dia"))){
+                return true;
+            }
+        }
+        }
+        return false;
+    }
+    
     public boolean Alta(Dia v){
         boolean result = true;
         abrirBase();
         Base.openTransaction();
+        if(diaExiste(v)){
+            return false;
+        }
         Dia dia = Dia.create("dia", v.get("dia"), "rutina_id", v.get("rutina_id"));
         if(dia.saveIt()){
             idDia = dia.get("id");
