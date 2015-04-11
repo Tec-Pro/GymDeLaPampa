@@ -10,7 +10,7 @@ import Interfaces.CargarHuellaGui;
 import Interfaces.DietasSocioGui;
 import Interfaces.FichaMedicaGui;
 import Interfaces.FormaDePagoGui;
-import Interfaces.GuiCrearRutina;
+import Interfaces.GuiCargarDias;
 import Interfaces.GuiRutinas;
 import Interfaces.PagoCuentaEfectivo;
 import Interfaces.PrincipalGui;
@@ -56,8 +56,8 @@ public class ControladorAbmCliente implements ActionListener {
     private ActualizarDatos actualizarDatos;
     private String dniViejo;
     private PrincipalGui principal;
-    GuiCrearRutina guiCrearRutina;
-    ControladorGuiCrearRutina controladorGuiCrearRutina;
+    GuiCargarDias guiCrearRutina;
+    ControladorGuiCargarDias controladorGuiCrearRutina;
     GuiRutinas guiRutinas;
     ControladorGuiRutinas controladorGuiRutinas;
     
@@ -67,8 +67,8 @@ public class ControladorAbmCliente implements ActionListener {
         this.clienteGui.setActionListener(this);
         abmsocio = new ABMSocios();
         this.actualizarDatos= actualizarDatos;
-        guiCrearRutina = new GuiCrearRutina();
-        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina, principal);
+        guiCrearRutina = new GuiCargarDias();
+        controladorGuiCrearRutina = new ControladorGuiCargarDias(guiCrearRutina, principal);
         principal.getDesktop().add(guiCrearRutina);
         
         guiRutinas = new GuiRutinas();
@@ -521,7 +521,7 @@ public class ControladorAbmCliente implements ActionListener {
                  }
     }    
     }
-        if(ae.getSource().equals(clienteGui.getBtnVerRutina())){
+        /*if(ae.getSource().equals(clienteGui.getBtnVerRutina())){
             abrirBase();
             LazyList<Rutina> listaRutinas = Rutina.where("socio_id = ?", clienteGui.getDni().getText());
             if(listaRutinas.isEmpty()){
@@ -548,7 +548,7 @@ public class ControladorAbmCliente implements ActionListener {
                     guiRutinas.getTablaRutinasDefault().addRow(row);
                 }
             }
-        }
+        }*/
         if(ae.getSource().equals(clienteGui.getBtnDietas())){
                 DietasSocioGui dietaSocioGui=new DietasSocioGui(principal, true,s.getInteger("id_datos_pers") );
                 dietaSocioGui.setLocationRelativeTo(clienteGui);

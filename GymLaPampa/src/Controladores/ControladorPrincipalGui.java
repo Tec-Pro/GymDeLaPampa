@@ -32,7 +32,7 @@ import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
 import Interfaces.DietaGui;
 import Interfaces.GastosGui;
-import Interfaces.GuiCrearRutina;
+import Interfaces.GuiCrearRutinas;
 import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
@@ -81,8 +81,8 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorAlimentos controladorAlimentos;
 
     
-    private GuiCrearRutina guiCrearRutina;
-    private ControladorGuiCrearRutina controladorGuiCrearRutina;
+    private GuiCrearRutinas guiCrearRutina;
+    private ControladorGuiCrearRutinas controladorGuiCrearRutina;
     
         private DietaGui dietaGui;
     private ControladorAltaDieta controladorDietas;
@@ -147,8 +147,8 @@ public class ControladorPrincipalGui implements ActionListener {
         controladorAlimentos= new ControladorAlimentos(alimentosGui);
         principalGui.getDesktop().add(alimentosGui);
         
-        guiCrearRutina = new GuiCrearRutina();
-        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina, principalGui);
+        guiCrearRutina = new GuiCrearRutinas();
+        controladorGuiCrearRutina = new ControladorGuiCrearRutinas(guiCrearRutina, principalGui);
         principalGui.getDesktop().add(guiCrearRutina);
         
                 dietaGui = new DietaGui();
@@ -308,7 +308,6 @@ public class ControladorPrincipalGui implements ActionListener {
             alimentosGui.toFront();
                 }
         if(ae.getSource().equals(principalGui.getBtnCrearRutina())){
-            controladorGuiCrearRutina.ActualizarListaEjercicios();
             controladorGuiCrearRutina.ActualizarListaSocios();
             guiCrearRutina.setVisible(true);
             guiCrearRutina.toFront();

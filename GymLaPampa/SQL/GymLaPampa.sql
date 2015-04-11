@@ -450,9 +450,8 @@ DROP TABLE IF EXISTS `rutinas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rutinas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dia` varchar(20) DEFAULT NULL,
   `socio_id` int(10) DEFAULT NULL,
-  `objetivo` varchar(200) DEFAULT NULL,
+  `descrip` varchar(200) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -460,19 +459,35 @@ CREATE TABLE `rutinas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `rutinas_ejercicios`
+-- Table structure for table `dias_ejercicios`
 --
 
-DROP TABLE IF EXISTS `rutinas_ejercicios`;
+DROP TABLE IF EXISTS `dias_ejercicios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rutinas_ejercicios` (
+CREATE TABLE `dias_ejercicios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rutina_id` int(10) DEFAULT NULL,
+  `dia_id` int(10) DEFAULT NULL,
   `ejercicio_id` int(10) DEFAULT NULL,
   `series` int(10) DEFAULT NULL,
   `repeticiones` int(10) DEFAULT NULL,
   `tiempo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dia`
+--
+
+DROP TABLE IF EXISTS `dias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rutina_id` int(10) DEFAULT NULL,
+  `dia` VARCHAR(15) DEFAULT NULL,
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

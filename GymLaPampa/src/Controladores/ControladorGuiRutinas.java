@@ -8,7 +8,7 @@ package Controladores;
 import Interfaces.GuiRutinas;
 import Modelos.Ejercicio;
 import Modelos.Rutina;
-import Modelos.RutinasEjercicios;
+import Modelos.DiasEjercicios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -75,8 +75,8 @@ public class ControladorGuiRutinas implements ActionListener {
     private void CargarEjercicios(Object id) {
         guiRutinas.getTablaMusculacionDefault().setRowCount(0);
         guiRutinas.getTablaAerobicoDefault().setRowCount(0);
-        LazyList<RutinasEjercicios> listaEjercicios = RutinasEjercicios.where("rutina_id = ?", id);
-        for (RutinasEjercicios re : listaEjercicios) {
+        LazyList<DiasEjercicios> listaEjercicios = DiasEjercicios.where("rutina_id = ?", id);
+        for (DiasEjercicios re : listaEjercicios) {
             Ejercicio e = Ejercicio.first("id = ?", re.get("ejercicio_id"));
             if (e.getString("grupo").equals("AEROBICO")) {
                 Object[] row = new Object[3];

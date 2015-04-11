@@ -5,14 +5,12 @@
  */
 package Modelos;
 
-import java.util.LinkedList;
 import org.javalite.activejdbc.Model;
 
 /**
  *
  * @author A
  */
-public class Rutina extends Model{
+public class DiasEjercicios extends Model{
     
-   
 }
