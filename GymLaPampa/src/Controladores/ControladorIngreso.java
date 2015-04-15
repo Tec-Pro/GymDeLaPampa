@@ -8,6 +8,8 @@ package Controladores;
 import ABMs.ABMSocios;
 import BD.ConexionBD;
 import Interfaces.AsistenciasGui;
+import Interfaces.DietasSocioGui;
+import Interfaces.FelizCumpleGui;
 import Interfaces.IngresoGui;
 import Interfaces.RegistrarPagoGui;
 import Interfaces.asistenciaCombo;
@@ -351,6 +353,9 @@ public class ControladorIngreso implements ActionListener {
             ingresoGui.limpiarAsistencias();
             cargarAsistencia();
         }
+        if(e.getSource()==ingresoGui.getBtnDietas()){
+            DietasSocioGui dsg= new DietasSocioGui(ingresoGui, true, socio.getInteger("ID_DATOS_PERS"));
+        }
     }
 
     private void cargarAsistencia() {
@@ -499,6 +504,10 @@ public class ControladorIngreso implements ActionListener {
 
         ingresoGui.getDarDeAlta().setEnabled(!socio.getBoolean("ACTIVO"));
         ingresoGui.getGestAsis().setEnabled(socio.getBoolean("ACTIVO"));
+               ingresoGui.getBtnDietas().setEnabled(true);
+       ingresoGui.getBtnRutinas().setEnabled(true);
+        if( socio.getDate("fecha_nac").getDay()==Calendar.getInstance().getTime().getDay() && socio.getDate("fecha_nac").getMonth()==Calendar.getInstance().getTime().getMonth())
+            new FelizCumpleGui(ingresoGui, true, socio.getString("nombre"), socio.getString("apellido")).setVisible(true);
         timer.start();
 
     }

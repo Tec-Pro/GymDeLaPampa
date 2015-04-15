@@ -50,6 +50,11 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.btnCrearRutina.addActionListener(lis);
         this.btnDietas.addActionListener(lis);
         this.btnEstadisticasIngreso.addActionListener(lis);
+        this.btnEstadisticasSocios.addActionListener(lis);
+    }
+
+    public JMenuItem getBtnEstadisticasSocios() {
+        return btnEstadisticasSocios;
     }
 
     public JMenuItem getBtnEstadisticasIngreso() {
@@ -189,10 +194,11 @@ public class PrincipalGui extends javax.swing.JFrame {
         btnDietas = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         btnEstadisticasIngreso = new javax.swing.JMenuItem();
+        btnEstadisticasSocios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Gimnasio Costa Norte");
-        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icono.png")).getImage());
+        setTitle("Gimnasio Personalizado Pitbull's");
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/logo_chico.png")).getImage());
 
         panelBotones.setLayout(new java.awt.GridLayout(0, 1));
 
@@ -305,9 +311,14 @@ public class PrincipalGui extends javax.swing.JFrame {
         btnEstadisticasIngreso.setText("Estadisticas de ingresos");
         jMenu6.add(btnEstadisticasIngreso);
 
+        btnEstadisticasSocios.setText("Estadisticas sobre socios");
+        jMenu6.add(btnEstadisticasSocios);
+
         jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
+
+        getAccessibleContext().setAccessibleName("Gimnasio Personalizado Pitbull's");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,6 +344,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnCrearRutina;
     private javax.swing.JMenuItem btnDietas;
     private javax.swing.JMenuItem btnEstadisticasIngreso;
+    private javax.swing.JMenuItem btnEstadisticasSocios;
     private javax.swing.JButton btnGastos;
     private javax.swing.JMenuItem btnGestionEjercicios;
     private javax.swing.JMenuItem declaracion;

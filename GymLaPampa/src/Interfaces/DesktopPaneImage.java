@@ -12,7 +12,7 @@ import javax.swing.JDesktopPane;
 
 public class DesktopPaneImage extends JDesktopPane {
 
-    private Image IMG = new ImageIcon(getClass().getResource("/Imagenes/logo_grande.png")).getImage();
+    private Image IMG = new ImageIcon(getClass().getResource("/Imagenes/logo_grande.jpg")).getImage();
 
     public void paintChildren(Graphics g) {
         g.drawImage(IMG, 0, 0, getWidth(), getHeight(), this);

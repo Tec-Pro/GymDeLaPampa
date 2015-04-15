@@ -55,7 +55,7 @@ public class AcercaDe extends javax.swing.JDialog {
             }
         });
 
-        panelImage2.setBorder(new javax.swing.border.SoftBevelBorder(1));
+        panelImage2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         panelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/TecProBanner.jpg"))); // NOI18N
 
         javax.swing.GroupLayout panelImage2Layout = new javax.swing.GroupLayout(panelImage2);
@@ -72,9 +72,9 @@ public class AcercaDe extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel7.setText("Contáctanos!");
 
-        jLabel2.setText("Copyright ©2013-2014 Tec-Pro");
+        jLabel2.setText("Copyright ©2013-2015 Tec-Pro");
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
         jLabel1.setText("Tec Pro");

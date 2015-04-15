@@ -81,7 +81,7 @@ public class DietasSocioGui extends javax.swing.JDialog {
                    d.setVisible(true);
                    switch (d.getReturnStatus()){
                        case VerDietaEditarGui.RET_VER :
-                           VerDietaGui verDietaGui=new VerDietaGui(parent, true,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietas.getValueAt(tblDietas.getSelectedRow(), 2)),(String) tblDietas.getValueAt(tblDietas.getSelectedRow(), 0),(String) tblDietas.getValueAt(tblDietas.getSelectedRow(), 1));
+                           VerDietaGui verDietaGui=new VerDietaGui(parent, true,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietas.getValueAt(tblDietas.getSelectedRow(), 2)),(String) tblDietas.getValueAt(tblDietas.getSelectedRow(), 0),(String) tblDietas.getValueAt(tblDietas.getSelectedRow(), 1),-1,-1);
                             verDietaGui.setLocationRelativeTo(estaVentana);
                            verDietaGui.setVisible(true);
                             break;
@@ -107,7 +107,7 @@ public class DietasSocioGui extends javax.swing.JDialog {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(evt.getClickCount()==2){
-                VerDietaGui verDietaGui= new VerDietaGui(parent, true,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5)),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 0),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 1));
+                VerDietaGui verDietaGui= new VerDietaGui(parent, true,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5)),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 0),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 1),(Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5),idSocio);
                     verDietaGui.setLocationRelativeTo(estaVentana);
                     verDietaGui.setVisible(true);
             }

@@ -31,17 +31,19 @@ import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
 import Interfaces.DietaGui;
+import Interfaces.EstadisticaConocioGui;
+import Interfaces.EstadisticaGui;
 import Interfaces.GastosGui;
 import Interfaces.GuiCrearRutinas;
 import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
 import Modelos.User;
+import com.jtattoo.plaf.aero.AeroLookAndFeel;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import java.util.Properties;
-
 
 /**
  *
@@ -73,27 +75,26 @@ public class ControladorPrincipalGui implements ActionListener {
     private ControladorCompra controladorCompra;
     private CompraGui compraGui;
     private GastosGui gastosGui;
-     ControladorGasto controladorGastos;
+    ControladorGasto controladorGastos;
     private MovimientosDelDiaGui movimientosGui;
-    
+
     private GuiEjercicios guiEjercicios;
     private ControladorEjercicios controladorEjercicios;
 
     private AbmAlimentosGui alimentosGui;
     private ControladorAlimentos controladorAlimentos;
 
-    
     private GuiCrearRutinas guiCrearRutina;
     private ControladorGuiCrearRutinas controladorGuiCrearRutina;
-    
-        private DietaGui dietaGui;
+
+    private DietaGui dietaGui;
     private ControladorAltaDieta controladorDietas;
 
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
-                          Properties props = new Properties();
+            Properties props = new Properties();
             props.put("logoString", "Tec-Pro");
             com.jtattoo.plaf.aero.AeroLookAndFeel.setTheme("Gold");
             AeroLookAndFeel.setCurrentTheme(props);
@@ -102,6 +103,7 @@ public class ControladorPrincipalGui implements ActionListener {
             UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
         }
+        abrirBase();
         principalGui = new PrincipalGui();
         ingresoGui = new IngresoGui();
         controladorIngreso = new ControladorIngreso(ingresoGui);
@@ -123,17 +125,12 @@ public class ControladorPrincipalGui implements ActionListener {
         controladorUsuario = new ControladorUsuario(usuarioGui);
         impresionArancel = new ControladorJReport("precio.jasper");
         principalGui.getDesktop().add(usuarioGui);
-        principalGui.setCursor(Cursor.DEFAULT_CURSOR);
         articulosGUI = new ArticulosGUI();
         controladorArticulosGUI = new ControladorArticulosGUI(articulosGUI);
         principalGui.getDesktop().add(articulosGUI);
         cargarVentaGUI = new CargarVentaGUI();
         controladorCargarVentaGUI = new ControladorCargarVentaGUI(cargarVentaGUI, principalGui);
         principalGui.getDesktop().add(cargarVentaGUI);
-        cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
-
-        principalGui.getDesktop().add(cumpleGui);
-
         proveedorGui = new ProveedorGui();
         compraGui = new CompraGui();
         controladorCompra = new ControladorCompra(compraGui, principalGui);
@@ -143,23 +140,27 @@ public class ControladorPrincipalGui implements ActionListener {
         gastosGui = new GastosGui();
         principalGui.getDesktop().add(gastosGui);
         controladorGastos = new ControladorGasto(gastosGui);
-        movimientosGui= new MovimientosDelDiaGui();
+        movimientosGui = new MovimientosDelDiaGui();
         principalGui.getDesktop().add(movimientosGui);
-        
+
         guiEjercicios = new GuiEjercicios();
         controladorEjercicios = new ControladorEjercicios(guiEjercicios);
         principalGui.getDesktop().add(guiEjercicios);
         alimentosGui = new AbmAlimentosGui();
-        controladorAlimentos= new ControladorAlimentos(alimentosGui);
+        controladorAlimentos = new ControladorAlimentos(alimentosGui);
         principalGui.getDesktop().add(alimentosGui);
-        
+
         guiCrearRutina = new GuiCrearRutinas();
         controladorGuiCrearRutina = new ControladorGuiCrearRutinas(guiCrearRutina, principalGui);
         principalGui.getDesktop().add(guiCrearRutina);
-        
-                dietaGui = new DietaGui();
+
+        dietaGui = new DietaGui();
         controladorDietas = new ControladorAltaDieta(dietaGui);
         principalGui.getDesktop().add(dietaGui);
+                cumpleGui = new CumpleaniosGui(controladorClientes.getAltaClienteGui(), controladorClientes.getControladorAbmCliente());
+
+        principalGui.getDesktop().add(cumpleGui);
+        principalGui.setCursor(Cursor.DEFAULT_CURSOR);
     }
 
     @Override
@@ -294,42 +295,53 @@ public class ControladorPrincipalGui implements ActionListener {
             compraGui.setVisible(true);
             compraGui.toFront();
         }
-                if (ae.getSource() == principalGui.getBtnGastos()) {
+        if (ae.getSource() == principalGui.getBtnGastos()) {
             gastosGui.setVisible(true);
             gastosGui.toFront();
         }
-                 if (ae.getSource() == principalGui.getBtnCaja()) {
+        if (ae.getSource() == principalGui.getBtnCaja()) {
             movimientosGui.setVisible(true);
             movimientosGui.toFront();
-        }  
-        if(ae.getSource().equals(principalGui.getBtnGestionEjercicios())){
+        }
+        if (ae.getSource().equals(principalGui.getBtnGestionEjercicios())) {
             controladorEjercicios.ActualizarLista();
             guiEjercicios.setVisible(true);
             guiEjercicios.toFront();
             guiEjercicios.reClick();
         }
-                if(ae.getSource().equals(principalGui.getBtnAlimentos())){
+        if (ae.getSource().equals(principalGui.getBtnAlimentos())) {
             controladorAlimentos.busqueda();
             alimentosGui.setVisible(true);
             alimentosGui.toFront();
-                }
-        if(ae.getSource().equals(principalGui.getBtnCrearRutina())){
+        }
+        if (ae.getSource().equals(principalGui.getBtnCrearRutina())) {
             controladorGuiCrearRutina.ActualizarListaSocios();
             guiCrearRutina.setVisible(true);
             guiCrearRutina.toFront();
         }
-                        if(ae.getSource().equals(principalGui.getBtnDietas())){
+        if (ae.getSource().equals(principalGui.getBtnDietas())) {
             controladorDietas.busquedaDietas();
             controladorDietas.busqueda();
             dietaGui.setVisible(true);
             dietaGui.toFront();
-                }
+        }
 
-				if(ae.getSource().equals(principalGui.getBtnEstadisticasIngreso())){
-                	EstadisticaGui es=new EstadisticaGui(principalGui, true);
-                    es.setLocationRelativeTo(principalGui);
-                    es.setVisible(true);
-                }
+        if (ae.getSource().equals(principalGui.getBtnEstadisticasIngreso())) {
+            EstadisticaGui es = new EstadisticaGui(principalGui, true);
+            es.setLocationRelativeTo(principalGui);
+            es.setVisible(true);
+        }
+        if (ae.getSource().equals(principalGui.getBtnEstadisticasSocios())) {
+            EstadisticaConocioGui es = new EstadisticaConocioGui(principalGui, true);
+            es.setLocationRelativeTo(principalGui);
+            es.setVisible(true);
+        }
+    }
+    
+            public void abrirBase() {
+        if (!Base.hasConnection()) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/gym", "root", "root");
+        }
     }
 
     public static void main(String[] args) throws InterruptedException, Exception {

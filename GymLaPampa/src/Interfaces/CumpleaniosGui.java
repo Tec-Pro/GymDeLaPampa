@@ -72,15 +72,14 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
              Iterator<Socio> it= clientes.iterator();
                 while(it.hasNext()){
                     Socio cli= it.next();
-                    String cols[] = new String[8];
+                    String cols[] = new String[7];
                     cols[0] = cli.getString("nombre");
                     cols[1] = cli.getString("apellido");
                     cols[2] = dateToMySQLDate(cli.getDate("fecha_nac"), true);
                     cols[3] = cli.getString("tel");
-                    //cols[4] = cli.getString("celular");
-                    //cols[5] = cli.getString("email");
-                    //cols[6] = cli.getString("facebook");
-                    cols[7] = cli.getString("id");
+                //    cols[4] = cli.getString("email");
+                    cols[5] = cli.getString("facebook");
+                    cols[6] = cli.getString("id");
                     cumpleHoyDefault.addRow(cols);
                     
                 }
@@ -88,20 +87,19 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
                 date.setDate(date.getDate()+7);
                 clientes=null;
                  Base.openTransaction();
-                 clientes= Socio.findBySQL("select * from socios where DATE_FORMAT(fecha_nac,'%m %d') <> DATE_FORMAT( ?,'%m %d') AND DATE_FORMAT(fecha_nac, '%m%d') <> DATE_FORMAT(?,'%m%d')", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(Calendar.getInstance().getTime(),false));
+                 clientes= Socio.findBySQL("select * from socios where DATE_FORMAT(fecha_nac,'%m %d') >= DATE_FORMAT( ?,'%m %d') AND DATE_FORMAT(fecha_nac, '%m%d') < DATE_FORMAT(?,'%m%d')", dateToMySQLDate(Calendar.getInstance().getTime(),false),dateToMySQLDate(date,false));
                 Base.commitTransaction();
                                 it= clientes.iterator();
                 while(it.hasNext()){
                     Socio cli= it.next();
-                    String cols[] = new String[8];
+                    String cols[] = new String[7];
                     cols[0] = cli.getString("nombre");
                     cols[1] = cli.getString("apellido");
                     cols[2] = dateToMySQLDate(cli.getDate("fecha_nac"), true);
                     cols[3] = cli.getString("tel");
-                    //cols[4] = cli.getString("celular");
-                    //cols[5] = cli.getString("email");
-                    //cols[6] = cli.getString("facebook");
-                    cols[7] = cli.getString("id");
+                  //  cols[4] = cli.getString("email");
+                    cols[5] = cli.getString("facebook");
+                    cols[6] = cli.getString("id");
                      cumpleSemanaDefault.addRow(cols);
                     
                 } 
@@ -125,7 +123,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
     private void tablaHoy(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) {
              Base.openTransaction();
-            Socio s= Socio.findById(cumpleHoy.getValueAt(cumpleHoy.getSelectedRow(), 7));
+            Socio s= Socio.findById(cumpleHoy.getValueAt(cumpleHoy.getSelectedRow(), 6));
                  Base.commitTransaction();
             
                  clienteGui.setTitle(s.getString("APELLIDO") + " " + s.getString("NOMBRE"));
@@ -170,11 +168,10 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
         private void tablaSemana(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) {
              Base.openTransaction();
-            Socio s= Socio.findById(cumpleSemana.getValueAt(cumpleSemana.getSelectedRow(), 7));
+            Socio s= Socio.findById(cumpleSemana.getValueAt(cumpleSemana.getSelectedRow(), 6));
                    Base.commitTransaction();
-
                    
-                                  clienteGui.setTitle(s.getString("APELLIDO") + " " + s.getString("NOMBRE"));
+                   clienteGui.setTitle(s.getString("APELLIDO") + " " + s.getString("NOMBRE"));
             clienteGui.setVisible(true);
             clienteGui.toFront();
             controladorAbmCliente.setSocio(s);
@@ -260,14 +257,14 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Fecha nacimiento", "Telefono", "Celular", "Email", "Facebook", "Id interno"
+                "Nombre", "Apellido", "Fecha nacimiento", "Telefono", "Email", "Facebook", "Id interno"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -301,14 +298,14 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Fecha nacimiento", "Telefono", "Celular", "Email", "Facebook", "Id interno"
+                "Nombre", "Apellido", "Fecha nacimiento", "Telefono", "Email", "Facebook", "Id interno"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

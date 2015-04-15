@@ -6,6 +6,7 @@ package Interfaces;
 
 import ABMs.ABMSocios;
 import Controladores.CobroACuentaGui;
+import Controladores.ControladorJReport;
 import Modelos.Arancel;
 import Modelos.Asistencia;
 import Modelos.Categoria;
@@ -19,13 +20,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 
@@ -37,6 +42,7 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
 
     Socio socio;
     DefaultTableModel tablaDefault;
+    ControladorJReport reporte;
 
     /**
      * Creates new form RegistrarPagoGui
@@ -77,6 +83,15 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
         if (asistencias.size() > 0) {
             Asistencia primAsistencia = asistencias.get(0);//Es la primer fecha después del vencimiento
             primAsis.setText(dateToMySQLDate(primAsistencia.getDate("fecha"), true));
+        }
+        try {
+            reporte = new ControladorJReport("pagoMembresia.jasper");
+        } catch (JRException ex) {
+            Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -713,8 +728,10 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 int retCalVuelto = calVueltoGui.getReturnStatus();
                 if (retCalVuelto == CalcularVueltoGui.RET_OK) {
                     Base.openTransaction();
-                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO", "descripcion","MEMBRESIA PAGADA EN EFECTIVO");
+                    Pago pago=Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO", "descripcion","MEMBRESIA PAGADA EN EFECTIVO");
+                    Base.commitTransaction();
 
+           Base.openTransaction();
                     socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
                     socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
 
@@ -725,6 +742,15 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "Socio dado de alta correctamente!");
                         this.dispose();
                     }
+                               try {
+                reporte.mostrarTicketMembresia(pago.getInteger("id"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 }
                 break;
             case FormaDePagoGui.RET_CUENTA:
@@ -734,7 +760,10 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                 retCalVuelto = cobroAcuentaGui.getReturnStatus();
                 if (retCalVuelto == CobroACuentaGui.RET_OK) {
                     Base.openTransaction();
-                    Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO", "CUENTA", "DESCRIPCION", "MEMBRESIA AGREGADA A LA CUENTA");
+                    Pago pago=Pago.createIt("ID_DATOS_PERS", socio.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(fecha.getDate(), false), "MONTO", totalB.setScale(2, RoundingMode.CEILING),"MODO", "CUENTA", "DESCRIPCION", "MEMBRESIA AGREGADA A LA CUENTA");
+     Base.commitTransaction();
+
+           Base.openTransaction();
 
                     socio.set("FECHA_ULT_PAGO", dateToMySQLDate(fecha.getDate(), false));
                     socio.set("FECHA_PROX_PAGO", dateToMySQLDate(fechaVence.getDate(), false));
@@ -747,6 +776,15 @@ public class RegistrarPagoGui extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "Socio dado de alta correctamente!");
                         this.dispose();
                     }
+                               try {
+                reporte.mostrarTicketMembresia(pago.getInteger("id"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(RegistrarPagoGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 }
                     break;
         }

@@ -25,7 +25,7 @@ public class ControladorJReport {
 
     private JasperReport reporte;
     private final String logo = "/Reporte/logo.png";
-
+private final String logoTrans = "/Reporte/imagenTicket.png";
     public ControladorJReport(String jasper) throws JRException, ClassNotFoundException, SQLException {
         reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reporte/" + jasper));//cargo el reporte
     }
@@ -56,6 +56,41 @@ public class ControladorJReport {
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         JasperViewer.viewReport(jasperPrint, false);
         connection.close();
+    }
+    
+        //listado de clientes productos y proveedores.
+    public void mostrarTicketMembresia(Integer idPagoMemb) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        
+        parametros.put("logo", this.getClass().getResourceAsStream(logoTrans));
+         parametros.put("id_pago", idPagoMemb);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        JasperViewer.viewReport(jasperPrint, false);
+        connection.close();
+    }
+    
+            //listado de clientes productos y proveedores.
+    public void mostrarDieta(Integer idSocio,Integer idDieta) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        
+        parametros.put("logo", this.getClass().getResource(logoTrans).getPath().toString());
+         parametros.put("id_socio", idSocio);
+                  parametros.put("id_dieta", idDieta);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+          JasperViewer jasperViewer = new JasperViewer(jasperPrint);
+            jasperViewer.setTitle("Impresión de dieta");
+            jasperViewer.toFront();
+            jasperViewer.setVisible(true);
+
+       
+        
     }
 
 }

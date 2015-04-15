@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dieta" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c81a3a9-473a-4c00-b1d4-48a5f9aa941d">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fill="Solid" scaleImage="FillFrame" fontName="SansSerif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+	<style name="SubTitle" forecolor="#666666" fontName="SansSerif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="SansSerif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="SansSerif" fontSize="12"/>
+	<parameter name="id_socio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_dieta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     alimentos.`nombre` AS alimentos_nombre,
+     alimentos.`pc` AS alimentos_pc,
+     alimentos.`agua` AS alimentos_agua,
+     alimentos.`prot` AS alimentos_prot,
+     alimentos.`hc` AS alimentos_hc,
+     alimentos.`grasa` AS alimentos_grasa,
+     alimentos.`satur` AS alimentos_satur,
+     alimentos.`mono` AS alimentos_mono,
+     alimentos.`poli` AS alimentos_poli,
+     alimentos.`colesterol` AS alimentos_colesterol,
+     alimentos.`fibra` AS alimentos_fibra,
+     alimentos.`sodio` AS alimentos_sodio,
+     alimentos.`potasio` AS alimentos_potasio,
+     alimentos.`magnesio` AS alimentos_magnesio,
+     alimentos.`calcio` AS alimentos_calcio,
+     alimentos.`fosforo` AS alimentos_fosforo,
+     alimentos.`hierro` AS alimentos_hierro,
+     alimentos.`indiceglucemico` AS alimentos_indiceglucemico,
+     alimentos_dietas.`porcion` AS alimentos_dietas_porcion,
+     alimentos_dietas.`hora` AS alimentos_dietas_hora,
+     alimentos_dietas.`dia` AS alimentos_dietas_dia,
+alimentos_dietas.`numero_dia` AS alimentos_dietas_numero_dia,
+     socios_dietas.`desde` AS socios_dietas_desde,
+     socios_dietas.`hasta` AS socios_dietas_hasta,
+     socios.`NOMBRE` AS socios_NOMBRE,
+     socios.`APELLIDO` AS socios_APELLIDO,
+     socios.`SEXO` AS socios_SEXO,
+     dietas.`nombre` AS dietas_nombre,
+     dietas.`descripcion` AS dietas_descripcion,
+     socios.`FECHA_ING` AS socios_FECHA_ING,
+     socios.`ID_DATOS_PERS` AS socios_ID_DATOS_PERS,
+     socios_dietas.`id` AS socios_dietas_id,
+     alimentos_dietas.`dieta_id` AS alimentos_dietas_dieta_id,
+     dietas.`id` AS dietas_id
+FROM
+     `alimentos` alimentos INNER JOIN `alimentos_dietas` alimentos_dietas ON alimentos.`id` = alimentos_dietas.`alimento_id`
+     INNER JOIN `dietas` dietas ON alimentos_dietas.`dieta_id` = dietas.`id`
+     INNER JOIN `socios_dietas` socios_dietas ON dietas.`id` = socios_dietas.`dieta_id`
+     INNER JOIN `socios` socios ON socios_dietas.`socio_id` = socios.`ID_DATOS_PERS`
+WHERE
+    $P{id_socio} = socios.`ID_DATOS_PERS`
+     and $P{id_dieta} = dietas.`id`]]>
+	</queryString>
+	<field name="alimentos_nombre" class="java.lang.String"/>
+	<field name="alimentos_pc" class="java.lang.Float"/>
+	<field name="alimentos_agua" class="java.lang.Float"/>
+	<field name="alimentos_prot" class="java.lang.Float"/>
+	<field name="alimentos_hc" class="java.lang.Float"/>
+	<field name="alimentos_grasa" class="java.lang.Float"/>
+	<field name="alimentos_satur" class="java.lang.Float"/>
+	<field name="alimentos_mono" class="java.lang.Float"/>
+	<field name="alimentos_poli" class="java.lang.Float"/>
+	<field name="alimentos_colesterol" class="java.lang.Float"/>
+	<field name="alimentos_fibra" class="java.lang.Float"/>
+	<field name="alimentos_sodio" class="java.lang.Float"/>
+	<field name="alimentos_potasio" class="java.lang.Float"/>
+	<field name="alimentos_magnesio" class="java.lang.Float"/>
+	<field name="alimentos_calcio" class="java.lang.Float"/>
+	<field name="alimentos_fosforo" class="java.lang.Float"/>
+	<field name="alimentos_hierro" class="java.lang.Float"/>
+	<field name="alimentos_indiceglucemico" class="java.lang.Float"/>
+	<field name="alimentos_dietas_porcion" class="java.lang.Float"/>
+	<field name="alimentos_dietas_hora" class="java.lang.String"/>
+	<field name="alimentos_dietas_dia" class="java.lang.String"/>
+	<field name="alimentos_dietas_numero_dia" class="java.lang.Integer"/>
+	<field name="socios_dietas_desde" class="java.sql.Date"/>
+	<field name="socios_dietas_hasta" class="java.sql.Date"/>
+	<field name="socios_NOMBRE" class="java.lang.String"/>
+	<field name="socios_APELLIDO" class="java.lang.String"/>
+	<field name="socios_SEXO" class="java.lang.String"/>
+	<field name="dietas_nombre" class="java.lang.String"/>
+	<field name="dietas_descripcion" class="java.lang.String"/>
+	<field name="socios_FECHA_ING" class="java.sql.Date"/>
+	<field name="socios_ID_DATOS_PERS" class="java.lang.Integer"/>
+	<field name="socios_dietas_id" class="java.lang.Integer"/>
+	<field name="alimentos_dietas_dieta_id" class="java.lang.Integer"/>
+	<field name="dietas_id" class="java.lang.Integer"/>
+	<sortField name="alimentos_dietas_numero_dia"/>
+	<variable name="sumaAgua" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_agua}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaProt" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_prot}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaHC" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_hc}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaGrasa" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_grasa}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaKcal" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_prot}*$F{alimentos_dietas_porcion}*4+$F{alimentos_hc}*$F{alimentos_dietas_porcion}*4+$F{alimentos_grasa}*9*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaGrasaSat" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_satur}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaGrasaMono" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_mono}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaGrasaPoli" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_poli}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaSodio" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_sodio}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaPotasio" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_potasio}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaMagnesio" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_magnesio}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaCalcio" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_calcio}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaFosforo" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_fosforo}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaHierro" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_hierro}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaColesterol" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_colesterol}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="sumaFibra" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentos_fibra}*$F{alimentos_dietas_porcion}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Group1" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{alimentos_dietas_numero_dia}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField evaluationTime="Group" evaluationGroup="Group1" isBlankWhenNull="true">
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#CC0000" uuid="3999ef67-2b31-41f5-bb5d-28c0b106092d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{alimentos_dietas_dia}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="58477374-5f06-4de5-bb94-ef9ac22ace36"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="299">
+				<staticText>
+					<reportElement x="0" y="112" width="95" height="20" uuid="915711d1-e837-405d-a33c-9acfc5c3088d"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[carbohidratos(g)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="4" y="92" width="91" height="20" uuid="2f914509-bc20-4567-a10e-e6dc17d4050f"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Proteinas (g)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="367" y="92" width="84" height="20" uuid="58d7fec9-1927-48d6-a3ec-61237d2555e5"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaProt}*100/($V{sumaProt}+$V{sumaHC}+$V{sumaGrasa})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="6" y="21" width="61" height="20" uuid="bc6d888f-943d-4556-8c85-991e672553bd"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Kcal:]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="67" y="21" width="128" height="20" uuid="3c6687d0-960f-4135-a47f-517b0749b5f4"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaKcal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="95" y="112" width="100" height="20" uuid="888015da-8a6a-45ed-8a42-a53895b54483"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaHC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="275" y="132" width="36" height="20" uuid="c3f18e81-dfb1-4ce8-8f03-10a5b0b801c8"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kcal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="275" y="92" width="36" height="20" uuid="9654f2c2-2f17-41ae-a3ef-5449041be7d9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kcal]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="206" y="132" width="67" height="20" uuid="698890bf-5880-4a81-8819-a35cff226d5d"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasa}*9]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="367" y="132" width="84" height="20" uuid="abb00934-f283-41a9-8134-e594a794f0e5"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasa}*100/($V{sumaProt}+$V{sumaHC}+$V{sumaGrasa})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="467" y="52" width="84" height="20" uuid="4418337b-ecc8-4d88-8c8e-a9c125bbe66c"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Porcentaje (Kcal)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="95" y="52" width="100" height="20" uuid="b29b9e32-e626-44f5-9f69-18ee0c1752ef"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL (g)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="206" y="92" width="67" height="20" uuid="e9ef3bfe-3197-4a1d-a985-4d8239c5dc9a"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaProt}*4]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="467" y="132" width="84" height="20" uuid="1dcb0b79-8d4c-4efb-baf2-89a847195b6a"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasa}*9*100/$V{sumaKcal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="467" y="112" width="84" height="20" uuid="1f65f614-26f4-4770-9dba-8ee34d7f2df7"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaHC}*4*100/$V{sumaKcal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="275" y="72" width="36" height="20" uuid="e54bcee0-07c6-4fdf-855e-03f161e09d24"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[lts]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="208" y="112" width="67" height="20" uuid="bd92b866-6ab5-4125-8493-eae052927f9b"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaHC}*4]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="95" y="92" width="100" height="20" uuid="84aedcc7-d108-4558-953f-294c8296bf89"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaProt}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="367" y="112" width="84" height="20" uuid="d7b2b669-7ff3-45e2-abc2-626bb7e3ac39"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaHC}*100/($V{sumaProt}+$V{sumaHC}+$V{sumaGrasa})]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="467" y="92" width="84" height="20" uuid="f86f664e-36a5-49ca-b8f8-6b2b2e88a534"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaProt}*100*4/$V{sumaKcal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="206" y="72" width="67" height="20" uuid="1ccdbbbf-2c34-49bb-8ad7-fc8378e23bc1"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaAgua}/1000]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="4" y="132" width="91" height="20" uuid="c5278b2b-11f9-4aad-bba0-38166ccc3ccc"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[grasa (g)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="95" y="132" width="100" height="20" uuid="f8ef697e-1574-4abc-af36-1e0682c7a274"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasa}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="95" y="72" width="100" height="20" uuid="b070442a-ac68-4847-bb33-2d007d145fca"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaAgua}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="367" y="52" width="84" height="20" uuid="64e0a2dd-364c-4f8c-927f-a63c6bbff835"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Porcentaje (grs)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="6" y="72" width="89" height="20" uuid="985a65b6-2dfe-4d53-b4ab-234d8593499d"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Agua (g)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="275" y="112" width="36" height="20" uuid="779ead4e-dcfb-4686-bd73-7ebee3804ce9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kcal]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="6" y="168" width="545" height="121" uuid="2a9fc710-cdea-4087-986b-dc50fee6fc9b"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="14" y="181" width="92" height="20" uuid="3f5583bd-bb8c-4d03-ba53-68967de1a2d9"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grasa sat(g)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="201" width="92" height="20" uuid="6fe880bb-1ae2-4be0-b06e-440df37048f8"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grasa mono.(g)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="221" width="92" height="20" uuid="947c5f40-0b08-4f4c-8f65-604e29c4661a"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grasa poli(g)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="106" y="181" width="69" height="20" uuid="677f7964-266b-47f5-981d-6b96f32dcb52"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasaSat}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="106" y="201" width="69" height="20" uuid="484c011f-40aa-4218-9b2a-ebf53cb2a3c6"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasaMono}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="106" y="221" width="69" height="20" uuid="ddb46b9c-263c-407d-b2f8-e72e4620d472"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaGrasaPoli}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="223" y="181" width="67" height="20" uuid="f6398dd4-c856-43fe-a9cd-dc7957aaf5c3"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sodio (mg)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="206" y="201" width="84" height="20" uuid="51efe3bf-0faf-424c-be30-687014fe62a1"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Potasio (mg)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="199" y="221" width="91" height="20" uuid="6c0b5647-997a-4e79-af55-24cabd8cc17f"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Magnesio (mg)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="290" y="181" width="77" height="20" uuid="8e172802-f61f-4cbe-9d11-e3a65e3bacc1"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaSodio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="290" y="201" width="77" height="20" uuid="f89f5b5d-b046-41c4-bd31-2629f59ce486"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaPotasio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="290" y="221" width="77" height="20" uuid="bbc2b54c-7185-40e7-a1a7-9245cd2c17d4"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaMagnesio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="384" y="201" width="82" height="20" uuid="b2668ad4-ab12-4dcb-bc66-60993dec8d83"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fosforo (mg)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="399" y="221" width="67" height="20" uuid="4f4f96f6-f24e-45bb-8fea-99488e9981a5"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[hierro (mg)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="399" y="181" width="67" height="20" uuid="d8793cd1-6073-4f15-acca-94cb6fbaded2"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Calcio (mg)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="467" y="181" width="71" height="20" uuid="6dbdb80c-ea21-4223-b277-8b654588f2f4"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaCalcio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="467" y="201" width="71" height="20" uuid="28f141a6-71ed-4d26-bc62-fa13f02eb5c8"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaFosforo}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="467" y="221" width="71" height="20" uuid="fbaec6d9-0e02-4803-bce5-610c6690e84b"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaHierro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="85" y="256" width="90" height="20" uuid="07b9fb02-4aeb-4b8d-978c-54323b8b4e61"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Colesterol (mg)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="175" y="256" width="100" height="20" uuid="a499552e-027a-4737-bf92-2af18647f572"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaColesterol}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="290" y="256" width="77" height="20" uuid="45aebc9c-3ed7-48a4-8d65-2777a0c3352c"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fibra (g)]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="false">
+					<reportElement x="367" y="256" width="100" height="20" uuid="c8d50826-97ca-48eb-b908-3f05495ebcc9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaFibra}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="1" width="555" height="20" uuid="849c10f1-a07b-4961-9d1c-b2ce48716c4c"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[CONTENIDOS DE MACRONUTRIENTES Y MINERALES]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="802" uuid="c64e63e9-7757-47eb-81be-7cdcf1d38384"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="555" height="63" uuid="3a0d5086-ed2a-47ec-8dc6-2c055983a211"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="28" isItalic="true" isUnderline="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[GIMNASIO PERSONALIZADO PITBULL'S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="6" y="63" width="282" height="33" uuid="8ccace95-3b5e-4458-a425-08d2d4af7cf6"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Dieta personalizada]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="87" splitType="Stretch">
+			<textField>
+				<reportElement x="48" y="60" width="151" height="20" uuid="f7b0aa06-87ca-4d85-9a23-3de84092073c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{socios_dietas_desde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="20" width="449" height="20" uuid="82799c4f-eb51-44fc-b034-b2979f98ec84"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dietas_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="60" width="44" height="20" uuid="daa46c17-1b00-4974-9082-fb7438a3317a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="0" width="282" height="20" uuid="567d53eb-e162-4aa2-94f3-a8ad7e1b910d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{socios_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="218" y="0" width="55" height="20" uuid="76562770-9178-4acd-992a-40ec697bbd07"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="20" width="104" height="20" uuid="e966e8c5-f7b8-43ed-8fc6-8f9d32d42c54"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de la dieta]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="40" width="484" height="20" uuid="570dd7a6-186b-4e89-86ba-ab908edd294a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dietas_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="0" width="46" height="20" uuid="cc63831c-cf43-48f8-be28-6efcbbceddb1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="60" width="151" height="20" uuid="75c468e2-9285-4449-89ac-914193582b16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{socios_dietas_hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="208" y="60" width="44" height="20" uuid="d8897c78-efe3-442e-8866-9a05f1d96ab5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="0" width="170" height="20" uuid="14ac72ef-9217-448f-a1b7-5ddafc9a35ea"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{socios_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="40" width="69" height="20" uuid="9d5c54d3-2e32-47be-a329-4f2e8ad59b0e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripcion:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="86" width="555" height="1" uuid="b1f19e82-0ea5-486a-9a54-5d4d510d0f3d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="b82d378a-a0fe-4fbc-b501-cb5df821f8ac"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="114" y="15" width="175" height="20" uuid="d8cb3665-0b3c-4884-a3a7-323e91fcb855"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALIMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="15" width="67" height="20" uuid="955f6741-f21b-4741-a35d-009895e8ca2a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROTEINA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="15" width="43" height="20" uuid="a65ca433-fb75-4925-b35c-6001e9dd1e0d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGUA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="15" width="58" height="20" uuid="84681a5a-9873-4a74-be81-d08d7b12ce25"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PORCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="15" width="55" height="20" uuid="30531091-abbf-43bc-a5df-2ebf27826ab2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="15" width="52" height="20" uuid="d248e034-7afd-45c2-aacb-778c54f1239c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="15" width="60" height="20" uuid="06669cb7-2f5a-4242-b018-9282cd01bb8f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRASA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="15" width="40" height="20" uuid="c6c9cc55-d438-467e-a270-a50f158f6989"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kcal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="6a63fbc5-ffaa-426d-9c16-4c5127b79d02"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="55" y="0" width="57" height="15" uuid="98394542-4b63-4613-b554-3ffce5f5b93e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_dietas_porcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="55" height="15" uuid="2b509876-67ad-46a3-9deb-c7a78ff5172c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_dietas_hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="1" width="175" height="15" uuid="708e3d29-5214-4bc2-84cb-56b5995c8b12"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement x="289" y="1" width="57" height="15" uuid="4b1adf82-e3c3-4e5f-a2c3-2066fda9fcfa"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_agua}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="346" y="1" width="53" height="15" uuid="39a82108-d6cd-4267-88bb-e308d5db27a8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_prot}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement x="403" y="0" width="50" height="15" uuid="7fa3e14c-6586-47fb-97f2-66a4bf34e56e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_hc}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement x="453" y="1" width="41" height="15" uuid="e23a0def-5fa3-4b85-8335-00c2d87668c0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alimentos_grasa}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement x="494" y="0" width="61" height="15" uuid="54a456ac-f48c-43fc-8904-4c56e25bfb1b"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{alimentos_prot}*$F{alimentos_dietas_porcion}*4)+($F{alimentos_hc}*$F{alimentos_dietas_porcion}*4)+($F{alimentos_grasa}*$F{alimentos_dietas_porcion}*9)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="c6942947-a161-411c-9b88-6b4670373b22"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="e848efde-7725-424f-97d3-23452b31acf2"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="50e0add1-b207-4ba4-9775-4e66a1f2ed93"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="111b721b-8c72-43dc-a8aa-8312eeefd2da"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -66,7 +66,7 @@ public class LoginGUI extends javax.swing.JFrame {
         setTitle("Inicio de sesión");
         setResizable(false);
 
-        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo_grande.png"))); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo_grande.jpg"))); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);

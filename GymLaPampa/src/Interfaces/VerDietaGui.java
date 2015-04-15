@@ -5,12 +5,17 @@
  */
 package Interfaces;
 
+import Controladores.ControladorJReport;
 import Modelos.Alimento;
 import Modelos.AlimentosDietas;
+import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.LazyList;
 
 /**
@@ -37,12 +42,17 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     DefaultTableModel tblDefaultAlimentoDietaSabado;
     DefaultTableModel tblDefaultAlimentoDietaDomingo;
     LazyList<AlimentosDietas> lista ;
+    Integer idDieta=-1;
+    Integer idSocio=-1;
+    ControladorJReport reporte;
     /**
      * Creates new form VerRutinasGui
      */
-    public VerDietaGui(java.awt.Frame parent, boolean modal,LazyList<AlimentosDietas> lista,String nombre, String descripcion ) {
+    public VerDietaGui(java.awt.Frame parent, boolean modal,LazyList<AlimentosDietas> lista,String nombre, String descripcion,Integer idDieta,Integer idSocio) {
         super(parent, modal);
         initComponents();
+        this.idDieta= idDieta;
+        this.idSocio= idSocio;
         tblDefaultAlimentoDietaLunes = (DefaultTableModel) tblAlimentosDietaLunes.getModel();
         tblDefaultAlimentoDietaMartes = (DefaultTableModel) tblAlimentosDietaMartes.getModel();
         tblDefaultAlimentoDietaMiercoles = (DefaultTableModel) tblAlimentosDietaMiercoles.getModel();
@@ -64,6 +74,19 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         txtNombre.setText(nombre);
         txtDescripcion.setText(descripcion);
         pnlTab.addChangeListener(this);
+            try {
+                reporte= new ControladorJReport("dieta.jasper");
+            } catch (JRException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(idSocio==-1){
+                btnImprimir.setEnabled(false);
+            }
+        
     }
 
         private void cargarEnTablaDietaAliemtos(LazyList<AlimentosDietas> lista) {
@@ -381,9 +404,10 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         tblAlimentosDietaSabado = new javax.swing.JTable();
         jScrollPane11 = new javax.swing.JScrollPane();
         tblAlimentosDietaDomingo = new javax.swing.JTable();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("Nombre");
 
@@ -704,27 +728,33 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
 
         pnlTab.addTab("Domingo", jScrollPane11);
 
+        btnImprimir.setText("IMPRIMIR DIETA");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)))
-                .addGap(0, 0, 0))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnImprimir)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -736,10 +766,11 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(pnlTab, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnImprimir)
                 .addGap(0, 0, 0))
         );
 
@@ -750,9 +781,22 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+            try {
+                reporte.mostrarDieta(idSocio, idDieta);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

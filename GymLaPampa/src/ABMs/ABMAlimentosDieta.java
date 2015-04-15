@@ -29,7 +29,34 @@ public class ABMAlimentosDieta {
         if(dieta!=null){
             idDieta = dieta.getId();
             for(Object[] t: listaAlimentos){
-                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",t[1],"porcion",t[2],"dia",t[3]);
+                int numDia=0;
+                switch ((String)t[3]){
+                    case "LUNES":
+                        numDia=1;
+                        break;
+                    case "MARTES":
+                        numDia=2;
+                        break;
+                    case "MIERCOLES":
+                        numDia=3;
+                        break;  
+                    case "JUEVES":
+                        numDia=4;
+                        break;
+                    case "VIERNES":
+                        numDia=5;
+                        break;
+                    case "SABADO":
+                        numDia=6;
+                        break;
+                    case "DOMINGO":
+                        numDia=7;
+                        break;
+                }
+                String hora=(String) t[1];
+                if(hora.length()<5)
+                    hora="0"+hora;
+                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",hora,"porcion",t[2],"dia",t[3],"numero_dia",numDia);
         }
             result= true;
         }
@@ -51,7 +78,35 @@ public class ABMAlimentosDieta {
             dieta.set("nombre",nombre);
             dieta.set("descripcion",descripcion);
             for(Object[] t: listaAlimentos){
-                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",t[1],"porcion",t[2],"dia",t[3]);
+                                int numDia=0;
+                switch ((String)t[3]){
+                    case "LUNES":
+                        numDia=1;
+                        break;
+                    case "MARTES":
+                        numDia=2;
+                        break;
+                    case "MIERCOLES":
+                        numDia=3;
+                        break;  
+                    case "JUEVES":
+                        numDia=4;
+                        break;
+                    case "VIERNES":
+                        numDia=5;
+                        break;
+                    case "SABADO":
+                        numDia=6;
+                        break;
+                    case "DOMINGO":
+                        numDia=7;
+                        break;
+                }
+                                String hora=(String) t[1];
+       
+                if(hora.length()<5)
+                    hora="0"+hora;
+                AlimentosDietas alimentosDieta= AlimentosDietas.createIt("alimento_id",t[0], "dieta_id",idDieta,"hora",hora,"porcion",t[2],"dia",t[3],"numero_dia",numDia);
         }
             result=dieta.saveIt();
         }

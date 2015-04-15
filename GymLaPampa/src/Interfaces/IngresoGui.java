@@ -22,6 +22,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -58,6 +59,10 @@ public class IngresoGui extends javax.swing.JFrame {
         fechaUltPago.setText("");
         fechaVence.setText("");
         cantDias.setText("");
+        btnDietas.setEnabled(false);
+        btnRutinas.setEnabled(false);
+        gestAsis.setEnabled(false);
+        darDeAlta.setEnabled(false);
         Component[] array=panelAsistencia.getComponents();
         for (Component array1 : array) {
             ((JTextArea)((JViewport)((JScrollPane) array1).getComponent(0)).getView()).setText("") ;
@@ -86,6 +91,14 @@ public class IngresoGui extends javax.swing.JFrame {
          }
             //clip.stop();
 
+    }
+
+    public JButton getBtnDietas() {
+        return btnDietas;
+    }
+
+    public JButton getBtnRutinas() {
+        return btnRutinas;
     }
  
  
@@ -118,6 +131,8 @@ public class IngresoGui extends javax.swing.JFrame {
         busquedaManual.addActionListener(lis);
         darDeAlta.addActionListener(lis);
         gestAsis.addActionListener(lis);
+        btnDietas.addActionListener(lis);
+        btnRutinas.addActionListener(lis);
     }
 
     public JMenuItem getGestAsis() {
@@ -211,6 +226,8 @@ public class IngresoGui extends javax.swing.JFrame {
         jTextArea29 = new javax.swing.JTextArea();
         jScrollPane32 = new javax.swing.JScrollPane();
         jTextArea30 = new javax.swing.JTextArea();
+        btnDietas = new javax.swing.JButton();
+        btnRutinas = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         busquedaManual = new javax.swing.JMenuItem();
@@ -224,10 +241,9 @@ public class IngresoGui extends javax.swing.JFrame {
 
         setTitle("Ingreso de socios");
         setBackground(new java.awt.Color(236, 233, 216));
-        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/icono.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/logo_chico.png")).getImage());
 
-        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del socio", 2, 0, new java.awt.Font("Century", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del socio", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century", 1, 14))); // NOI18N
 
         nombre.setFont(new java.awt.Font("Tahoma", 1, 40)); // NOI18N
         nombre.setForeground(new java.awt.Color(12, 134, 52));
@@ -310,8 +326,7 @@ public class IngresoGui extends javax.swing.JFrame {
                             .addComponent(jLabel38)))))
         );
 
-        jPanel2.setBackground(new java.awt.Color(236, 233, 216));
-
+        jLabel2.setBackground(panelImage1.getBackground());
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -359,7 +374,7 @@ public class IngresoGui extends javax.swing.JFrame {
         );
 
         textoHuella.setEditable(false);
-        textoHuella.setBackground(new java.awt.Color(236, 233, 216));
+        textoHuella.setBackground(panelImage1.getBackground());
         textoHuella.setColumns(20);
         textoHuella.setFont(new java.awt.Font("Arial Black", 1, 16)); // NOI18N
         textoHuella.setForeground(new java.awt.Color(0, 153, 0));
@@ -379,13 +394,13 @@ public class IngresoGui extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        panelAsistencia.setBackground(new java.awt.Color(236, 233, 216));
-        panelAsistencia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días de asistencia", 1, 0, new java.awt.Font("Agency FB", 0, 14))); // NOI18N
+        panelAsistencia.setBackground(panelImage1.getBackground());
+        panelAsistencia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Días de asistencia", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 14))); // NOI18N
         panelAsistencia.setAutoscrolls(true);
         panelAsistencia.setLayout(new java.awt.GridLayout(3, 10));
 
         jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea1.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea1.setColumns(1);
         jTextArea1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea1.setLineWrap(true);
@@ -398,7 +413,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane3);
 
         jTextArea2.setEditable(false);
-        jTextArea2.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea2.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea2.setColumns(1);
         jTextArea2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea2.setLineWrap(true);
@@ -413,7 +428,7 @@ public class IngresoGui extends javax.swing.JFrame {
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTextArea3.setEditable(false);
-        jTextArea3.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea3.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea3.setColumns(1);
         jTextArea3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea3.setLineWrap(true);
@@ -428,7 +443,7 @@ public class IngresoGui extends javax.swing.JFrame {
         jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTextArea4.setEditable(false);
-        jTextArea4.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea4.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea4.setColumns(1);
         jTextArea4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea4.setLineWrap(true);
@@ -443,7 +458,7 @@ public class IngresoGui extends javax.swing.JFrame {
         jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTextArea5.setEditable(false);
-        jTextArea5.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea5.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea5.setColumns(1);
         jTextArea5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea5.setLineWrap(true);
@@ -458,7 +473,7 @@ public class IngresoGui extends javax.swing.JFrame {
         jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTextArea6.setEditable(false);
-        jTextArea6.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea6.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea6.setColumns(1);
         jTextArea6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea6.setLineWrap(true);
@@ -473,7 +488,7 @@ public class IngresoGui extends javax.swing.JFrame {
         jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jTextArea7.setEditable(false);
-        jTextArea7.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea7.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea7.setColumns(1);
         jTextArea7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea7.setLineWrap(true);
@@ -486,7 +501,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane9);
 
         jTextArea8.setEditable(false);
-        jTextArea8.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea8.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea8.setColumns(1);
         jTextArea8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea8.setLineWrap(true);
@@ -499,7 +514,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane10);
 
         jTextArea9.setEditable(false);
-        jTextArea9.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea9.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea9.setColumns(1);
         jTextArea9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea9.setLineWrap(true);
@@ -512,7 +527,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane11);
 
         jTextArea10.setEditable(false);
-        jTextArea10.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea10.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea10.setColumns(1);
         jTextArea10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea10.setLineWrap(true);
@@ -525,7 +540,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane12);
 
         jTextArea11.setEditable(false);
-        jTextArea11.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea11.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea11.setColumns(1);
         jTextArea11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea11.setLineWrap(true);
@@ -538,7 +553,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane13);
 
         jTextArea12.setEditable(false);
-        jTextArea12.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea12.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea12.setColumns(1);
         jTextArea12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea12.setLineWrap(true);
@@ -551,7 +566,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane14);
 
         jTextArea13.setEditable(false);
-        jTextArea13.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea13.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea13.setColumns(1);
         jTextArea13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea13.setLineWrap(true);
@@ -564,7 +579,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane15);
 
         jTextArea14.setEditable(false);
-        jTextArea14.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea14.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea14.setColumns(1);
         jTextArea14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea14.setLineWrap(true);
@@ -577,7 +592,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane16);
 
         jTextArea15.setEditable(false);
-        jTextArea15.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea15.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea15.setColumns(1);
         jTextArea15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea15.setLineWrap(true);
@@ -590,7 +605,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane17);
 
         jTextArea16.setEditable(false);
-        jTextArea16.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea16.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea16.setColumns(1);
         jTextArea16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea16.setLineWrap(true);
@@ -603,7 +618,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane18);
 
         jTextArea17.setEditable(false);
-        jTextArea17.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea17.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea17.setColumns(1);
         jTextArea17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea17.setLineWrap(true);
@@ -616,7 +631,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane19);
 
         jTextArea18.setEditable(false);
-        jTextArea18.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea18.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea18.setColumns(1);
         jTextArea18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea18.setLineWrap(true);
@@ -629,7 +644,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane20);
 
         jTextArea19.setEditable(false);
-        jTextArea19.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea19.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea19.setColumns(1);
         jTextArea19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea19.setLineWrap(true);
@@ -642,7 +657,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane21);
 
         jTextArea20.setEditable(false);
-        jTextArea20.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea20.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea20.setColumns(1);
         jTextArea20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea20.setLineWrap(true);
@@ -655,7 +670,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane22);
 
         jTextArea21.setEditable(false);
-        jTextArea21.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea21.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea21.setColumns(1);
         jTextArea21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea21.setLineWrap(true);
@@ -668,7 +683,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane23);
 
         jTextArea22.setEditable(false);
-        jTextArea22.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea22.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea22.setColumns(1);
         jTextArea22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea22.setLineWrap(true);
@@ -681,7 +696,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane24);
 
         jTextArea23.setEditable(false);
-        jTextArea23.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea23.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea23.setColumns(1);
         jTextArea23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea23.setLineWrap(true);
@@ -694,7 +709,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane25);
 
         jTextArea24.setEditable(false);
-        jTextArea24.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea24.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea24.setColumns(1);
         jTextArea24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea24.setLineWrap(true);
@@ -707,7 +722,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane26);
 
         jTextArea25.setEditable(false);
-        jTextArea25.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea25.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea25.setColumns(1);
         jTextArea25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea25.setLineWrap(true);
@@ -720,7 +735,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane27);
 
         jTextArea26.setEditable(false);
-        jTextArea26.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea26.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea26.setColumns(1);
         jTextArea26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea26.setLineWrap(true);
@@ -733,7 +748,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane28);
 
         jTextArea27.setEditable(false);
-        jTextArea27.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea27.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea27.setColumns(1);
         jTextArea27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea27.setLineWrap(true);
@@ -746,7 +761,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane29);
 
         jTextArea28.setEditable(false);
-        jTextArea28.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea28.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea28.setColumns(1);
         jTextArea28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea28.setLineWrap(true);
@@ -759,7 +774,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane30);
 
         jTextArea29.setEditable(false);
-        jTextArea29.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea29.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea29.setColumns(1);
         jTextArea29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea29.setLineWrap(true);
@@ -772,7 +787,7 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane31);
 
         jTextArea30.setEditable(false);
-        jTextArea30.setBackground(new java.awt.Color(236, 233, 216));
+        jTextArea30.setBackground(new java.awt.Color(240, 240, 240));
         jTextArea30.setColumns(1);
         jTextArea30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextArea30.setLineWrap(true);
@@ -785,6 +800,10 @@ public class IngresoGui extends javax.swing.JFrame {
         panelAsistencia.add(jScrollPane32);
 
         jPanel4.add(panelAsistencia, java.awt.BorderLayout.CENTER);
+
+        btnDietas.setText("Ver dieta");
+
+        btnRutinas.setText("Ver rutinas");
 
         jMenu1.setText("Archivo");
 
@@ -842,7 +861,12 @@ public class IngresoGui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(imHuella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDietas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRutinas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -858,10 +882,17 @@ public class IngresoGui extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(imHuella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imHuella, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDietas)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnRutinas))))))
         );
 
         pack();
@@ -955,6 +986,8 @@ public class IngresoGui extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDietas;
+    private javax.swing.JButton btnRutinas;
     private javax.swing.JMenuItem busquedaManual;
     private javax.swing.JLabel cantDias;
     private javax.swing.JMenuItem darDeAlta;
