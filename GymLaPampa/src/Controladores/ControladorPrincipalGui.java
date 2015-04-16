@@ -34,6 +34,7 @@ import Interfaces.DietaGui;
 import Interfaces.EstadisticaConocioGui;
 import Interfaces.EstadisticaGui;
 import Interfaces.GastosGui;
+import Interfaces.GuiCrearRutina;
 import Interfaces.GuiCrearRutinas;
 import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
@@ -84,12 +85,13 @@ public class ControladorPrincipalGui implements ActionListener {
     private AbmAlimentosGui alimentosGui;
     private ControladorAlimentos controladorAlimentos;
 
-    private GuiCrearRutinas guiCrearRutina;
-    private ControladorGuiCrearRutinas controladorGuiCrearRutina;
+    private GuiCrearRutina guiCrearRutina;
+    private ControladorGuiCrearRutina controladorGuiCrearRutina;
 
     private DietaGui dietaGui;
     private ControladorAltaDieta controladorDietas;
 
+   
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
         try {
@@ -150,8 +152,8 @@ public class ControladorPrincipalGui implements ActionListener {
         controladorAlimentos = new ControladorAlimentos(alimentosGui);
         principalGui.getDesktop().add(alimentosGui);
 
-        guiCrearRutina = new GuiCrearRutinas();
-        controladorGuiCrearRutina = new ControladorGuiCrearRutinas(guiCrearRutina, principalGui);
+        guiCrearRutina = new GuiCrearRutina();
+        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina);
         principalGui.getDesktop().add(guiCrearRutina);
 
         dietaGui = new DietaGui();
