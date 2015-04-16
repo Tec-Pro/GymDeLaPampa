@@ -93,11 +93,8 @@ public class ControladorPrincipalGui implements ActionListener {
     private DietaGui dietaGui;
     private ControladorAltaDieta controladorDietas;
 
-<<<<<<< HEAD
     private Modulo modulo;
-=======
    
->>>>>>> origin/master
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
         try {
