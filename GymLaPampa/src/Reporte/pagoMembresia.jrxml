@@ -6,7 +6,6 @@
 	<parameter name="id_pago" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT
      pagos.`ID_PAGOS` AS pagos_ID_PAGOS,
@@ -67,7 +66,7 @@ WHERE
 		<band height="152" splitType="Stretch">
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="260" height="152" uuid="77456d81-6274-48cd-951f-2208efbafdc9"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<imageExpression><![CDATA["logoTrans.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="0" width="260" height="20" uuid="599f8682-41fc-4f8d-b895-333c443cb378"/>

@@ -13,7 +13,6 @@
 	<parameter name="id_dieta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
      alimentos.`nombre` AS alimentos_nombre,
@@ -158,7 +157,7 @@ WHERE
 		<variableExpression><![CDATA[$F{alimentos_fibra}*$F{alimentos_dietas_porcion}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<group name="Group1" isStartNewPage="true">
+	<group name="Group1" isStartNewPage="true" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{alimentos_dietas_numero_dia}]]></groupExpression>
 		<groupHeader>
 			<band height="40">
@@ -534,9 +533,9 @@ WHERE
 	</group>
 	<background>
 		<band height="802" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="802" uuid="c64e63e9-7757-47eb-81be-7cdcf1d38384"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<imageExpression><![CDATA["logoTrans.png"]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -729,56 +728,56 @@ WHERE
 			<textField>
 				<reportElement x="55" y="0" width="57" height="15" uuid="98394542-4b63-4613-b554-3ffce5f5b93e"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_dietas_porcion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="1" width="55" height="15" uuid="2b509876-67ad-46a3-9deb-c7a78ff5172c"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_dietas_hora}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="114" y="1" width="175" height="15" uuid="708e3d29-5214-4bc2-84cb-56b5995c8b12"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="false">
 				<reportElement x="289" y="1" width="57" height="15" uuid="4b1adf82-e3c3-4e5f-a2c3-2066fda9fcfa"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_agua}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement x="346" y="1" width="53" height="15" uuid="39a82108-d6cd-4267-88bb-e308d5db27a8"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_prot}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="false">
 				<reportElement x="403" y="0" width="50" height="15" uuid="7fa3e14c-6586-47fb-97f2-66a4bf34e56e"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_hc}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="false">
 				<reportElement x="453" y="1" width="41" height="15" uuid="e23a0def-5fa3-4b85-8335-00c2d87668c0"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alimentos_grasa}*$F{alimentos_dietas_porcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="false">
 				<reportElement x="494" y="0" width="61" height="15" uuid="54a456ac-f48c-43fc-8904-4c56e25bfb1b"/>
 				<textElement textAlignment="Right">
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{alimentos_prot}*$F{alimentos_dietas_porcion}*4)+($F{alimentos_hc}*$F{alimentos_dietas_porcion}*4)+($F{alimentos_grasa}*$F{alimentos_dietas_porcion}*9)]]></textFieldExpression>
 			</textField>

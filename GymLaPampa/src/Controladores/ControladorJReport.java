@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -24,10 +25,10 @@ import net.sf.jasperreports.view.JasperViewer;
 public class ControladorJReport {
 
     private JasperReport reporte;
-    private final String logo = "/Reporte/logo.png";
-private final String logoTrans = "/Reporte/imagenTicket.png";
+    private String ruta;
     public ControladorJReport(String jasper) throws JRException, ClassNotFoundException, SQLException {
         reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reporte/" + jasper));//cargo el reporte
+         ruta= getClass().getResource("/Reporte/" + jasper).getPath();
     }
 
     //listado de clientes productos y proveedores.
@@ -36,9 +37,6 @@ private final String logoTrans = "/Reporte/imagenTicket.png";
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
         Map parametros = new HashMap();
         parametros.clear();
-        parametros.put("logo", this.getClass().getResourceAsStream(logo));
-        parametros.put("logo_1", this.getClass().getResourceAsStream(logo));
-        parametros.put("logo_2", this.getClass().getResourceAsStream(logo));
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         JasperViewer.viewReport(jasperPrint, false);
         connection.close();
@@ -50,7 +48,6 @@ private final String logoTrans = "/Reporte/imagenTicket.png";
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
         Map parametros = new HashMap();
         parametros.clear();
-        parametros.put("logo", this.getClass().getResourceAsStream(logo));
         parametros.put("desde", desde);
         parametros.put("hasta", hasta);
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
@@ -65,7 +62,6 @@ private final String logoTrans = "/Reporte/imagenTicket.png";
         Map parametros = new HashMap();
         parametros.clear();
         
-        parametros.put("logo", this.getClass().getResourceAsStream(logoTrans));
          parametros.put("id_pago", idPagoMemb);
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         JasperViewer.viewReport(jasperPrint, false);
@@ -79,15 +75,42 @@ private final String logoTrans = "/Reporte/imagenTicket.png";
         Map parametros = new HashMap();
         parametros.clear();
         
-        parametros.put("logo", this.getClass().getResource(logoTrans).getPath().toString());
          parametros.put("id_socio", idSocio);
                   parametros.put("id_dieta", idDieta);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        
           JasperViewer jasperViewer = new JasperViewer(jasperPrint);
             jasperViewer.setTitle("Impresión de dieta");
             jasperViewer.toFront();
             jasperViewer.setVisible(true);
+
+       
+        
+    }
+    
+                //listado de clientes productos y proveedores.
+    public String obtenerDieta(Integer idSocio,Integer idDieta) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+         parametros.put("id_socio", idSocio);
+         parametros.put("id_dieta", idDieta);
+         
+         String rutaDestino= ControladorJReport.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+         int i=0;
+         for( i=rutaDestino.length()-2;i>0 && rutaDestino.charAt(i)!='/';i-- ){
+             rutaDestino= rutaDestino.substring(0, i);
+             
+         }
+         if(rutaDestino.charAt(i)=='/'){
+             rutaDestino+="dieta.pdf";
+         }
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, rutaDestino);
+  
+  return rutaDestino;
 
        
         

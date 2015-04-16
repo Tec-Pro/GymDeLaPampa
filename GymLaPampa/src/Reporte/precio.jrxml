@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="precio" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="550ded38-8d81-4395-93cc-1472a44d907e">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="131"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="logo" class="java.io.InputStream"/>
-	<parameter name="logo_1" class="java.io.InputStream"/>
-	<parameter name="logo_2" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT nombre, precio, categoria FROM gym.arancels
 where activo=1;]]>
@@ -28,7 +25,7 @@ where activo=1;]]>
 		<groupHeader>
 			<band height="40">
 				<textField>
-					<reportElement style="SubTitle" x="0" y="13" width="254" height="24" forecolor="#006600" uuid="fc7c178d-2f1e-4d4c-ad47-ab3b0ed44daf"/>
+					<reportElement style="SubTitle" x="32" y="13" width="254" height="24" forecolor="#CC0000" uuid="fc7c178d-2f1e-4d4c-ad47-ab3b0ed44daf"/>
 					<textElement>
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
@@ -38,14 +35,14 @@ where activo=1;]]>
 					<reportElement mode="Opaque" x="0" y="13" width="0" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="8acf215b-83dd-46c9-ac48-7979db651c67"/>
 				</rectangle>
 				<textField>
-					<reportElement style="SubTitle" x="273" y="13" width="254" height="24" forecolor="#006600" uuid="fc866cba-7883-4add-a93a-378a2c15182a"/>
+					<reportElement style="SubTitle" x="305" y="13" width="254" height="24" forecolor="#CC0000" uuid="fc866cba-7883-4add-a93a-378a2c15182a"/>
 					<textElement>
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="SubTitle" x="548" y="13" width="254" height="24" forecolor="#006600" uuid="e7c56f47-e4d4-4537-ac1c-a77e2f764a44"/>
+					<reportElement style="SubTitle" x="580" y="13" width="254" height="24" forecolor="#CC0000" uuid="e7c56f47-e4d4-4537-ac1c-a77e2f764a44"/>
 					<textElement>
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
@@ -64,7 +61,7 @@ where activo=1;]]>
 		<band height="70" splitType="Stretch">
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="254" height="43" uuid="3ff58ea1-13a6-41ca-910b-cb36db18c535"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="50" width="254" height="20" uuid="28f69df7-aab7-45fc-b549-d9819f491c07"/>
@@ -89,11 +86,11 @@ where activo=1;]]>
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="273" y="0" width="254" height="43" uuid="860db9d8-3f56-4435-8c13-1c70c55c9628"/>
-				<imageExpression><![CDATA[$P{logo_1}]]></imageExpression>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
 				<reportElement x="548" y="0" width="254" height="43" uuid="be25d99e-7ad8-4926-86d7-1dbed1b6a146"/>
-				<imageExpression><![CDATA[$P{logo_2}]]></imageExpression>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

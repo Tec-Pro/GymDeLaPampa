@@ -6,17 +6,23 @@
 package Interfaces;
 
 import Controladores.ControladorJReport;
+import Controladores.EnvioEmailControlador;
 import Modelos.Alimento;
 import Modelos.AlimentosDietas;
+import Modelos.Socio;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -45,6 +51,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     Integer idDieta=-1;
     Integer idSocio=-1;
     ControladorJReport reporte;
+    private String email="nico.orcasitas@gmail.com";
     /**
      * Creates new form VerRutinasGui
      */
@@ -73,6 +80,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         cargarEnTablaDietaAliemtos(lista);
         txtNombre.setText(nombre);
         txtDescripcion.setText(descripcion);
+
         pnlTab.addChangeListener(this);
             try {
                 reporte= new ControladorJReport("dieta.jasper");
@@ -85,7 +93,10 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
             }
             if(idSocio==-1){
                 btnImprimir.setEnabled(false);
+                btnEnviarEmail.setEnabled(false);
             }
+            //else
+           // email = Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getString("email");
         
     }
 
@@ -404,9 +415,13 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         tblAlimentosDietaSabado = new javax.swing.JTable();
         jScrollPane11 = new javax.swing.JScrollPane();
         tblAlimentosDietaDomingo = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        btnEnviarEmail = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(960, 480));
+        setSize(new java.awt.Dimension(980, 500));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("Nombre");
@@ -728,33 +743,43 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
 
         pnlTab.addTab("Domingo", jScrollPane11);
 
+        jPanel3.setLayout(new java.awt.GridLayout());
+
+        btnEnviarEmail.setText("Enviarle la dieta al email ");
+        btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarEmailActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnEnviarEmail);
+
         btnImprimir.setText("IMPRIMIR DIETA");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
             }
         });
+        jPanel3.add(btnImprimir);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnImprimir)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlTab)
+                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -766,12 +791,12 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlTab, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(btnImprimir)
-                .addGap(0, 0, 0))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -793,9 +818,34 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
             }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
+    private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
+        try {                                               
+            String ruta=reporte.obtenerDieta(idSocio, idDieta);
+            try {
+                boolean res=EnvioEmailControlador.enviarMailManualDieta(ruta,email );
+                if (res) {
+                    JOptionPane.showMessageDialog(this, "Email enviado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Falló el envio, revise la conexión", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
+                File archivo=new File(ruta); 
+                archivo.delete();
+            } catch (MessagingException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_btnEnviarEmailActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEnviarEmail;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -807,6 +857,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

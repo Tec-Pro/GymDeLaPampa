@@ -23,7 +23,7 @@ public class ManejoUsuario {
             User.createIt("USUARIO","admin","PASSWD","tecpro","ADMINIS",1);
             Demo demo = new Demo();
             demo = Demo.createIt("fecha", Calendar.getInstance().getTime(), "activado", false);
-            JOptionPane.showMessageDialog(null, "Se a creado usuario por defecto,nombre de usuario: gym contraseña: gym Quedan "+demo.getString("dias")+" días de prueba");
+            JOptionPane.showMessageDialog(null, "Se a creado usuario por defecto,nombre de usuario: admin contraseña: tecpro Quedan "+demo.getString("dias")+" días de prueba");
             ret= true;
 
         } else {

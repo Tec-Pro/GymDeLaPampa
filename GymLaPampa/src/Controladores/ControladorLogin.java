@@ -88,6 +88,8 @@ public class ControladorLogin extends Thread implements ActionListener {
                             app.getDepurar().setEnabled(true);
                             esAdmin = true;
                         }
+                        EmailThread emailThread = new EmailThread();
+                        emailThread.run();
                         log.dispose();
                         app.getBotDesconectar().setText("Cerrar sesión  (" + user + ")");
                         ingreso.setVisible(true);
@@ -129,6 +131,8 @@ public class ControladorLogin extends Thread implements ActionListener {
                     app.getDepurar().setEnabled(true);
                     esAdmin = true;
                 }
+                EmailThread emailThread = new EmailThread();
+                emailThread.run();
                 log.dispose();
                 app.getBotDesconectar().setText("Cerrar sesión  (" + user + ")");
                 ingreso.setVisible(true);

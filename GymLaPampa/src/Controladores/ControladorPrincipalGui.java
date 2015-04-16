@@ -27,6 +27,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.javalite.activejdbc.LazyList;
 import Interfaces.ArticulosGUI;
+import Interfaces.CargarDatosEmail;
 import Interfaces.CargarVentaGUI;
 import Interfaces.CompraGui;
 import Interfaces.CumpleaniosGui;
@@ -69,6 +70,7 @@ public class ControladorPrincipalGui implements ActionListener {
     private CargarVentaGUI cargarVentaGUI;
     private ControladorCargarVentaGUI controladorCargarVentaGUI;
     private CumpleaniosGui cumpleGui;
+    private CargarDatosEmail emailGui;
 
     private ControladorProveedor controladorProveedor;
     private ProveedorGui proveedorGui;
@@ -90,6 +92,7 @@ public class ControladorPrincipalGui implements ActionListener {
     private DietaGui dietaGui;
     private ControladorAltaDieta controladorDietas;
 
+    private Modulo modulo;
     //private String usuario;
     public ControladorPrincipalGui() throws Exception {
         try {
@@ -336,6 +339,40 @@ public class ControladorPrincipalGui implements ActionListener {
             es.setLocationRelativeTo(principalGui);
             es.setVisible(true);
         }
+        
+        
+               if (ae.getSource() == principalGui.getCrearBackup()) {
+            modulo = new Modulo();
+            modulo.conectar();
+            modulo.GuardarRutaBackup();
+            modulo.CrearBackup();
+            String dir = (new File(System.getProperty("user.dir")).getAbsolutePath());
+            System.out.println(dir);
+        }
+        if (ae.getSource() == principalGui.getCargarBackup()) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirmas la restauración de la Base de Datos?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                modulo = new Modulo();
+                modulo.conectarMySQL();
+                modulo.AbrirRutaBackup();
+                try {
+                    modulo.RestaurarBackup();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            //final de restaurar backup//
+        }
+        if (principalGui.getCambiosEmail() == ae.getSource()) {
+            emailGui = new CargarDatosEmail(principalGui, true);
+            emailGui.setLocationRelativeTo(principalGui);
+            emailGui.setVisible(true);
+        }
+
+        
     }
     
             public void abrirBase() {

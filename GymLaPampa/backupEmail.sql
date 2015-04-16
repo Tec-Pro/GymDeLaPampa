@@ -1,4 +1,8 @@
-
+-- MySQL dump 10.13  Distrib 5.6.14, for Win32 (x86)
+--
+-- Host: localhost    Database: gym
+-- ------------------------------------------------------
+-- Server version	5.6.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -12,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `alimentos`
+--
+
+DROP TABLE IF EXISTS `alimentos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alimentos` (
+  `nombre` varchar(50) NOT NULL,
+  `pc` float DEFAULT '0',
+  `agua` float DEFAULT '0',
+  `prot` float DEFAULT '0',
+  `hc` float DEFAULT '0',
+  `grasa` float DEFAULT '0',
+  `satur` float DEFAULT '0',
+  `mono` float DEFAULT '0',
+  `poli` float DEFAULT '0',
+  `colesterol` float DEFAULT '0',
+  `fibra` float DEFAULT '0',
+  `sodio` float DEFAULT '0',
+  `potasio` float DEFAULT '0',
+  `magnesio` float DEFAULT '0',
+  `calcio` float DEFAULT '0',
+  `fosforo` float DEFAULT '0',
+  `hierro` float DEFAULT '0',
+  `indiceglucemico` float DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`,`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=564 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `alimentos`
 --
 
@@ -22,6 +57,25 @@ INSERT INTO `alimentos` VALUES ('ABLARICOQUE',0.91,85.3,0.9,9.9,0.1,0,0,0,0,2,2,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `alimentos_dietas`
+--
+
+DROP TABLE IF EXISTS `alimentos_dietas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alimentos_dietas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alimento_id` int(11) NOT NULL,
+  `dieta_id` int(11) NOT NULL,
+  `porcion` float DEFAULT NULL,
+  `hora` varchar(45) DEFAULT NULL,
+  `dia` varchar(45) DEFAULT NULL,
+  `numero_dia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`,`dieta_id`,`alimento_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `alimentos_dietas`
 --
 
@@ -30,7 +84,25 @@ LOCK TABLES `alimentos_dietas` WRITE;
 INSERT INTO `alimentos_dietas` VALUES (52,1,10,1,'8:00','LUNES',1),(53,2,10,30,'9:00','LUNES',1),(54,3,10,12,'10:00','LUNES',1),(55,5,10,4,'11:00','LUNES',1),(56,20,10,1,'12:00','LUNES',1),(57,48,10,1,'13:00','LUNES',1),(58,75,10,1,'14:00','LUNES',1),(59,111,10,1,'15:00','LUNES',1),(60,141,10,1,'16:00','LUNES',1),(61,174,10,1,'16:00','LUNES',1),(62,207,10,1,'16:00','LUNES',1),(63,231,10,2,'16:00','LUNES',1),(64,261,10,1,'21:00','LUNES',1),(65,278,10,1,'8:00','MARTES',2),(66,279,10,1,'8:00','MARTES',2),(67,294,10,1,'8:00','MARTES',2),(68,306,10,1,'8:00','MARTES',2),(69,322,10,1,'8:00','MARTES',2),(70,334,10,1,'8:00','MARTES',2),(71,349,10,1,'8:00','MARTES',2),(72,378,10,1,'8:00','MIERCOLES',3),(73,393,10,1,'8:00','MIERCOLES',3),(74,408,10,1,'8:00','MIERCOLES',3),(75,423,10,1,'8:00','MIERCOLES',3),(76,435,10,1,'8:00','MIERCOLES',3),(77,468,10,1,'8:00','MIERCOLES',3),(78,486,10,1,'8:00','MIERCOLES',3),(79,500,10,1,'8:00','MIERCOLES',3),(80,515,10,1,'8:00','MIERCOLES',3),(81,533,10,1,'8:00','MIERCOLES',3),(82,548,10,1,'8:00','MIERCOLES',3),(83,561,10,1,'8:00','JUEVES',4),(84,562,10,1,'8:00','JUEVES',4),(85,512,10,1,'8:00','JUEVES',4),(86,500,10,1,'8:00','JUEVES',4),(87,481,10,1,'8:00','JUEVES',4),(88,460,10,1,'8:00','JUEVES',4),(89,442,10,1,'8:00','JUEVES',4),(90,423,10,1,'8:00','VIERNES',5),(91,406,10,1,'8:00','VIERNES',5),(92,394,10,1,'8:00','VIERNES',5),(93,382,10,1,'8:00','VIERNES',5),(94,367,10,1,'8:00','VIERNES',5),(95,346,10,1,'8:00','VIERNES',5),(96,328,10,1,'8:00','VIERNES',5),(97,310,10,1,'8:00','VIERNES',5),(98,299,10,1,'8:00','SABADO',6),(99,273,10,1,'8:00','SABADO',6),(100,255,10,1,'8:00','SABADO',6),(101,240,10,1,'8:00','SABADO',6),(102,222,10,1,'8:00','SABADO',6),(103,201,10,1,'8:00','SABADO',6),(104,183,10,1,'8:00','DOMINGO',7),(105,186,10,1,'8:00','DOMINGO',7),(106,185,10,1,'8:00','DOMINGO',7);
 /*!40000 ALTER TABLE `alimentos_dietas` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `arancels`
+--
+
+DROP TABLE IF EXISTS `arancels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `arancels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `activo` int(5) DEFAULT NULL,
+  `categoria` varchar(15) DEFAULT NULL,
+  `dias` int(2) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `arancels`
@@ -43,6 +115,26 @@ INSERT INTO `arancels` VALUES (6,'PILATES 2 VECES POR SEMANA',300,'2015-04-10',1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `articulos`
+--
+
+DROP TABLE IF EXISTS `articulos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `articulos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(10) DEFAULT NULL,
+  `articulo` varchar(20) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  `precio_compra` float DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `descripcion` varchar(120) DEFAULT NULL,
+  `proveedor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `articulos`
 --
 
@@ -51,6 +143,23 @@ LOCK TABLES `articulos` WRITE;
 INSERT INTO `articulos` VALUES (1,'pwm','POWERADE 500 ML',12,8,57,'SABOR MANDARINA',NULL),(2,'ag','AGUA MINERAL',10,7,24,'LOS ANDES 500 ML',NULL);
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `articulos_compras`
+--
+
+DROP TABLE IF EXISTS `articulos_compras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `articulos_compras` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `compra_id` int(11) DEFAULT NULL,
+  `articulo_id` int(11) DEFAULT NULL,
+  `cantidad` float NOT NULL,
+  `precio_final` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `articulos_compras`
@@ -63,6 +172,74 @@ INSERT INTO `articulos_compras` VALUES (4,3,1,5,8),(5,3,2,11,7),(6,4,1,31,8);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `articulos_ventas`
+--
+
+DROP TABLE IF EXISTS `articulos_ventas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `articulos_ventas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `venta_id` int(11) DEFAULT NULL,
+  `articulo_id` int(11) DEFAULT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_final` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `articulos_ventas`
+--
+
+LOCK TABLES `articulos_ventas` WRITE;
+/*!40000 ALTER TABLE `articulos_ventas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `articulos_ventas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asistencias`
+--
+
+DROP TABLE IF EXISTS `asistencias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asistencias` (
+  `ID_ASISTENCIA` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_DATOS_PERS` int(11) NOT NULL,
+  `FECHA` date DEFAULT NULL,
+  `ID_ACTIV` int(11) DEFAULT NULL,
+  `ID_ACTIV_COMBO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_ASISTENCIA`),
+  KEY `FK_ASISTENCIA` (`ID_DATOS_PERS`),
+  CONSTRAINT `FK_ASISTENCIA` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asistencias`
+--
+
+LOCK TABLES `asistencias` WRITE;
+/*!40000 ALTER TABLE `asistencias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asistencias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `categorias`
+--
+
+DROP TABLE IF EXISTS `categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categorias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `categorias`
 --
 
@@ -71,6 +248,51 @@ LOCK TABLES `categorias` WRITE;
 INSERT INTO `categorias` VALUES (1,'AEROBICO'),(2,'PILATES'),(3,'SPINNING'),(4,'MUSCULACION'),(5,'COMBO'),(6,'COMPRAS');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `clase`
+--
+
+DROP TABLE IF EXISTS `clase`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `clase` (
+  `ID_CLASE` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_PROFES` int(11) NOT NULL,
+  `FECHA` date DEFAULT NULL,
+  `ACTIV` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_CLASE`),
+  KEY `FK_CLASE` (`ID_PROFES`),
+  CONSTRAINT `FK_CLASE` FOREIGN KEY (`ID_PROFES`) REFERENCES `profes` (`ID_PROFES`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clase`
+--
+
+LOCK TABLES `clase` WRITE;
+/*!40000 ALTER TABLE `clase` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clase` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `combos`
+--
+
+DROP TABLE IF EXISTS `combos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `combos` (
+  `id_combo` int(11) NOT NULL,
+  `id_activ` int(11) NOT NULL,
+  `dias` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_combo`,`id_activ`),
+  KEY `fk_activ_combo` (`id_activ`),
+  CONSTRAINT `fk_activ_combo` FOREIGN KEY (`id_activ`) REFERENCES `arancels` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_combo` FOREIGN KEY (`id_combo`) REFERENCES `arancels` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `combos`
@@ -83,6 +305,26 @@ INSERT INTO `combos` VALUES (10,6,2),(10,7,0);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `compras`
+--
+
+DROP TABLE IF EXISTS `compras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `compras` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `monto` float DEFAULT NULL,
+  `proveedor_id` int(11) DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `pago` int(11) DEFAULT '0',
+  `fecha_pago` date DEFAULT NULL,
+  `descuento` float DEFAULT '0',
+  `pago_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `compras`
 --
 
@@ -91,6 +333,22 @@ LOCK TABLES `compras` WRITE;
 INSERT INTO `compras` VALUES (3,117,2,'2015-04-06',1,'2015-04-10',0,2),(4,248,2,'2015-04-08',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `compras` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `datos`
+--
+
+DROP TABLE IF EXISTS `datos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `datos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(200) DEFAULT NULL,
+  `categoria_id` int(11) DEFAULT NULL,
+  `ingreso_egreso` varchar(7) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `datos`
@@ -103,6 +361,98 @@ INSERT INTO `datos` VALUES (8,'MEMBRESIA PILATES 2 VECES POR SEMANA',2,'ingreso'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `demos`
+--
+
+DROP TABLE IF EXISTS `demos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `demos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` date DEFAULT NULL,
+  `dias` int(11) DEFAULT '7',
+  `activado` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `demos`
+--
+
+LOCK TABLES `demos` WRITE;
+/*!40000 ALTER TABLE `demos` DISABLE KEYS */;
+INSERT INTO `demos` VALUES (3,'2015-04-15',7,0);
+/*!40000 ALTER TABLE `demos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dias`
+--
+
+DROP TABLE IF EXISTS `dias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rutina_id` int(10) DEFAULT NULL,
+  `dia` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dias`
+--
+
+LOCK TABLES `dias` WRITE;
+/*!40000 ALTER TABLE `dias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dias_ejercicios`
+--
+
+DROP TABLE IF EXISTS `dias_ejercicios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dias_ejercicios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dia_id` int(10) DEFAULT NULL,
+  `ejercicio_id` int(10) DEFAULT NULL,
+  `series` int(10) DEFAULT NULL,
+  `repeticiones` int(10) DEFAULT NULL,
+  `tiempo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dias_ejercicios`
+--
+
+LOCK TABLES `dias_ejercicios` WRITE;
+/*!40000 ALTER TABLE `dias_ejercicios` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dias_ejercicios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dietas`
+--
+
+DROP TABLE IF EXISTS `dietas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dietas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `descripcion` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `dietas`
 --
 
@@ -111,6 +461,21 @@ LOCK TABLES `dietas` WRITE;
 INSERT INTO `dietas` VALUES (10,'Dieta para adelgazar','Dieta para adelgazar rapido');
 /*!40000 ALTER TABLE `dietas` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `ejercicios`
+--
+
+DROP TABLE IF EXISTS `ejercicios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ejercicios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ejercicio` varchar(120) DEFAULT NULL,
+  `grupo` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ejercicios`
@@ -123,6 +488,90 @@ INSERT INTO `ejercicios` VALUES (1,'APERTURAS CON MANCUERNAS EN BANCO INCLINADO'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `emails`
+--
+
+DROP TABLE IF EXISTS `emails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emails` (
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`,`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emails`
+--
+
+LOCK TABLES `emails` WRITE;
+/*!40000 ALTER TABLE `emails` DISABLE KEYS */;
+INSERT INTO `emails` VALUES ('niqo.orcasitas@hotmail.com','snht36:>8:<',1);
+/*!40000 ALTER TABLE `emails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `envios`
+--
+
+DROP TABLE IF EXISTS `envios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `envios` (
+  `fecha` date NOT NULL,
+  `enviado` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`,`fecha`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `envios`
+--
+
+LOCK TABLES `envios` WRITE;
+/*!40000 ALTER TABLE `envios` DISABLE KEYS */;
+/*!40000 ALTER TABLE `envios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fichas`
+--
+
+DROP TABLE IF EXISTS `fichas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fichas` (
+  `ID_FICHA_MEDICA` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_DATOS_PERS` int(11) NOT NULL,
+  `TEL_EMERG` varchar(20) DEFAULT NULL,
+  `GRUPO_SANG` varchar(2) DEFAULT NULL,
+  `FACTOR` varchar(3) DEFAULT NULL,
+  `ALERGICO` varchar(30) DEFAULT NULL,
+  `MEDICAM` varchar(30) DEFAULT NULL,
+  `OBSERV` varchar(3000) DEFAULT NULL,
+  `ARTROSIS` int(2) DEFAULT NULL,
+  `ASMA` int(2) DEFAULT NULL,
+  `CARDIACO` int(2) DEFAULT NULL,
+  `DIABETES` int(2) DEFAULT NULL,
+  `EMBARAZO` int(2) DEFAULT NULL,
+  `ENDOCRINOLOGIA` int(2) DEFAULT NULL,
+  `HUESOS` int(2) DEFAULT NULL,
+  `PULMONARES` int(2) DEFAULT NULL,
+  `EPILEPTICO` int(2) DEFAULT NULL,
+  `HIPERTENSION` int(2) DEFAULT NULL,
+  `DEPORTIVA` int(2) DEFAULT NULL,
+  `OBESIDAD` int(2) DEFAULT NULL,
+  `REUMA` int(2) DEFAULT NULL,
+  PRIMARY KEY (`ID_FICHA_MEDICA`),
+  KEY `FK_FICHA_MEDICA` (`ID_DATOS_PERS`),
+  CONSTRAINT `FK_FICHA_MEDICA` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `fichas`
 --
 
@@ -131,6 +580,23 @@ LOCK TABLES `fichas` WRITE;
 INSERT INTO `fichas` VALUES (1,2,'3587213122','AB','RH-','alergico al polem','','es hipertenso',1,0,0,0,1,0,0,0,0,1,0,0,0);
 /*!40000 ALTER TABLE `fichas` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `gastos`
+--
+
+DROP TABLE IF EXISTS `gastos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gastos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dato_id` int(11) DEFAULT NULL,
+  `monto` float DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `descrip` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `gastos`
@@ -143,6 +609,50 @@ INSERT INTO `gastos` VALUES (5,10,800,'2015-04-10','PAGOS DE MEMBRESIA MUSCULACI
 UNLOCK TABLES;
 
 --
+-- Table structure for table `huellas`
+--
+
+DROP TABLE IF EXISTS `huellas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `huellas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `huella` blob,
+  `dedo` varchar(45) DEFAULT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_cliente` (`client_id`),
+  CONSTRAINT `fk_cliente` FOREIGN KEY (`client_id`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `huellas`
+--
+
+LOCK TABLES `huellas` WRITE;
+/*!40000 ALTER TABLE `huellas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `huellas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pagoproveedors`
+--
+
+DROP TABLE IF EXISTS `pagoproveedors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pagoproveedors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` date DEFAULT NULL,
+  `monto` float DEFAULT NULL,
+  `proveedor_id` int(11) DEFAULT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `pagoproveedors`
 --
 
@@ -151,6 +661,27 @@ LOCK TABLES `pagoproveedors` WRITE;
 INSERT INTO `pagoproveedors` VALUES (1,'2015-04-09',179,1,''),(2,'2015-04-10',117,2,'');
 /*!40000 ALTER TABLE `pagoproveedors` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `pagos`
+--
+
+DROP TABLE IF EXISTS `pagos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pagos` (
+  `ID_PAGOS` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_DATOS_PERS` int(11) NOT NULL,
+  `FECHA` date DEFAULT NULL,
+  `MONTO` float DEFAULT NULL,
+  `MODO` varchar(100) DEFAULT NULL,
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID_PAGOS`),
+  UNIQUE KEY `ID_PAGOS_UNIQUE` (`ID_PAGOS`),
+  KEY `FK_PAGOS` (`ID_DATOS_PERS`),
+  CONSTRAINT `FK_PAGOS` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `pagos`
@@ -163,6 +694,57 @@ INSERT INTO `pagos` VALUES (4,4,'2015-04-10',400,'EFECTIVO','MEMBRESIA PAGADA EN
 UNLOCK TABLES;
 
 --
+-- Table structure for table `profes`
+--
+
+DROP TABLE IF EXISTS `profes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profes` (
+  `ID_PROFES` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE` varchar(20) DEFAULT NULL,
+  `APELLIDO` varchar(20) DEFAULT NULL,
+  `DNI` varchar(12) DEFAULT NULL,
+  `FECHA_NAC` date DEFAULT NULL,
+  `DIR` varchar(30) DEFAULT NULL,
+  `TEL` varchar(20) DEFAULT NULL,
+  `SEXO` char(1) DEFAULT NULL,
+  `OBSERV` varchar(3000) DEFAULT NULL,
+  PRIMARY KEY (`ID_PROFES`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profes`
+--
+
+LOCK TABLES `profes` WRITE;
+/*!40000 ALTER TABLE `profes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proveedors`
+--
+
+DROP TABLE IF EXISTS `proveedors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proveedors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `cuit` varchar(45) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `celular` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `cuenta_corriente` float DEFAULT '0',
+  `forma_de_pago` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `proveedors`
 --
 
@@ -171,6 +753,51 @@ LOCK TABLES `proveedors` WRITE;
 INSERT INTO `proveedors` VALUES (2,'Coca cola','','','358-5981223','','cocacola@cocacola.comar',-248,'');
 /*!40000 ALTER TABLE `proveedors` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `rutinas`
+--
+
+DROP TABLE IF EXISTS `rutinas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rutinas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `socio_id` int(10) DEFAULT NULL,
+  `descrip` varchar(200) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rutinas`
+--
+
+LOCK TABLES `rutinas` WRITE;
+/*!40000 ALTER TABLE `rutinas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rutinas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `socioarancels`
+--
+
+DROP TABLE IF EXISTS `socioarancels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `socioarancels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_socio` int(11) DEFAULT NULL,
+  `id_arancel` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_cliente_arancel` (`id_socio`),
+  KEY `fk_arancel` (`id_arancel`),
+  CONSTRAINT `fk_arancel` FOREIGN KEY (`id_arancel`) REFERENCES `arancels` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cliente_arancel` FOREIGN KEY (`id_socio`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `socioarancels`
@@ -183,6 +810,34 @@ INSERT INTO `socioarancels` VALUES (8,4,8),(10,2,10),(11,3,6),(18,5,7),(19,5,9),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `socios`
+--
+
+DROP TABLE IF EXISTS `socios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `socios` (
+  `ID_DATOS_PERS` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE` varchar(20) DEFAULT NULL,
+  `APELLIDO` varchar(20) DEFAULT NULL,
+  `DNI` varchar(12) DEFAULT NULL,
+  `FECHA_NAC` varchar(10) DEFAULT NULL,
+  `FECHA_ING` date DEFAULT NULL,
+  `DIR` varchar(30) DEFAULT NULL,
+  `TEL` varchar(20) DEFAULT NULL,
+  `SEXO` char(1) DEFAULT NULL,
+  `FECHA_ULT_PAGO` date DEFAULT NULL,
+  `ACTIV` bigint(20) DEFAULT NULL,
+  `FECHA_PROX_PAGO` date DEFAULT NULL,
+  `ACTIVO` int(2) DEFAULT NULL,
+  `CUENTA_CORRIENTE` float DEFAULT '0',
+  `FACEBOOK` varchar(30) DEFAULT NULL,
+  `NOSCONOCIOPOR` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`ID_DATOS_PERS`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `socios`
 --
 
@@ -191,6 +846,23 @@ LOCK TABLES `socios` WRITE;
 INSERT INTO `socios` VALUES (2,'PEDRO','GOMEZ','37134821','2015-04-08','2015-04-08','LOS CEIBOS 123','','M','2015-04-10',NULL,'2015-05-10',1,0,'PedroPerez','VIO EL GIMNASIO'),(3,'JULIO ','PEREZ','12921322','2015-04-10','2015-04-10','CASEROS 2913','123512451','M','2015-04-10',NULL,'2015-05-10',1,0,'julioPerez','POR TV'),(4,'ALBERTO','GOMEZ','30192312','2015-04-10','2015-04-10','SAN MARTIN 200','31231231','M','2015-04-10',NULL,'2015-05-10',1,0,'','REDES SOCIALES'),(5,'AGUSTINA','GMEZ','1234775','2015-04-10','2015-04-10','DIRECCION 1231','91231','F','2015-04-10',NULL,'2015-05-10',1,0,'','UN AMIGO/A'),(6,'SOFIA','LOPEZ','12312312','2015-04-10','2015-04-10','BUENOS AIRES 200','12312312','F','2015-04-10',NULL,'2015-05-10',1,-730,'','VIO EL GIMNASIO'),(7,'AGUSTIN','GONZALEZ','12312331','2015-04-10','2015-04-10','ADSDAS 123','','M','2015-04-10',NULL,'2015-05-10',1,-700,'','NO ESPECIFICA'),(8,'MARTIN','MARTINEZ','12312321','2015-04-10','2015-04-10','ASDASDAS 123','','M','2015-03-11',NULL,'2015-04-11',1,0,'','NO ESPECIFICA');
 /*!40000 ALTER TABLE `socios` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `socios_dietas`
+--
+
+DROP TABLE IF EXISTS `socios_dietas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `socios_dietas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `socio_id` varchar(45) NOT NULL,
+  `dieta_id` varchar(45) NOT NULL,
+  `desde` date DEFAULT NULL,
+  `hasta` date DEFAULT NULL,
+  PRIMARY KEY (`id`,`socio_id`,`dieta_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `socios_dietas`
@@ -202,7 +874,58 @@ INSERT INTO `socios_dietas` VALUES (3,'2','10','2015-04-09','2015-04-09');
 /*!40000 ALTER TABLE `socios_dietas` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `users`
+--
 
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `USUARIO` varchar(20) DEFAULT NULL,
+  `PASSWD` varchar(20) DEFAULT NULL,
+  `ADMINIS` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (3,'admin','tecpro',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ventas`
+--
+
+DROP TABLE IF EXISTS `ventas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ventas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `monto` float DEFAULT NULL,
+  `socio_id` int(11) DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `forma_pago` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ventas`
+--
+
+LOCK TABLES `ventas` WRITE;
+/*!40000 ALTER TABLE `ventas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ventas` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -212,4 +935,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-11  1:23:40
+-- Dump completed on 2015-04-15 21:11:58

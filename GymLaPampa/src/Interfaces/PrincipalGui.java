@@ -51,6 +51,10 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.btnDietas.addActionListener(lis);
         this.btnEstadisticasIngreso.addActionListener(lis);
         this.btnEstadisticasSocios.addActionListener(lis);
+                //this.enviar.addActionListener(lis);
+        this.cargarBackup.addActionListener(lis);
+        this.crearBackup.addActionListener(lis);
+        this.cambiosEmail.addActionListener(lis);
     }
 
     public JMenuItem getBtnEstadisticasSocios() {
@@ -60,6 +64,21 @@ public class PrincipalGui extends javax.swing.JFrame {
     public JMenuItem getBtnEstadisticasIngreso() {
         return btnEstadisticasIngreso;
     }
+    
+        public JMenuItem getCargarBackup() {
+        return cargarBackup;
+    }
+
+    public JMenuItem getCrearBackup() {
+        return crearBackup;
+    }
+
+    public JMenuItem getCambiosEmail() {
+        return cambiosEmail;
+    }
+//    public JMenuItem getEnviar() {
+//        return enviar;
+//    }
 
     
     public JMenuItem getDepurar() {
@@ -181,6 +200,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         botDesconectar = new javax.swing.JMenuItem();
         botSalir = new javax.swing.JMenuItem();
         depurar = new javax.swing.JMenuItem();
+        cambiosEmail = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         declaracion = new javax.swing.JMenuItem();
         impresionAranceles = new javax.swing.JMenuItem();
@@ -195,6 +215,9 @@ public class PrincipalGui extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         btnEstadisticasIngreso = new javax.swing.JMenuItem();
         btnEstadisticasSocios = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        crearBackup = new javax.swing.JMenuItem();
+        cargarBackup = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gimnasio Personalizado Pitbull's");
@@ -261,6 +284,10 @@ public class PrincipalGui extends javax.swing.JFrame {
         depurar.setText("Depurar datos");
         jMenu1.add(depurar);
 
+        cambiosEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mail.png"))); // NOI18N
+        cambiosEmail.setText("Cambiar correo");
+        jMenu1.add(cambiosEmail);
+
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Documentos");
@@ -316,9 +343,19 @@ public class PrincipalGui extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
-        setJMenuBar(jMenuBar1);
+        jMenu7.setText("Backup");
 
-        getAccessibleContext().setAccessibleName("Gimnasio Personalizado Pitbull's");
+        crearBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardarBack.png"))); // NOI18N
+        crearBackup.setText("Crear Backup");
+        jMenu7.add(crearBackup);
+
+        cargarBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/subirBack.png"))); // NOI18N
+        cargarBackup.setText("Cargar Backup");
+        jMenu7.add(cargarBackup);
+
+        jMenuBar1.add(jMenu7);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -347,6 +384,9 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnEstadisticasSocios;
     private javax.swing.JButton btnGastos;
     private javax.swing.JMenuItem btnGestionEjercicios;
+    private javax.swing.JMenuItem cambiosEmail;
+    private javax.swing.JMenuItem cargarBackup;
+    private javax.swing.JMenuItem crearBackup;
     private javax.swing.JMenuItem declaracion;
     private javax.swing.JMenuItem depurar;
     private javax.swing.JMenuItem impresionAranceles;
@@ -357,6 +397,7 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JButton proveedores;
