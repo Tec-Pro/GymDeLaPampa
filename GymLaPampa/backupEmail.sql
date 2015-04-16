@@ -131,7 +131,7 @@ CREATE TABLE `articulos` (
   `descripcion` varchar(120) DEFAULT NULL,
   `proveedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `articulos` (
 
 LOCK TABLES `articulos` WRITE;
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
-INSERT INTO `articulos` VALUES (1,'pwm','POWERADE 500 ML',12,8,57,'SABOR MANDARINA',NULL),(2,'ag','AGUA MINERAL',10,7,24,'LOS ANDES 500 ML',NULL);
+INSERT INTO `articulos` VALUES (1,'pwm','POWERADE 500 ML',12,8,57,'SABOR MANDARINA',NULL),(2,'ag','AGUA MINERAL',10,7,24,'LOS ANDES 500 ML',NULL),(3,'5','HTRH',65,65,5,'',2),(4,'es','ESTAAA',546,564,321,'FSVFDF',3);
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,7 +347,7 @@ CREATE TABLE `datos` (
   `categoria_id` int(11) DEFAULT NULL,
   `ingreso_egreso` varchar(7) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ CREATE TABLE `datos` (
 
 LOCK TABLES `datos` WRITE;
 /*!40000 ALTER TABLE `datos` DISABLE KEYS */;
-INSERT INTO `datos` VALUES (8,'MEMBRESIA PILATES 2 VECES POR SEMANA',2,'ingreso'),(9,'MEMBRESIA MUSCULACION LIBRE SIN CINTA',4,'ingreso'),(10,'MEMBRESIA MUSCULACION LIBRE CON CINTA',4,'ingreso'),(11,'MEMBRESIA SPINNING LIBREM',3,'ingreso'),(12,'MEMBRESIA MUSCULACION LIBRE Y PILATES 2 VECES POR SEMANA',5,'ingreso'),(13,'2-Coca cola',6,'egreso');
+INSERT INTO `datos` VALUES (8,'MEMBRESIA PILATES 2 VECES POR SEMANA',2,'ingreso'),(9,'MEMBRESIA MUSCULACION LIBRE SIN CINTA',4,'ingreso'),(10,'MEMBRESIA MUSCULACION LIBRE CON CINTA',4,'ingreso'),(11,'MEMBRESIA SPINNING LIBREM',3,'ingreso'),(12,'MEMBRESIA MUSCULACION LIBRE Y PILATES 2 VECES POR SEMANA',5,'ingreso'),(13,'2-Coca cola',6,'egreso'),(14,'3-tu vieja',6,'egreso');
 /*!40000 ALTER TABLE `datos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,7 +382,7 @@ CREATE TABLE `demos` (
 
 LOCK TABLES `demos` WRITE;
 /*!40000 ALTER TABLE `demos` DISABLE KEYS */;
-INSERT INTO `demos` VALUES (3,'2015-04-16',7,0);
+INSERT INTO `demos` VALUES (3,'2015-04-16',7,1);
 /*!40000 ALTER TABLE `demos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -740,7 +740,7 @@ CREATE TABLE `proveedors` (
   `cuenta_corriente` float DEFAULT '0',
   `forma_de_pago` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -749,7 +749,7 @@ CREATE TABLE `proveedors` (
 
 LOCK TABLES `proveedors` WRITE;
 /*!40000 ALTER TABLE `proveedors` DISABLE KEYS */;
-INSERT INTO `proveedors` VALUES (2,'Coca cola','','','358-5981223','','cocacola@cocacola.comar',-248,'');
+INSERT INTO `proveedors` VALUES (2,'Coca cola','','','358-5981223','','cocacola@cocacola.comar',-248,''),(3,'tu vieja','757','uft','55','','higy',0,'');
 /*!40000 ALTER TABLE `proveedors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -795,7 +795,7 @@ CREATE TABLE `socioarancels` (
   KEY `fk_arancel` (`id_arancel`),
   CONSTRAINT `fk_arancel` FOREIGN KEY (`id_arancel`) REFERENCES `arancels` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_cliente_arancel` FOREIGN KEY (`id_socio`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -804,7 +804,7 @@ CREATE TABLE `socioarancels` (
 
 LOCK TABLES `socioarancels` WRITE;
 /*!40000 ALTER TABLE `socioarancels` DISABLE KEYS */;
-INSERT INTO `socioarancels` VALUES (8,4,8),(10,2,10),(11,3,6),(18,5,7),(19,5,9),(22,6,7),(23,6,9),(27,7,6),(28,7,8),(31,8,6),(32,8,10);
+INSERT INTO `socioarancels` VALUES (8,4,8),(10,2,10),(11,3,6),(18,5,7),(19,5,9),(22,6,7),(23,6,9),(31,8,6),(32,8,10),(43,7,6),(44,7,8);
 /*!40000 ALTER TABLE `socioarancels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -936,4 +936,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-16 17:34:02
+-- Dump completed on 2015-04-16 18:15:53

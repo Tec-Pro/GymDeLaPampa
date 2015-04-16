@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import Controladores.ControladorArticulosGUI;
+import Controladores.ControladorArticuloGUI;
 import Modelos.Articulo;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -68,6 +68,10 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         return modificarBtn;
     }
 
+    public JComboBox getBoxProveedor() {
+        return boxProveedor;
+    }
+
     public JButton getNuevoBtn() {
         return nuevoBtn;
     }
@@ -105,6 +109,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         nuevoBtn.setText("Guardar");
         eliminarBtn.setText("Cancelar");
         eliminarBtn.setEnabled(true);
+        boxProveedor.setEnabled(true);
     }
     
     public void EstadoInicial(){
@@ -118,6 +123,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         eliminarBtn.setText("Eliminar");
         eliminarBtn.setEnabled(false);
         modificarBtn.setEnabled(false);
+        boxProveedor.setEnabled(false);
     }
     
     public void reClick(){
@@ -136,6 +142,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         eliminarBtn.setText("Eliminar");
         eliminarBtn.setEnabled(true);
         modificarBtn.setEnabled(true);
+        boxProveedor.setEnabled(false);
     }
     
     public void EstadoArticuloSeleccionado(){
@@ -149,6 +156,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         eliminarBtn.setText("Eliminar");
         eliminarBtn.setEnabled(true);
         modificarBtn.setEnabled(true);
+        boxProveedor.setEnabled(false);
     }
     
     public void LimpiarCampos(){
@@ -158,6 +166,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         txtCodigo.setText("");
         areaDesc.setText("");
         txtStock.setText("");
+        boxProveedor.setSelectedIndex(0);
     }
     
     public void CargarCampos(Articulo art) {
@@ -215,7 +224,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPrecioCompra = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        boxProveedor = new javax.swing.JComboBox();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -329,7 +338,8 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Proveedor");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxProveedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        boxProveedor.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -341,7 +351,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(boxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,7 +423,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(boxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -453,9 +463,9 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaArticulos;
     private javax.swing.JTextArea areaDesc;
+    private javax.swing.JComboBox boxProveedor;
     private javax.swing.JButton eliminarBtn;
     private javax.swing.JLabel encontradosLbl;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;

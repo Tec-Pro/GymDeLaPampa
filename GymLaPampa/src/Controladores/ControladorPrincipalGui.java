@@ -67,7 +67,7 @@ public class ControladorPrincipalGui implements ActionListener {
     private ActualizarDatos actualizarDatos;
     private ControladorJReport impresionArancel;
     private ArticulosGUI articulosGUI;
-    private ControladorArticulosGUI controladorArticulosGUI;
+    private ControladorArticuloGUI controladorArticulosGUI;
     private CargarVentaGUI cargarVentaGUI;
     private ControladorCargarVentaGUI controladorCargarVentaGUI;
     private CumpleaniosGui cumpleGui;
@@ -131,7 +131,7 @@ public class ControladorPrincipalGui implements ActionListener {
         impresionArancel = new ControladorJReport("precio.jasper");
         principalGui.getDesktop().add(usuarioGui);
         articulosGUI = new ArticulosGUI();
-        controladorArticulosGUI = new ControladorArticulosGUI(articulosGUI);
+        controladorArticulosGUI = new ControladorArticuloGUI(articulosGUI);
         principalGui.getDesktop().add(articulosGUI);
         cargarVentaGUI = new CargarVentaGUI();
         controladorCargarVentaGUI = new ControladorCargarVentaGUI(cargarVentaGUI, principalGui);
