@@ -111,6 +111,14 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         return nombre;
     }
 
+    public JTextField getTxtCelular() {
+        return txtCelular;
+    }
+
+    public JTextField getTxtMail() {
+        return txtMail;
+    }
+
     public JComboBox getSexo() {
         return sexo;
     }
@@ -146,6 +154,8 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         sexo.setEnabled(!si);
         txtFacebook.setEnabled(!si);
         boxConocio.setEnabled(!si);
+        txtCelular.setEnabled(!si);
+        txtMail.setEnabled(!si);
     }
     
         public void limpiarCampos(){
@@ -161,6 +171,8 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         saldoCorriente.setText("");
         txtFacebook.setText("");
         boxConocio.setSelectedIndex(0);
+        txtCelular.setText("");
+        txtMail.setText("");
     }
 
     public DefaultTableModel getTablaActivDefault() {
@@ -223,6 +235,10 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         boxConocio = new javax.swing.JComboBox();
         btnVerRutina = new javax.swing.JButton();
         btnDietas = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        txtCelular = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txtMail = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         botNuevo = new javax.swing.JButton();
         botModif = new javax.swing.JButton();
@@ -307,6 +323,10 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
 
         btnDietas.setText("Dietas");
 
+        jLabel13.setText("Celular");
+
+        jLabel14.setText("Mail");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -349,19 +369,16 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(4, 4, 4)
-                        .addComponent(fechaNacim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(fechaNacim, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(direccion))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(10, 10, 10)
                         .addComponent(apellido))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 19, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnDietas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -369,7 +386,18 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botFicha)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BotHuella)))))
+                                .addComponent(BotHuella))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCelular))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMail)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -411,16 +439,24 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(boxConocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(boxConocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botFicha)
                             .addComponent(BotHuella)
                             .addComponent(btnVerRutina))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDietas)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(btnDietas))))
         );
 
         jPanel5.setLayout(new org.jdesktop.swingx.HorizontalLayout());
@@ -542,7 +578,7 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(saldoCorriente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botPago)
                     .addComponent(botPagoCuenta)))
@@ -601,6 +637,8 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -623,7 +661,9 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox sexo;
     private javax.swing.JTable tablaActividades;
     private javax.swing.JTextField telefono;
+    private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtFacebook;
+    private javax.swing.JTextField txtMail;
     // End of variables declaration//GEN-END:variables
 
 

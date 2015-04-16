@@ -549,21 +549,23 @@ DROP TABLE IF EXISTS `socios`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `socios` (
   `ID_DATOS_PERS` int(11) NOT NULL AUTO_INCREMENT,
-  `NOMBRE` varchar(20) DEFAULT NULL,
-  `APELLIDO` varchar(20) DEFAULT NULL,
-  `DNI` varchar(12) DEFAULT NULL,
+  `NOMBRE` varchar(50) DEFAULT NULL,
+  `APELLIDO` varchar(50) DEFAULT NULL,
+  `DNI` varchar(20) DEFAULT NULL,
   `FECHA_NAC` varchar(10) DEFAULT NULL,
   `FECHA_ING` date DEFAULT NULL,
-  `DIR` varchar(30) DEFAULT NULL,
-  `TEL` varchar(20) DEFAULT NULL,
+  `DIR` varchar(200) DEFAULT NULL,
+  `TEL` varchar(50) DEFAULT NULL,
   `SEXO` char(1) DEFAULT NULL,
   `FECHA_ULT_PAGO` date DEFAULT NULL,
   `ACTIV` bigint(20) DEFAULT NULL,
   `FECHA_PROX_PAGO` date DEFAULT NULL,
   `ACTIVO` int(2) DEFAULT NULL,
   `CUENTA_CORRIENTE` float DEFAULT '0',
-  `FACEBOOK` varchar(30) DEFAULT NULL,
+  `FACEBOOK` varchar(100) DEFAULT NULL,
   `NOSCONOCIOPOR` varchar(30) DEFAULT NULL,
+  `CELULAR` varchar(50) DEFAULT NULL,
+  `MAIL` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`ID_DATOS_PERS`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
