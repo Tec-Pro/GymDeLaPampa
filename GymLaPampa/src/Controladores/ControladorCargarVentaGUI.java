@@ -149,8 +149,6 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         v.set("socio_id", cargarVentaGUI.getIdSocioTxt().getText());
         v.set("fecha", dateToMySQLDate(cargarVentaGUI.getCalendario().getDate(), false));
         v.setBigDecimal("monto", cargarVentaGUI.getTotalTxt().getText());
-        v.set("forma_pago", cargarVentaGUI.getFormaPagoBox().getSelectedItem());
-         
         return v;
     }
 

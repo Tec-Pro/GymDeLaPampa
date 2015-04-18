@@ -541,7 +541,7 @@ public class ControladorAbmCliente implements ActionListener {
                 guiVerRutina.getTablaRutinasDefault().setRowCount(0);
                 guiVerRutina.setVisible(true);
                 guiVerRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
-                //guiRutinas.getTxtSocioID().setText(clienteGui.getDni().getText());
+               // guiVerRutina.getTxtDNI().setText(clienteGui.getDni().getText());
                 guiVerRutina.setTitle("Rutinas de "+clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
                 for(Rutina r : listaRutinas){
                     Object[] row = new Object[3];

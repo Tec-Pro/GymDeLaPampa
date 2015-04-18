@@ -59,7 +59,6 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
         this.getNombreSocioTxt().setText("");
         this.getTablaVentaDefault().setRowCount(0);
         this.getTotalTxt().setText("0.00");
-        this.getFormaPagoBox().setSelectedIndex(0);
         this.getBusquedaNombreTxt().setText("");
         this.getBusquedaArticulo().setText("");
     }
@@ -102,11 +101,6 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
         return cancelarVentaBtn;
     }
 
-    
-
-    public JComboBox getFormaPagoBox() {
-        return formaPagoBox;
-    }
 
     public JTextField getIdSocioTxt() {
         return idSocioTxt;
@@ -170,8 +164,6 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
         calendarioTxt = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         totalTxt = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        formaPagoBox = new javax.swing.JComboBox();
         quitarBtn = new javax.swing.JButton();
         registrarVentaBtn = new javax.swing.JButton();
         cancelarVentaBtn = new javax.swing.JButton();
@@ -324,10 +316,6 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
 
         totalTxt.setFont(new java.awt.Font("Droid Sans", 1, 24)); // NOI18N
 
-        jLabel7.setText("Forma de pago");
-
-        formaPagoBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A DEFINIR LUEGO", "CONTADO", "POR SEMANA", "POR QUINCENA", "POR MES" }));
-
         quitarBtn.setText("Quitar articulo");
         quitarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,17 +348,11 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
                         .addGap(54, 54, 54))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(quitarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63)
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(totalTxt))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(formaPagoBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(quitarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalTxt)
                         .addGap(19, 19, 19))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -390,22 +372,23 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                         .addGap(29, 29, 29)
                         .addComponent(quitarBtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(totalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(formaPagoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(37, 37, 37))
         );
 
         registrarVentaBtn.setText("Registrar venta");
 
         cancelarVentaBtn.setText("Cancelar venta");
+        cancelarVentaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarVentaBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -454,20 +437,22 @@ public class CargarVentaGUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_quitarBtnActionPerformed
 
+    private void cancelarVentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarVentaBtnActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelarVentaBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField busquedaArticulo;
     private javax.swing.JTextField busquedaNombreTxt;
     private com.toedter.calendar.JDateChooser calendarioTxt;
     private javax.swing.JButton cancelarVentaBtn;
-    private javax.swing.JComboBox formaPagoBox;
     private javax.swing.JTextField idSocioTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

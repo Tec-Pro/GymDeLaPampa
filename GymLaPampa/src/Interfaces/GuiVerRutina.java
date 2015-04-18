@@ -6,15 +6,27 @@
 package Interfaces;
 
 import Controladores.ControladorJReport;
+import Modelos.Dia;
+import Modelos.DiasEjercicios;
+import Modelos.Ejercicio;
+import Modelos.Rutina;
 import com.toedter.calendar.JDateChooser;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import org.javalite.activejdbc.LazyList;
 
 /**
  *
@@ -25,12 +37,247 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
     DefaultTableModel tablaRutinasDefault;
     ControladorJReport reporte;
     
+    DefaultTableModel tablaAerobicoLunesDefault;
+    DefaultTableModel tablaAerobicoMartesDefault;
+    DefaultTableModel tablaAerobicoMiercolesDefault;
+    DefaultTableModel tablaAerobicoJuevesDefault;
+    DefaultTableModel tablaAerobicoViernesDefault;
+    DefaultTableModel tablaAerobicoSabadoDefault;
+    DefaultTableModel tablaAerobicoDomingoDefault;
+    DefaultTableModel tablaMusculacionLunesDefault;
+    DefaultTableModel tablaMusculacionMartesDefault;
+    DefaultTableModel tablaMusculacionMiercolesDefault;
+    DefaultTableModel tablaMusculacionJuevesDefault;
+    DefaultTableModel tablaMusculacionViernesDefault;
+    DefaultTableModel tablaMusculacionSabadoDefault;
+    DefaultTableModel tablaMusculacionDomingoDefault;
+    
     public GuiVerRutina() throws JRException, ClassNotFoundException, SQLException {
         initComponents();
         tablaRutinasDefault = (DefaultTableModel) tablaRutinas.getModel();
         reporte = new ControladorJReport("rutina.jasper");
+        
+        tablaAerobicoLunesDefault = (DefaultTableModel) tablaAerobicoLunes.getModel();
+         tablaAerobicoMartesDefault = (DefaultTableModel) tablaAerobicoMartes.getModel();
+         tablaAerobicoMiercolesDefault = (DefaultTableModel) tablaAerobicoMiercoles.getModel();
+         tablaAerobicoJuevesDefault = (DefaultTableModel) tablaAerobicoJueves.getModel();
+         tablaAerobicoViernesDefault = (DefaultTableModel) tablaAerobicoViernes.getModel();
+         tablaAerobicoSabadoDefault = (DefaultTableModel) tablaAerobicoSabado.getModel();
+         tablaAerobicoDomingoDefault = (DefaultTableModel) tablaAerobicoDomingo.getModel();
+         tablaMusculacionLunesDefault = (DefaultTableModel) tablaMusculacionLunes2.getModel();
+         tablaMusculacionMartesDefault = (DefaultTableModel) tablaMusculacionMartes.getModel();
+         tablaMusculacionMiercolesDefault = (DefaultTableModel) tablaMusculacionMiercoles.getModel();
+         tablaMusculacionJuevesDefault = (DefaultTableModel) tablaMusculacionJueves.getModel();
+         tablaMusculacionViernesDefault = (DefaultTableModel) tablaMusculacionViernes.getModel();
+         tablaMusculacionSabadoDefault = (DefaultTableModel) tablaMusculacionSabado.getModel();
+         tablaMusculacionDomingoDefault = (DefaultTableModel) tablaMusculacionDomingo.getModel();
+         
+         tablaRutinas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (tablaRutinas.getSelectedRow() != -1) {
+                    limpiarTablas();
+                    rutinaSeleccionada();
+                    btnImprimir.setEnabled(true);
+                } else {
+                    limpiarTablas();
+                    LimpiarCampos();
+                    btnImprimir.setEnabled(false);
+                }
+            }
+        });
+    }
+    /*paraMostrar == true: retorna la fecha en formato dd/mm/yyyy (formato pantalla)
+     * paraMostrar == false: retorna la fecha en formato yyyy/mm/dd (formato SQL)
+     */
+    public String dateToMySQLDate(Date fecha, boolean paraMostrar) {
+        if (paraMostrar) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+            return sdf.format(fecha);
+        } else {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(fecha);
+        }
+    }
+    private void rutinaSeleccionada() {
+        int r = tablaRutinas.getSelectedRow();
+        Rutina ru = Rutina.first("id = ?", tablaRutinas.getValueAt(r, 0));
+        //guiCrearRutina.getFechaInicio().setDate(dateToMySQLDate(ru.getDate("fecha_inicio"), true));
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        String strFecha = dateToMySQLDate(ru.getDate("fecha_inicio"), true);
+        Date fecha = null;
+        try {
+            fecha = formatoDelTexto.parse(strFecha);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        fechaInicio.setDate(fecha);
+        SimpleDateFormat formatoDelTexto2 = new SimpleDateFormat("dd/MM/yyyy");
+        String strFecha2 = dateToMySQLDate(ru.getDate("fecha_fin"), true);
+        Date fecha2 = null;
+        try {
+            fecha2 = formatoDelTexto2.parse(strFecha2);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        fechaFin.setDate(fecha2);
+        areaObjetivo.setText(ru.getString("descrip"));
+        LazyList<Dia> dias = Dia.where("rutina_id = ?", ru.get("id"));
+        if (!dias.isEmpty()) {
+            for (Dia d : dias) {
+                LazyList<DiasEjercicios> diasEjercicios = DiasEjercicios.where("dia_id = ?", d.get("id"));
+                for (DiasEjercicios de : diasEjercicios) {
+                    Ejercicio e = Ejercicio.first("id = ?", de.get("ejercicio_id"));
+                    switch (d.getString("dia")) {
+                        case "LUNES":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoLunesDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionLunesDefault.addRow(row);
+                            }
+                            break;
+                        case "MARTES":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoMartesDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionMartesDefault.addRow(row);
+                            }
+                            break;
+                        case "MIERCOLES":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoMiercolesDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionMiercolesDefault.addRow(row);
+                            }
+                            break;
+                        case "JUEVES":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoJuevesDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionJuevesDefault.addRow(row);
+                            }
+                            break;
+                        case "VIERNES":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoViernesDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionViernesDefault.addRow(row);
+                            }
+                            break;
+                        case "SABADO":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoSabadoDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionSabadoDefault.addRow(row);
+                            }
+                            break;
+                        case "DOMINGO":
+                            if (e.getString("grupo").equals("AEROBICO")) {
+                                Object[] row = new Object[3];
+                                row[0] = e.get("id");
+                                row[1] = e.get("ejercicio");
+                                row[2] = de.get("tiempo");
+                                tablaAerobicoDomingoDefault.addRow(row);
+                            } else {
+                                Object[] row = new Object[5];
+                                row[0] = e.get("id");
+                                row[1] = e.get("grupo");
+                                row[2] = e.get("ejercicio");
+                                row[3] = de.get("series");
+                                row[4] = de.get("repeticiones");
+                                tablaMusculacionDomingoDefault.addRow(row);
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
     }
 
+
+    public void LimpiarCampos(){
+        fechaInicio.setDate(Calendar.getInstance().getTime());
+        areaObjetivo.setText("");
+    }
+    
+    public void limpiarTablas(){
+        tablaAerobicoLunesDefault.setRowCount(0);
+        tablaMusculacionLunesDefault.setRowCount(0);
+        tablaAerobicoMartesDefault.setRowCount(0);
+        tablaMusculacionMartesDefault.setRowCount(0);
+        tablaAerobicoMiercolesDefault.setRowCount(0);
+        tablaMusculacionMiercolesDefault.setRowCount(0);
+        tablaAerobicoJuevesDefault.setRowCount(0);
+        tablaMusculacionJuevesDefault.setRowCount(0);
+        tablaAerobicoViernesDefault.setRowCount(0);
+        tablaMusculacionViernesDefault.setRowCount(0);
+        tablaAerobicoSabadoDefault.setRowCount(0);
+        tablaMusculacionSabadoDefault.setRowCount(0);
+        tablaAerobicoDomingoDefault.setRowCount(0);
+        tablaMusculacionDomingoDefault.setRowCount(0);
+    }
+    
     public DefaultTableModel getTablaRutinasDefault() {
         return tablaRutinasDefault;
     }
@@ -55,6 +302,67 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         return txtSocio;
     }
 
+    public JTable getTablaAerobicoDomingo() {
+        return tablaAerobicoDomingo;
+    }
+
+    public JTable getTablaAerobicoJueves() {
+        return tablaAerobicoJueves;
+    }
+
+    public JTable getTablaAerobicoLunes() {
+        return tablaAerobicoLunes;
+    }
+
+    public JTable getTablaAerobicoMartes() {
+        return tablaAerobicoMartes;
+    }
+
+    public JTable getTablaAerobicoMiercoles() {
+        return tablaAerobicoMiercoles;
+    }
+
+    public JTable getTablaAerobicoSabado() {
+        return tablaAerobicoSabado;
+    }
+
+    public JTable getTablaAerobicoViernes() {
+        return tablaAerobicoViernes;
+    }
+
+    public JTable getTablaMusculacionDomingo() {
+        return tablaMusculacionDomingo;
+    }
+
+    public JTable getTablaMusculacionJueves() {
+        return tablaMusculacionJueves;
+    }
+
+    public JTable getTablaMusculacionLunes2() {
+        return tablaMusculacionLunes2;
+    }
+
+    public JTable getTablaMusculacionMartes() {
+        return tablaMusculacionMartes;
+    }
+
+    public JTable getTablaMusculacionMiercoles() {
+        return tablaMusculacionMiercoles;
+    }
+
+    public JTable getTablaMusculacionSabado() {
+        return tablaMusculacionSabado;
+    }
+
+    public JTable getTablaMusculacionViernes() {
+        return tablaMusculacionViernes;
+    }
+
+    public JTabbedPane getTabsPanel() {
+        return tabsPanel;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -756,7 +1064,7 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                 .addGap(26, 26, 26)
                 .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -797,8 +1105,14 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         );
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.setEnabled(false);
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
@@ -813,11 +1127,11 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtSocio))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -853,7 +1167,6 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         int r = tablaRutinas.getSelectedRow();
         Integer id = Integer.parseInt(String.valueOf(tablaRutinas.getValueAt(r, 0)));
-        System.out.println("data"+id);
         try {
             reporte.mostrarRutina(id);
         } catch (ClassNotFoundException ex) {
@@ -864,6 +1177,10 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
             Logger.getLogger(GuiVerRutina.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
