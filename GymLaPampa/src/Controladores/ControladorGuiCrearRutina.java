@@ -484,7 +484,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
         for (Socio s : lista) {
             Object[] row = new Object[2];
             row[0] = s.get("NOMBRE") + " " + s.get("APELLIDO");
-            row[1] = s.get("ID_DATOS_PERS");
+            row[1] = s.get("DNI");
             guiCrearRutina.getTablaSociosDefault().addRow(row);
         }
     }

@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="idRutina" class="java.lang.String"/>
+	<parameter name="rutina_id" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      ejercicios.`id` AS ejercicios_id,
@@ -33,7 +33,7 @@ FROM
      INNER JOIN `dias_ejercicios` dias_ejercicios ON dias.`id` = dias_ejercicios.`dia_id`
      INNER JOIN `ejercicios` ejercicios ON dias_ejercicios.`ejercicio_id` = ejercicios.`id`
 WHERE
-     rutinas.`id` = $P{idRutina}]]>
+     rutinas.`id` = $P{rutina_id}]]>
 	</queryString>
 	<field name="ejercicios_id" class="java.lang.Integer"/>
 	<field name="ejercicios_ejercicio" class="java.lang.String"/>
@@ -95,10 +95,10 @@ WHERE
 				<textElement textAlignment="Center">
 					<font size="28" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Gimasio personalizado Pitbull's]]></text>
+				<text><![CDATA[Gimnasio personalizado Pitbull's]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="41" width="250" height="27" uuid="2ebec70a-68c6-4522-a62a-8afeb4b9f311"/>
+				<reportElement x="12" y="41" width="250" height="27" uuid="2ebec70a-68c6-4522-a62a-8afeb4b9f311"/>
 				<textElement>
 					<font size="18" isItalic="true"/>
 				</textElement>

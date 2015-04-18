@@ -26,6 +26,7 @@ public class ControladorJReport {
 
     private JasperReport reporte;
     private String ruta;
+    
     public ControladorJReport(String jasper) throws JRException, ClassNotFoundException, SQLException {
         reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reporte/" + jasper));//cargo el reporte
          ruta= getClass().getResource("/Reporte/" + jasper).getPath();
@@ -116,13 +117,13 @@ public class ControladorJReport {
         
     }
     
-    public void mostrarRutina(Object idRutina) throws ClassNotFoundException, SQLException, JRException {
+    public void mostrarRutina(Integer idRutina) throws ClassNotFoundException, SQLException, JRException {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
         Map parametros = new HashMap();
         parametros.clear();
         
-        parametros.put("idRutina", idRutina);
+        parametros.put("rutina_id", idRutina);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         

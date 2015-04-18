@@ -25,9 +25,10 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
     DefaultTableModel tablaRutinasDefault;
     ControladorJReport reporte;
     
-    public GuiVerRutina() {
+    public GuiVerRutina() throws JRException, ClassNotFoundException, SQLException {
         initComponents();
         tablaRutinasDefault = (DefaultTableModel) tablaRutinas.getModel();
+        reporte = new ControladorJReport("rutina.jasper");
     }
 
     public DefaultTableModel getTablaRutinasDefault() {
@@ -845,8 +846,10 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         int r = tablaRutinas.getSelectedRow();
+        Integer id = Integer.parseInt(String.valueOf(tablaRutinas.getValueAt(r, 0)));
+        System.out.println("data"+id);
         try {
-            reporte.mostrarRutina(tablaRutinas.getValueAt(r, 0));
+            reporte.mostrarRutina(id);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GuiVerRutina.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
