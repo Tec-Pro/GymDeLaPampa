@@ -425,7 +425,8 @@ public class ControladorAbmCliente implements ActionListener {
             System.out.println("Boton nuevo pulsado");
             isNuevo=true;
             clienteGui.limpiarCampos();
-            clienteGui.bloquearCampos(false);            
+            clienteGui.bloquearCampos(false);   
+            clienteGui.getBtnVerRutina().setEnabled(false);
             clienteGui.setBotonesNuevo(true);
             clienteGui.setTitle("Alta de socio");
             clienteGui.getTablaActivDefault().setRowCount(0);

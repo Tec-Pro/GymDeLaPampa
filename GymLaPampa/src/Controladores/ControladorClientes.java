@@ -470,6 +470,7 @@ public class ControladorClientes implements ActionListener {
         if (evt.getClickCount() == 2) {
             altaClienteGui.setBotonesNuevo(false);
             altaClienteGui.bloquearCampos(true);
+            altaClienteGui.getBtnVerRutina().setEnabled(true);
             altaClienteGui.limpiarCampos();
             int row = tablaClientes.getSelectedRow();
             Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(row, 2));
@@ -514,6 +515,7 @@ public class ControladorClientes implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == clientesGui.getBotAltaSocio()) {
             altaClienteGui.setBotonesNuevo(true);
+            altaClienteGui.getBtnVerRutina().setEnabled(false);
             altaClienteGui.bloquearCampos(false);
             altaClienteGui.limpiarCampos();
             controladorAbmCliente.setIsNuevo(true);

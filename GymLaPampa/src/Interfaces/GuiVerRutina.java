@@ -130,6 +130,12 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
 
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Rutina"));
 
         jLabel4.setText("Fecha de inicio");

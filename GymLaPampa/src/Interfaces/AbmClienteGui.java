@@ -320,6 +320,7 @@ public class AbmClienteGui extends javax.swing.JInternalFrame {
         boxConocio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NO ESPECIFICA", "VIO EL GIMNASIO", "POR RADIO", "POR TV", "REDES SOCIALES", "UN AMIGO/A" }));
 
         btnVerRutina.setText("Ver rutina");
+        btnVerRutina.setEnabled(false);
 
         btnDietas.setText("Dietas");
 
