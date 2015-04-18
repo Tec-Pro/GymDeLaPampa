@@ -287,9 +287,9 @@ CREATE TABLE `dias_ejercicios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dia_id` int(10) DEFAULT NULL,
   `ejercicio_id` int(10) DEFAULT NULL,
-  `series` int(10) DEFAULT NULL,
-  `repeticiones` int(10) DEFAULT NULL,
-  `tiempo` varchar(100) DEFAULT NULL,
+  `series` int(10) DEFAULT 0,
+  `repeticiones` int(10) DEFAULT 0,
+  `tiempo` varchar(100) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

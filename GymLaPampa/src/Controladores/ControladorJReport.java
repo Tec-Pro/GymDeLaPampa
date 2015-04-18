@@ -115,5 +115,24 @@ public class ControladorJReport {
        
         
     }
+    
+    public void mostrarRutina(Object idRutina) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        
+        parametros.put("idRutina", idRutina);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        
+          JasperViewer jasperViewer = new JasperViewer(jasperPrint);
+            jasperViewer.setTitle("Impresión de rutina");
+            jasperViewer.toFront();
+            jasperViewer.setVisible(true);
+
+       
+        
+    }
 
 }

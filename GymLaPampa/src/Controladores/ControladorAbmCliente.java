@@ -11,7 +11,9 @@ import Interfaces.DietasSocioGui;
 import Interfaces.FichaMedicaGui;
 import Interfaces.FormaDePagoGui;
 import Interfaces.GuiCargarDias;
+import Interfaces.GuiCrearRutina;
 import Interfaces.GuiRutinas;
+import Interfaces.GuiVerRutina;
 import Interfaces.PagoCuentaEfectivo;
 import Interfaces.PrincipalGui;
 import Interfaces.RegistrarPagoGui;
@@ -56,10 +58,10 @@ public class ControladorAbmCliente implements ActionListener {
     private ActualizarDatos actualizarDatos;
     private String dniViejo;
     private PrincipalGui principal;
-    GuiCargarDias guiCrearRutina;
-    ControladorGuiCargarDias controladorGuiCrearRutina;
-    GuiRutinas guiRutinas;
-    ControladorGuiRutinas controladorGuiRutinas;
+    GuiCrearRutina guiCrearRutina;
+    ControladorGuiCrearRutina controladorGuiCrearRutina;
+    GuiVerRutina guiVerRutina;
+    //ControladorGuiRutinas controladorGuiRutinas;
     
     public ControladorAbmCliente(AbmClienteGui clienteGui, ActualizarDatos actualizarDatos, PrincipalGui p) throws JRException, ClassNotFoundException, SQLException {
         principal = p;
@@ -67,13 +69,12 @@ public class ControladorAbmCliente implements ActionListener {
         this.clienteGui.setActionListener(this);
         abmsocio = new ABMSocios();
         this.actualizarDatos= actualizarDatos;
-        guiCrearRutina = new GuiCargarDias();
-        controladorGuiCrearRutina = new ControladorGuiCargarDias(guiCrearRutina, principal);
+        guiCrearRutina = new GuiCrearRutina();
+        controladorGuiCrearRutina = new ControladorGuiCrearRutina(guiCrearRutina);
         principal.getDesktop().add(guiCrearRutina);
         
-        guiRutinas = new GuiRutinas();
-        controladorGuiRutinas = new ControladorGuiRutinas(guiRutinas);
-        principal.getDesktop().add(guiRutinas);
+        guiVerRutina = new GuiVerRutina();
+        principal.getDesktop().add(guiVerRutina);
     }
     
     private void CargarDatosSocio(Socio s){
@@ -523,34 +524,34 @@ public class ControladorAbmCliente implements ActionListener {
                  }
     }    
     }
-        /*if(ae.getSource().equals(clienteGui.getBtnVerRutina())){
+        if(ae.getSource().equals(clienteGui.getBtnVerRutina())){
             abrirBase();
             LazyList<Rutina> listaRutinas = Rutina.where("socio_id = ?", clienteGui.getDni().getText());
             if(listaRutinas.isEmpty()){
                 int ret=JOptionPane.showConfirmDialog(null, "Este socio no posee rutinas. Decea agregar una?",null,JOptionPane.YES_NO_OPTION);
                 if(ret == JOptionPane.YES_OPTION){
                     guiCrearRutina.setVisible(true);
-                    controladorGuiCrearRutina.ActualizarListaEjercicios();
+                    //controladorGuiCrearRutina.ActualizarListaEjercicios();
                     controladorGuiCrearRutina.ActualizarListaSocios();
-                    guiCrearRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
-                    guiCrearRutina.getTxtIdSocio().setText(clienteGui.getDni().getText());
+                    //guiCrearRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                    //guiCrearRutina.getTxtIdSocio().setText(clienteGui.getDni().getText());
                 }
             }else{
-                guiRutinas.getTablaRutinasDefault().setRowCount(0);
-                guiRutinas.setVisible(true);
-                guiRutinas.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
-                guiRutinas.getTxtSocioID().setText(clienteGui.getDni().getText());
-                guiRutinas.setTitle("Rutinas de "+clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                guiVerRutina.getTablaRutinasDefault().setRowCount(0);
+                guiVerRutina.setVisible(true);
+                guiVerRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
+                //guiRutinas.getTxtSocioID().setText(clienteGui.getDni().getText());
+                guiVerRutina.setTitle("Rutinas de "+clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
                 for(Rutina r : listaRutinas){
-                    Object[] row = new Object[4];
+                    Object[] row = new Object[3];
                     row[0] = r.get("id");
-                    row[1] = r.get("dia");
-                    row[2] = dateToMySQLDate(r.getDate("fecha_inicio"), true);
-                    row[3] = dateToMySQLDate(r.getDate("fecha_fin"), true);
-                    guiRutinas.getTablaRutinasDefault().addRow(row);
+                    //row[1] = r.get("dia");
+                    row[1] = dateToMySQLDate(r.getDate("fecha_inicio"), true);
+                    row[2] = dateToMySQLDate(r.getDate("fecha_fin"), true);
+                    guiVerRutina.getTablaRutinasDefault().addRow(row);
                 }
             }
-        }*/
+        }
         if(ae.getSource().equals(clienteGui.getBtnDietas())){
                 DietasSocioGui dietaSocioGui=new DietasSocioGui(principal, true,s.getInteger("id_datos_pers") );
                 dietaSocioGui.setLocationRelativeTo(clienteGui);

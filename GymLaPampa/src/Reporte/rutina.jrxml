@@ -59,9 +59,9 @@ WHERE
 	<group name="GrupoDia">
 		<groupExpression><![CDATA[$F{dias_dia}]]></groupExpression>
 		<groupHeader>
-			<band height="22">
+			<band height="16">
 				<textField>
-					<reportElement mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#999999" uuid="32747503-fdbf-466f-b568-8020ae378dfb"/>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="16" backcolor="#999999" uuid="32747503-fdbf-466f-b568-8020ae378dfb"/>
 					<textElement textAlignment="Center">
 						<font size="12" isBold="true" isItalic="false"/>
 					</textElement>
@@ -73,9 +73,9 @@ WHERE
 	<group name="GrupoEjGrupo">
 		<groupExpression><![CDATA[$F{ejercicios_grupo}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="15">
 				<textField>
-					<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="8a25d444-fa9c-4b32-9ce5-81733c5af544"/>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="8a25d444-fa9c-4b32-9ce5-81733c5af544"/>
 					<textElement textAlignment="Left">
 						<font isBold="true"/>
 					</textElement>
@@ -88,7 +88,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="41" uuid="736f1c9f-03d3-43f7-8590-30d845c1356a"/>
 				<box leftPadding="0"/>
@@ -107,88 +107,88 @@ WHERE
 		</band>
 	</title>
 	<pageHeader>
-		<band height="124" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<staticText>
-				<reportElement x="12" y="70" width="44" height="20" uuid="d3d08d0d-5a82-4ce3-808d-db5f31b27c54"/>
+				<reportElement x="12" y="40" width="44" height="20" uuid="d3d08d0d-5a82-4ce3-808d-db5f31b27c54"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Desde:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="40" width="69" height="20" uuid="35fd79ef-0386-4a50-ac72-70f254190c62"/>
+				<reportElement x="10" y="20" width="59" height="20" uuid="35fd79ef-0386-4a50-ac72-70f254190c62"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Descripcion:]]></text>
+				<text><![CDATA[Objetivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="10" width="46" height="20" uuid="1511bdb3-4cd0-4ba8-80af-4e80dc800c43"/>
+				<reportElement x="10" y="0" width="59" height="20" uuid="1511bdb3-4cd0-4ba8-80af-4e80dc800c43"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="70" width="44" height="20" uuid="6603f2c2-5c71-4df6-b8d9-7ce9f868482e"/>
+				<reportElement x="216" y="40" width="44" height="20" uuid="6603f2c2-5c71-4df6-b8d9-7ce9f868482e"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hasta:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="226" y="10" width="55" height="20" uuid="ea246f58-eb22-4551-8d7d-b4a947ee1901"/>
+				<reportElement x="216" y="0" width="55" height="20" uuid="ea246f58-eb22-4551-8d7d-b4a947ee1901"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellido:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="69" y="10" width="100" height="20" uuid="1c0569a6-3be9-4efc-867d-cb9abe7319a7"/>
+				<reportElement x="69" y="0" width="100" height="20" uuid="1c0569a6-3be9-4efc-867d-cb9abe7319a7"/>
 				<textFieldExpression><![CDATA[$F{socios_NOMBRE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="298" y="10" width="100" height="20" uuid="6bb2856d-27f9-4a91-8e9d-1707cf2639f0"/>
+				<reportElement x="271" y="0" width="100" height="20" uuid="6bb2856d-27f9-4a91-8e9d-1707cf2639f0"/>
 				<textFieldExpression><![CDATA[$F{socios_APELLIDO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="40" width="100" height="20" uuid="98a1bc00-8696-415b-a2b4-49984bc6dd40"/>
+				<reportElement x="69" y="20" width="100" height="20" uuid="98a1bc00-8696-415b-a2b4-49984bc6dd40"/>
 				<textFieldExpression><![CDATA[$F{rutinas_descrip}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="69" y="70" width="100" height="20" uuid="53f10ad4-5e8e-46f0-9a9f-178cd53cf41a"/>
+				<reportElement x="69" y="40" width="100" height="20" uuid="53f10ad4-5e8e-46f0-9a9f-178cd53cf41a"/>
 				<textFieldExpression><![CDATA[$F{rutinas_fecha_inicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="271" y="70" width="100" height="20" uuid="681bfc33-c30f-47d6-a8a6-8fe050dae708"/>
+				<reportElement x="271" y="40" width="100" height="20" uuid="681bfc33-c30f-47d6-a8a6-8fe050dae708"/>
 				<textFieldExpression><![CDATA[$F{rutinas_fecha_fin}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="0" y="104" width="555" height="20" uuid="de462b59-4bc6-4e76-ae76-f2039801bcac"/>
+				<reportElement x="0" y="60" width="555" height="20" uuid="de462b59-4bc6-4e76-ae76-f2039801bcac"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="12" y="102" width="100" height="20" uuid="98527b5f-4821-4df9-a7ff-d130ddcebe10"/>
+				<reportElement x="12" y="58" width="100" height="20" uuid="98527b5f-4821-4df9-a7ff-d130ddcebe10"/>
 				<textElement>
 					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Ejercicio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="246" y="102" width="100" height="20" uuid="8f2eec7a-fe81-441f-a91b-92a8cc62d882"/>
+				<reportElement x="298" y="60" width="49" height="20" uuid="8f2eec7a-fe81-441f-a91b-92a8cc62d882"/>
 				<textElement>
 					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Series]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="104" width="100" height="20" uuid="52f3f262-bba7-463d-b40b-e91ac671c85f"/>
+				<reportElement x="355" y="60" width="100" height="20" uuid="52f3f262-bba7-463d-b40b-e91ac671c85f"/>
 				<textElement>
 					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Repeticiones]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="104" width="100" height="20" uuid="5de070bc-23f2-430d-8e52-60cbdaae515f"/>
+				<reportElement x="455" y="60" width="100" height="20" uuid="5de070bc-23f2-430d-8e52-60cbdaae515f"/>
 				<textElement>
 					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
@@ -200,21 +200,33 @@ WHERE
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="255" height="20" uuid="344fcadc-0f16-4912-9f41-a17120effbd5"/>
+				<reportElement x="0" y="0" width="316" height="20" uuid="344fcadc-0f16-4912-9f41-a17120effbd5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ejercicios_ejercicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="255" y="0" width="100" height="20" uuid="8603fbb2-ca37-4d49-b317-9c92fb252b40"/>
+				<reportElement x="316" y="0" width="71" height="20" uuid="8603fbb2-ca37-4d49-b317-9c92fb252b40"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{dias_ejercicios_series}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="355" y="0" width="100" height="20" uuid="bf2ca413-4dae-454b-994f-180e51359802"/>
+				<reportElement x="387" y="0" width="68" height="20" uuid="bf2ca413-4dae-454b-994f-180e51359802"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{dias_ejercicios_repeticiones}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="0" width="100" height="20" uuid="d1500ab3-5625-4674-a8bb-2ec7d0b80e78"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{dias_ejercicios_tiempo}]]></textFieldExpression>
 			</textField>
 		</band>
