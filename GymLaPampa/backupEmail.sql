@@ -72,7 +72,7 @@ CREATE TABLE `alimentos_dietas` (
   `dia` varchar(45) DEFAULT NULL,
   `numero_dia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`,`dieta_id`,`alimento_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `articulos` (
 
 LOCK TABLES `articulos` WRITE;
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
-INSERT INTO `articulos` VALUES (1,'pwm','POWERADE 500 ML',12,8,57,'SABOR MANDARINA',NULL),(2,'ag','AGUA MINERAL',10,7,24,'LOS ANDES 500 ML',NULL),(3,'5','HTRH',65,65,5,'',2),(4,'es','ESTAAA',546,564,321,'FSVFDF',3);
+INSERT INTO `articulos` VALUES (1,'pwm','POWERADE 500 ML',12,8,57,'SABOR MANDARINA',NULL),(2,'ag','AGUA MINERAL',10,7,24,'LOS ANDES 500 ML',3),(3,'5','HTRH',65,65,5,'',2),(4,'es','ESTAAA',546,564,321,'FSVFDF',3);
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `asistencias` (
   PRIMARY KEY (`ID_ASISTENCIA`),
   KEY `FK_ASISTENCIA` (`ID_DATOS_PERS`),
   CONSTRAINT `FK_ASISTENCIA` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +398,7 @@ CREATE TABLE `dias` (
   `rutina_id` int(10) DEFAULT NULL,
   `dia` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,6 +407,7 @@ CREATE TABLE `dias` (
 
 LOCK TABLES `dias` WRITE;
 /*!40000 ALTER TABLE `dias` DISABLE KEYS */;
+INSERT INTO `dias` VALUES (8,1,'LUNES'),(9,1,'MARTES'),(10,1,'MIERCOLES'),(11,1,'JUEVES'),(12,1,'VIERNES'),(13,1,'SABADO'),(14,1,'DOMINGO');
 /*!40000 ALTER TABLE `dias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,7 +426,7 @@ CREATE TABLE `dias_ejercicios` (
   `repeticiones` int(10) DEFAULT NULL,
   `tiempo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -434,6 +435,7 @@ CREATE TABLE `dias_ejercicios` (
 
 LOCK TABLES `dias_ejercicios` WRITE;
 /*!40000 ALTER TABLE `dias_ejercicios` DISABLE KEYS */;
+INSERT INTO `dias_ejercicios` VALUES (3,8,1,3,15,NULL),(4,8,4,3,15,NULL),(5,9,4,3,15,NULL),(6,12,5,3,15,NULL);
 /*!40000 ALTER TABLE `dias_ejercicios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -449,7 +451,7 @@ CREATE TABLE `dietas` (
   `nombre` varchar(45) NOT NULL,
   `descripcion` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -594,7 +596,7 @@ CREATE TABLE `gastos` (
   `fecha` date DEFAULT NULL,
   `descrip` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -679,7 +681,7 @@ CREATE TABLE `pagos` (
   UNIQUE KEY `ID_PAGOS_UNIQUE` (`ID_PAGOS`),
   KEY `FK_PAGOS` (`ID_DATOS_PERS`),
   CONSTRAINT `FK_PAGOS` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -767,7 +769,7 @@ CREATE TABLE `rutinas` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -776,6 +778,7 @@ CREATE TABLE `rutinas` (
 
 LOCK TABLES `rutinas` WRITE;
 /*!40000 ALTER TABLE `rutinas` DISABLE KEYS */;
+INSERT INTO `rutinas` VALUES (1,7,'','2015-04-17','2015-05-17');
 /*!40000 ALTER TABLE `rutinas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -862,7 +865,7 @@ CREATE TABLE `socios_dietas` (
   `desde` date DEFAULT NULL,
   `hasta` date DEFAULT NULL,
   PRIMARY KEY (`id`,`socio_id`,`dieta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -936,4 +939,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-16 18:15:53
+-- Dump completed on 2015-04-17 20:33:53

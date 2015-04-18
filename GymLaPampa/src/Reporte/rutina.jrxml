@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eba73ee2-39a6-4390-91f8-0c617e90f0d6">
+	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idRutina" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     ejercicios.`id` AS ejercicios_id,
+     ejercicios.`ejercicio` AS ejercicios_ejercicio,
+     ejercicios.`grupo` AS ejercicios_grupo,
+     dias.`id` AS dias_id,
+     dias.`rutina_id` AS dias_rutina_id,
+     dias.`dia` AS dias_dia,
+     dias_ejercicios.`id` AS dias_ejercicios_id,
+     dias_ejercicios.`dia_id` AS dias_ejercicios_dia_id,
+     dias_ejercicios.`ejercicio_id` AS dias_ejercicios_ejercicio_id,
+     dias_ejercicios.`series` AS dias_ejercicios_series,
+     dias_ejercicios.`repeticiones` AS dias_ejercicios_repeticiones,
+     dias_ejercicios.`tiempo` AS dias_ejercicios_tiempo,
+     rutinas.`id` AS rutinas_id,
+     rutinas.`socio_id` AS rutinas_socio_id,
+     rutinas.`descrip` AS rutinas_descrip,
+     rutinas.`fecha_inicio` AS rutinas_fecha_inicio,
+     rutinas.`fecha_fin` AS rutinas_fecha_fin,
+     socios.`ID_DATOS_PERS` AS socios_ID_DATOS_PERS,
+     socios.`NOMBRE` AS socios_NOMBRE,
+     socios.`APELLIDO` AS socios_APELLIDO,
+     socios.`DNI` AS socios_DNI
+FROM
+     `socios` socios INNER JOIN `rutinas` rutinas ON socios.`ID_DATOS_PERS` = rutinas.`socio_id`
+     INNER JOIN `dias` dias ON rutinas.`id` = dias.`rutina_id`
+     INNER JOIN `dias_ejercicios` dias_ejercicios ON dias.`id` = dias_ejercicios.`dia_id`
+     INNER JOIN `ejercicios` ejercicios ON dias_ejercicios.`ejercicio_id` = ejercicios.`id`
+WHERE
+     rutinas.`id` = $P{idRutina}]]>
+	</queryString>
+	<field name="ejercicios_id" class="java.lang.Integer"/>
+	<field name="ejercicios_ejercicio" class="java.lang.String"/>
+	<field name="ejercicios_grupo" class="java.lang.String"/>
+	<field name="dias_id" class="java.lang.Integer"/>
+	<field name="dias_rutina_id" class="java.lang.Integer"/>
+	<field name="dias_dia" class="java.lang.String"/>
+	<field name="dias_ejercicios_id" class="java.lang.Integer"/>
+	<field name="dias_ejercicios_dia_id" class="java.lang.Integer"/>
+	<field name="dias_ejercicios_ejercicio_id" class="java.lang.Integer"/>
+	<field name="dias_ejercicios_series" class="java.lang.Integer"/>
+	<field name="dias_ejercicios_repeticiones" class="java.lang.Integer"/>
+	<field name="dias_ejercicios_tiempo" class="java.lang.String"/>
+	<field name="rutinas_id" class="java.lang.Integer"/>
+	<field name="rutinas_socio_id" class="java.lang.Integer"/>
+	<field name="rutinas_descrip" class="java.lang.String"/>
+	<field name="rutinas_fecha_inicio" class="java.sql.Date"/>
+	<field name="rutinas_fecha_fin" class="java.sql.Date"/>
+	<field name="socios_ID_DATOS_PERS" class="java.lang.Integer"/>
+	<field name="socios_NOMBRE" class="java.lang.String"/>
+	<field name="socios_APELLIDO" class="java.lang.String"/>
+	<field name="socios_DNI" class="java.lang.String"/>
+	<group name="GrupoDia">
+		<groupExpression><![CDATA[$F{dias_dia}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#999999" uuid="32747503-fdbf-466f-b568-8020ae378dfb"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dias_dia}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="GrupoEjGrupo">
+		<groupExpression><![CDATA[$F{ejercicios_grupo}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="8a25d444-fa9c-4b32-9ce5-81733c5af544"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ejercicios_grupo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="41" uuid="736f1c9f-03d3-43f7-8590-30d845c1356a"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Center">
+					<font size="28" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Gimasio personalizado Pitbull's]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="41" width="250" height="27" uuid="2ebec70a-68c6-4522-a62a-8afeb4b9f311"/>
+				<textElement>
+					<font size="18" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Rutina personalizada]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="124" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="70" width="44" height="20" uuid="d3d08d0d-5a82-4ce3-808d-db5f31b27c54"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="69" height="20" uuid="35fd79ef-0386-4a50-ac72-70f254190c62"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripcion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="46" height="20" uuid="1511bdb3-4cd0-4ba8-80af-4e80dc800c43"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="70" width="44" height="20" uuid="6603f2c2-5c71-4df6-b8d9-7ce9f868482e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="10" width="55" height="20" uuid="ea246f58-eb22-4551-8d7d-b4a947ee1901"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="10" width="100" height="20" uuid="1c0569a6-3be9-4efc-867d-cb9abe7319a7"/>
+				<textFieldExpression><![CDATA[$F{socios_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="10" width="100" height="20" uuid="6bb2856d-27f9-4a91-8e9d-1707cf2639f0"/>
+				<textFieldExpression><![CDATA[$F{socios_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="40" width="100" height="20" uuid="98a1bc00-8696-415b-a2b4-49984bc6dd40"/>
+				<textFieldExpression><![CDATA[$F{rutinas_descrip}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="70" width="100" height="20" uuid="53f10ad4-5e8e-46f0-9a9f-178cd53cf41a"/>
+				<textFieldExpression><![CDATA[$F{rutinas_fecha_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="70" width="100" height="20" uuid="681bfc33-c30f-47d6-a8a6-8fe050dae708"/>
+				<textFieldExpression><![CDATA[$F{rutinas_fecha_fin}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="0" y="104" width="555" height="20" uuid="de462b59-4bc6-4e76-ae76-f2039801bcac"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="102" width="100" height="20" uuid="98527b5f-4821-4df9-a7ff-d130ddcebe10"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Ejercicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="102" width="100" height="20" uuid="8f2eec7a-fe81-441f-a91b-92a8cc62d882"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Series]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="104" width="100" height="20" uuid="52f3f262-bba7-463d-b40b-e91ac671c85f"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Repeticiones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="104" width="100" height="20" uuid="5de070bc-23f2-430d-8e52-60cbdaae515f"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="255" height="20" uuid="344fcadc-0f16-4912-9f41-a17120effbd5"/>
+				<textFieldExpression><![CDATA[$F{ejercicios_ejercicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="100" height="20" uuid="8603fbb2-ca37-4d49-b317-9c92fb252b40"/>
+				<textFieldExpression><![CDATA[$F{dias_ejercicios_series}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20" uuid="bf2ca413-4dae-454b-994f-180e51359802"/>
+				<textFieldExpression><![CDATA[$F{dias_ejercicios_repeticiones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="d1500ab3-5625-4674-a8bb-2ec7d0b80e78"/>
+				<textFieldExpression><![CDATA[$F{dias_ejercicios_tiempo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
