@@ -311,7 +311,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         btnGestionEjercicios.setText("Gestion de ejercicios");
         jMenu4.add(btnGestionEjercicios);
 
-        btnCrearRutina.setText("Crear rutina");
+        btnCrearRutina.setText("Gestion de rutinas");
         jMenu4.add(btnCrearRutina);
 
         jMenuBar1.add(jMenu4);

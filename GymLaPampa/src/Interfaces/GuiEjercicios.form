@@ -153,15 +153,21 @@
     <Component class="javax.swing.JComboBox" name="boxGrupo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="8">
+          <StringArray count="14">
             <StringItem index="0" value="Seleccionar"/>
-            <StringItem index="1" value="PECTORALES"/>
-            <StringItem index="2" value="ESPALDA"/>
-            <StringItem index="3" value="HOMBROS"/>
-            <StringItem index="4" value="BICEPS"/>
-            <StringItem index="5" value="TRICEPS"/>
-            <StringItem index="6" value="PIERNAS"/>
-            <StringItem index="7" value="AEROBICO"/>
+            <StringItem index="1" value="ABDOMINALES"/>
+            <StringItem index="2" value="ANTEBRAZOS"/>
+            <StringItem index="3" value="B&#xcd;CEPS"/>
+            <StringItem index="4" value="CU&#xc1;DRICEPS"/>
+            <StringItem index="5" value="ESPALDA"/>
+            <StringItem index="6" value="FEMORALES"/>
+            <StringItem index="7" value="GEMELOS"/>
+            <StringItem index="8" value="GL&#xda;TEOS"/>
+            <StringItem index="9" value="HOMBROS"/>
+            <StringItem index="10" value="MU&#xd1;ECAS (ENDURECER)"/>
+            <StringItem index="11" value="PECTORALES"/>
+            <StringItem index="12" value="TR&#xcd;CEPS"/>
+            <StringItem index="13" value="AEROBICO"/>
           </StringArray>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>

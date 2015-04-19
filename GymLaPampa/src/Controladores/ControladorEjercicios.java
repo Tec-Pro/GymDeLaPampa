@@ -120,7 +120,7 @@ public class ControladorEjercicios implements ActionListener {
     public void ActualizarLista() {
         abrirBase();
         guiEjercicios.getTablaEjerciciosDefault().setRowCount(0);
-        LazyList<Ejercicio> listaEjercicios = Ejercicio.findAll();
+        LazyList<Ejercicio> listaEjercicios = Ejercicio.findAll().orderBy("grupo");
         for (Ejercicio ejercicio : listaEjercicios) {
             Object row[] = new String[3];
             row[0] = ejercicio.getString("id");

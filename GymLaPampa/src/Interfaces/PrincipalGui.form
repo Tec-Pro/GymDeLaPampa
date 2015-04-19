@@ -86,7 +86,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="btnCrearRutina">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Crear rutina"/>
+                <Property name="text" type="java.lang.String" value="Gestion de rutinas"/>
               </Properties>
             </MenuItem>
           </SubComponents>

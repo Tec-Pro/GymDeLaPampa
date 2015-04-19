@@ -164,7 +164,7 @@ public class GuiEjercicios extends javax.swing.JInternalFrame {
 
         txtEjercicio.setEnabled(false);
 
-        boxGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "PECTORALES", "ESPALDA", "HOMBROS", "BICEPS", "TRICEPS", "PIERNAS", "AEROBICO" }));
+        boxGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "ABDOMINALES", "ANTEBRAZOS", "BÍCEPS", "CUÁDRICEPS", "ESPALDA", "FEMORALES", "GEMELOS", "GLÚTEOS", "HOMBROS", "MUÑECAS (ENDURECER)", "PECTORALES", "TRÍCEPS", "AEROBICO" }));
         boxGrupo.setEnabled(false);
 
         nuevoBtn.setText("Nuevo");

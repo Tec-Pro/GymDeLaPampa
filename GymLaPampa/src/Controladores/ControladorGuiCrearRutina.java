@@ -454,7 +454,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
         abrirBase();
         guiCrearRutina.getTablaEjerciciosDefault().setRowCount(0);
         List<Ejercicio> resul;
-        resul = Ejercicio.where("ejercicio like ? or grupo like ?", "%" + guiCrearRutina.getTxtBuscarEjercicio().getText() + "%", "%" + guiCrearRutina.getTxtBuscarEjercicio().getText() + "%");
+        resul = Ejercicio.where("ejercicio like ? or grupo like ?", "%" + guiCrearRutina.getTxtBuscarEjercicio().getText() + "%", "%" + guiCrearRutina.getTxtBuscarEjercicio().getText() + "%").orderBy("grupo");
         for (Ejercicio e : resul) {
             Object[] row = new Object[3];
             row[0] = e.getString("id");
@@ -462,7 +462,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
             row[2] = e.getString("ejercicio");
             guiCrearRutina.getTablaEjerciciosDefault().addRow(row);
         }
-        guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
+        //guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
     }
 
     private void buscarSocio() {
@@ -492,7 +492,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
     public void ActualizarListaEjercicios() {
         guiCrearRutina.getTablaEjerciciosDefault().setRowCount(0);
         abrirBase();
-        LazyList<Ejercicio> ejercicios = Ejercicio.findAll();
+        LazyList<Ejercicio> ejercicios = Ejercicio.findAll().orderBy("grupo");
         for (Ejercicio a : ejercicios) {
             Object[] row = new Object[3];
             row[0] = a.getString("id");
@@ -500,7 +500,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
             row[2] = a.getString("ejercicio");
             guiCrearRutina.getTablaEjerciciosDefault().addRow(row);
         }
-        guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
+       // guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
     }
 
     public void ActualizarListaRutinas() {

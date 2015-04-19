@@ -79,8 +79,8 @@ public class GuiCrearRutina extends javax.swing.JInternalFrame {
         tablaEjercicio.getColumnModel().getColumn(2).setPreferredWidth(300);
 
         //Esto me sirve para despues poder ordenar los ejercicios por grupo
-        RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tablaEjerciciosDefault);
-        tablaEjercicio.setRowSorter(sorter);
+        //RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tablaEjerciciosDefault);
+        //tablaEjercicio.setRowSorter(sorter);
         //
     }
 
@@ -1306,7 +1306,7 @@ public class GuiCrearRutina extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Grupo", "Ejercicio"
+                "ID", "Fecha inicio", "Fecha fin"
             }
         ) {
             boolean[] canEdit = new boolean [] {
