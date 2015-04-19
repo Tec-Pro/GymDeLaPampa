@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/VerDietaGui.java</file>
-            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/PrincipalGui.java</file>
-            <file>file:/C:/Users/NicoOrcasitas/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorPrincipalGui.java</file>
+            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorAbmCliente.java</file>
+            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Interfaces/AbmClienteGui.java</file>
+            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/ABMs/ABMSocios.java</file>
+            <file>file:/C:/Users/A/Documents/GitHub/GymDeLaPampa/GymLaPampa/src/Controladores/ControladorClientes.java</file>
         </group>
     </open-files>
 </project-private>

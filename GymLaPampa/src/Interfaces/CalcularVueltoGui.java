@@ -12,6 +12,7 @@ import java.math.RoundingMode;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
@@ -213,6 +214,10 @@ public class CalcularVueltoGui extends javax.swing.JDialog {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
     }
 
 

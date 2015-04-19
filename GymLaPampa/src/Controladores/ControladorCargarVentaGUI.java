@@ -6,10 +6,13 @@
 package Controladores;
 
 import ABMs.ABMVentas;
+import Interfaces.CalcularVueltoGui;
 import Interfaces.PrincipalGui;
 import Interfaces.CargarVentaGUI;
 import Interfaces.FormaDePagoGui;
 import Modelos.Articulo;
+import Modelos.Dato;
+import Modelos.Gasto;
 import Modelos.Socio;
 import Modelos.Venta;
 import Utiles.Triple;
@@ -44,6 +47,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
     ABMVentas abmVentas;
     PrincipalGui aplicacionGUI;
     FormaDePagoGui formaDePago;
+    CalcularVueltoGui calcularVueltoGui;
 
     public ControladorCargarVentaGUI(CargarVentaGUI cv, PrincipalGui ap) throws JRException, ClassNotFoundException, SQLException {
         aplicacionGUI = ap;
@@ -51,6 +55,9 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         cargarVentaGUI.setActionListener(this);
         abmVentas = new ABMVentas();
         formaDePago = new FormaDePagoGui(aplicacionGUI, true, false);
+        formaDePago.setLocationRelativeTo(null);
+        formaDePago.getBtnCancelar().setEnabled(false);
+
         cargarVentaGUI.getBusquedaNombreTxt().addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -111,7 +118,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
                 row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
                 row[4] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
                 cargarVentaGUI.getTablaVentaDefault().addRow(row);
-                 
+
             } else {
                 // Lo que se hace dentro de este else es sumar en uno a la cantidad del articulo si ya estaba en el carrito.
                 Double viejaCantidad = new Double(String.valueOf(cargarVentaGUI.getTablaVentaDefault().getValueAt(lineaArticulo, 2)));
@@ -186,12 +193,12 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             cargarVentaGUI.getTablaVenta().getCellEditor(i, 3).addCellEditorListener(this);
         }
     }
-    
-    public void ActualizarListaProductos(){
+
+    public void ActualizarListaProductos() {
         cargarVentaGUI.getTablaArticulosDefault().setRowCount(0);
         abrirBase();
         LazyList<Articulo> articulos = Articulo.findAll();
-        for(Articulo a: articulos){
+        for (Articulo a : articulos) {
             Object[] row = new Object[4];
             row[0] = a.getString("codigo");
             row[1] = a.getString("articulo");
@@ -199,21 +206,72 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             row[3] = a.getBigDecimal("precio").setScale(2, RoundingMode.CEILING);
             cargarVentaGUI.getTablaArticulosDefault().addRow(row);
         }
-         
+
     }
-    
-    public void ActualizarListaSocios(){
+
+    public void ActualizarListaSocios() {
         cargarVentaGUI.getTablaSociosDefault().setRowCount(0);
         abrirBase();
         LazyList<Socio> socios = Socio.findAll();
-        for(Socio a: socios){
+        for (Socio a : socios) {
             Object[] row = new Object[3];
             row[0] = a.getString("ID_DATOS_PERS");
             row[1] = a.getString("NOMBRE");
             row[2] = a.getString("DIR");
             cargarVentaGUI.getTablaSociosDefault().addRow(row);
         }
-         
+
+    }
+
+    private boolean pagoACuenta() {
+        abrirBase();
+        Base.openTransaction();
+        boolean res = true;
+        Socio s = Socio.first("ID_DATOS_PERS = ?", cargarVentaGUI.getIdSocioTxt().getText());
+        Double t = Double.parseDouble(cargarVentaGUI.getTotalTxt().getText());
+        BigDecimal total = BigDecimal.valueOf(t);
+        BigDecimal r = s.getBigDecimal("CUENTA_CORRIENTE").subtract(total);
+        s.setBigDecimal("CUENTA_CORRIENTE", r);
+        res = res && s.saveIt();
+       //categoria_id = 7 es el id de la categoria VENTA 
+        //Dato d = Dato.create("descripcion","PAGO DE VENTA","categoria_id",7,"ingreso_egreso","ingreso");
+        //res = res && d.saveIt();
+        int idDato = 15;//d.getInteger("id");
+        Gasto g = Gasto.first("dato_id = ? and fecha = ?", idDato, dateToMySQLDate(Calendar.getInstance().getTime(), false));
+        if (g != null) {
+            BigDecimal monto = g.getBigDecimal("monto");
+            monto = monto.add(total);
+            g.setBigDecimal("monto", monto);
+            res = res && g.saveIt();
+        } else {
+            Gasto ga = Gasto.create("dato_id", idDato, "monto", total, "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "descrip", "PAGO DE VENTA");
+            res = res && ga.saveIt();
+        }
+
+        Base.commitTransaction();
+        return res;
+    }
+    
+    private boolean pagoEfectivo(){
+        abrirBase();
+        Base.openTransaction();
+        boolean res = true;
+        int idDato = 15;//d.getInteger("id"); id del dato de PAGO DE VENTA
+        Double t = Double.parseDouble(cargarVentaGUI.getTotalTxt().getText());
+        BigDecimal total = BigDecimal.valueOf(t);
+        Gasto g = Gasto.first("dato_id = ? and fecha = ?", idDato, dateToMySQLDate(Calendar.getInstance().getTime(), false));
+        if (g != null) {
+            BigDecimal monto = g.getBigDecimal("monto");
+            monto = monto.add(total);
+            g.setBigDecimal("monto", monto);
+            res = res && g.saveIt();
+        } else {
+            Gasto ga = Gasto.create("dato_id", idDato, "monto", total, "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "descrip", "PAGO DE VENTA");
+            res = res && ga.saveIt();
+        }
+
+        Base.commitTransaction();
+        return res;
     }
 
     /* private void VerCargarCuotasGUI() {
@@ -235,10 +293,36 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
                 if (abmVentas.Alta(ObtenerDatosVenta())) {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Venta registrada exitosamente!");
                     formaDePago.setVisible(true);
-                    switch(formaDePago.getReturnStatus()){
+                    switch (formaDePago.getReturnStatus()) {
                         case FormaDePagoGui.RET_CUENTA:
+                            if (pagoACuenta()) {
+                                JOptionPane.showMessageDialog(formaDePago, "Se cargo el monto a la cuenta corriente.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                cargarVentaGUI.setVisible(false);
+                            }
                             break;
                         case FormaDePagoGui.RET_EFECTIVO:
+                            Double t = Double.parseDouble(cargarVentaGUI.getTotalTxt().getText());
+                            BigDecimal total = BigDecimal.valueOf(t);
+                            calcularVueltoGui = new CalcularVueltoGui(aplicacionGUI, true, total);
+                            calcularVueltoGui.setVisible(true);
+                            calcularVueltoGui.setLocationRelativeTo(null);
+                            calcularVueltoGui.getCancelButton().setEnabled(false);
+                            switch(calcularVueltoGui.getReturnStatus()){
+                                case CalcularVueltoGui.RET_OK:
+                                    if(pagoEfectivo()){
+                                        JOptionPane.showMessageDialog(formaDePago, "Se cargo el pago correctamente.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                        cargarVentaGUI.setVisible(false);
+                                    }
+                                    break;
+                                case CalcularVueltoGui.RET_CANCEL:
+                                    JOptionPane.showMessageDialog(formaDePago, "La venta no registrara pagos, ni tampoco se reflejara la deuda de la venta en la cuenta del cliente!", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+                                    cargarVentaGUI.setVisible(false);
+                                    break;
+                            }
+                            break;
+                        case FormaDePagoGui.RET_CANCELAR:
+                            JOptionPane.showMessageDialog(formaDePago, "La venta no registrara pagos, ni tampoco se reflejara la deuda de la venta en la cuenta del cliente!", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+                            cargarVentaGUI.setVisible(false);
                             break;
                     }
                 } else {
