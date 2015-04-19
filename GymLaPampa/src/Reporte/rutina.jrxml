@@ -85,7 +85,12 @@ WHERE
 		</groupHeader>
 	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="555" height="802" uuid="3ee9290a-671a-42af-8b4a-72ca9bd76f5e"/>
+				<imageExpression><![CDATA["logoTrans.png"]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band height="68" splitType="Stretch">
@@ -222,7 +227,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dias_ejercicios_repeticiones}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="455" y="0" width="100" height="20" uuid="d1500ab3-5625-4674-a8bb-2ec7d0b80e78"/>
 				<textElement>
 					<font size="8"/>

@@ -1215,11 +1215,9 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
     private void btnMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMailActionPerformed
         try {
             int r = tablaRutinas.getSelectedRow();
-            Integer idRutina = Integer.parseInt(String.valueOf(tablaRutinas.getValueAt(r, r)));
+            Integer idRutina = Integer.parseInt(String.valueOf(tablaRutinas.getValueAt(r, 0)));
             String ruta = reporte.obtenerRutina(idRutina);
-            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?",txtID ).getInteger("ID_DATOS_PERS"), "rutina");
-            this.getParent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); //cambio el cursor por si se inicia sesión antes de cargar las cosas
-
+            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?",txtID.getText() ).getInteger("ID_DATOS_PERS"), "rutina");
             if (res) {
                 JOptionPane.showMessageDialog(this, "Email enviado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
             } else {

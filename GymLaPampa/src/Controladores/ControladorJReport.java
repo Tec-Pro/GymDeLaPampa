@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -80,9 +81,10 @@ public class ControladorJReport {
                   parametros.put("id_dieta", idDieta);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
-        
-          JasperViewer jasperViewer = new JasperViewer(jasperPrint);
+          JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
+
             jasperViewer.setTitle("Impresión de dieta");
+
             jasperViewer.toFront();
             jasperViewer.setVisible(true);
 
@@ -127,7 +129,7 @@ public class ControladorJReport {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         
-          JasperViewer jasperViewer = new JasperViewer(jasperPrint);
+          JasperViewer jasperViewer = new  JasperViewer(jasperPrint,false);
             jasperViewer.setTitle("Impresión de rutina");
             jasperViewer.toFront();
             jasperViewer.setVisible(true);
