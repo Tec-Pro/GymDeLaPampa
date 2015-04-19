@@ -76,7 +76,7 @@ public class DietasSocioGui extends javax.swing.JDialog {
 
                 int row = tblDietas.getSelectedRow();
                 if (row > -1) {
-                   VerDietaEditarGui d= new VerDietaEditarGui(parent, true);
+                   VerDietaEditarGui d= new VerDietaEditarGui(parent, false);
                    d.setLocationRelativeTo(estaVentana);
                    d.setVisible(true);
                    switch (d.getReturnStatus()){
@@ -107,7 +107,7 @@ public class DietasSocioGui extends javax.swing.JDialog {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(evt.getClickCount()==2){
-                VerDietaGui verDietaGui= new VerDietaGui(parent, true,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5)),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 0),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 1),(Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5),idSocio);
+                VerDietaGui verDietaGui= new VerDietaGui(parent, false,AlimentosDietas.where("dieta_id = ?", (Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5)),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 0),(String) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 1),(Integer) tblDietasSocio.getValueAt(tblDietasSocio.getSelectedRow(), 5),idSocio);
                     verDietaGui.setLocationRelativeTo(estaVentana);
                     verDietaGui.setVisible(true);
             }

@@ -38,7 +38,7 @@ public class EmailThread extends Thread {
                 Modulo moduloBackUp = new Modulo();
                 moduloBackUp.CrearBackupSilencioso();
                 try {
-                    enviar.enviarMail("", "", true);
+                    enviar.enviarMail("", "");
                 } catch (MessagingException ex) {
                     Logger.getLogger(EmailThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -49,7 +49,7 @@ public class EmailThread extends Thread {
             Modulo moduloBackUp = new Modulo();
             moduloBackUp.CrearBackupSilencioso();
             try {
-                enviar.enviarMail("", "", true);
+                enviar.enviarMail("", "");
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailThread.class.getName()).log(Level.SEVERE, null, ex);
             }

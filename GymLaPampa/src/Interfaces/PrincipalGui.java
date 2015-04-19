@@ -35,7 +35,6 @@ public class PrincipalGui extends javax.swing.JFrame {
         this.botActividades.addActionListener(lis);
         this.botUsuario.addActionListener(lis);
         this.ingreso.addActionListener(lis);
-        this.declaracion.addActionListener(lis);
         this.impresionAranceles.addActionListener(lis);
         this.depurar.addActionListener(lis);
         this.btnArticulos.addActionListener(lis);
@@ -143,9 +142,7 @@ public class PrincipalGui extends javax.swing.JFrame {
         return botSocios;
     }
 
-    public JMenuItem getDeclaracion() {
-        return declaracion;
-    }
+
 
     public DesktopPaneImage getDesktop() {
         return desktop;
@@ -202,7 +199,6 @@ public class PrincipalGui extends javax.swing.JFrame {
         depurar = new javax.swing.JMenuItem();
         cambiosEmail = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        declaracion = new javax.swing.JMenuItem();
         impresionAranceles = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         tecPro = new javax.swing.JMenuItem();
@@ -291,9 +287,6 @@ public class PrincipalGui extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Documentos");
-
-        declaracion.setText("Declaración jurada");
-        jMenu3.add(declaracion);
 
         impresionAranceles.setText("Aranceles para imprimir");
         jMenu3.add(impresionAranceles);
@@ -387,7 +380,6 @@ public class PrincipalGui extends javax.swing.JFrame {
     private javax.swing.JMenuItem cambiosEmail;
     private javax.swing.JMenuItem cargarBackup;
     private javax.swing.JMenuItem crearBackup;
-    private javax.swing.JMenuItem declaracion;
     private javax.swing.JMenuItem depurar;
     private javax.swing.JMenuItem impresionAranceles;
     private javax.swing.JButton ingreso;

@@ -554,7 +554,7 @@ public class ControladorAbmCliente implements ActionListener {
             }
         }
         if(ae.getSource().equals(clienteGui.getBtnDietas())){
-                DietasSocioGui dietaSocioGui=new DietasSocioGui(principal, true,s.getInteger("id_datos_pers") );
+                DietasSocioGui dietaSocioGui=new DietasSocioGui(principal, false,s.getInteger("id_datos_pers") );
                 dietaSocioGui.setLocationRelativeTo(clienteGui);
                 dietaSocioGui.setVisible(true);
            

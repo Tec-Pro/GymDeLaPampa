@@ -10,6 +10,7 @@ import Controladores.EnvioEmailControlador;
 import Modelos.Alimento;
 import Modelos.AlimentosDietas;
 import Modelos.Socio;
+import java.awt.Cursor;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -28,9 +29,9 @@ import org.javalite.activejdbc.Model;
  *
  * @author NicoOrcasitas
  */
-public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
+public class VerDietaGui extends javax.swing.JDialog implements ChangeListener {
 
-        private float aguaG = 0;
+    private float aguaG = 0;
     private float proteinasG = 0;
     private float hcG = 0;
     private float lipidosG = 0;
@@ -39,7 +40,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     private float hcKcal = 0;
     private float lipidosKcal = 0;
     private float calorias = 0;
-    
+
     DefaultTableModel tblDefaultAlimentoDietaLunes;
     DefaultTableModel tblDefaultAlimentoDietaMartes;
     DefaultTableModel tblDefaultAlimentoDietaMiercoles;
@@ -47,19 +48,20 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     DefaultTableModel tblDefaultAlimentoDietaViernes;
     DefaultTableModel tblDefaultAlimentoDietaSabado;
     DefaultTableModel tblDefaultAlimentoDietaDomingo;
-    LazyList<AlimentosDietas> lista ;
-    Integer idDieta=-1;
-    Integer idSocio=-1;
+    LazyList<AlimentosDietas> lista;
+    Integer idDieta = -1;
+    Integer idSocio = -1;
     ControladorJReport reporte;
-    private String email="nico.orcasitas@gmail.com";
+    private String email;
+
     /**
      * Creates new form VerRutinasGui
      */
-    public VerDietaGui(java.awt.Frame parent, boolean modal,LazyList<AlimentosDietas> lista,String nombre, String descripcion,Integer idDieta,Integer idSocio) {
+    public VerDietaGui(java.awt.Frame parent, boolean modal, LazyList<AlimentosDietas> lista, String nombre, String descripcion, Integer idDieta, Integer idSocio) {
         super(parent, modal);
         initComponents();
-        this.idDieta= idDieta;
-        this.idSocio= idSocio;
+        this.idDieta = idDieta;
+        this.idSocio = idSocio;
         tblDefaultAlimentoDietaLunes = (DefaultTableModel) tblAlimentosDietaLunes.getModel();
         tblDefaultAlimentoDietaMartes = (DefaultTableModel) tblAlimentosDietaMartes.getModel();
         tblDefaultAlimentoDietaMiercoles = (DefaultTableModel) tblAlimentosDietaMiercoles.getModel();
@@ -67,7 +69,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         tblDefaultAlimentoDietaViernes = (DefaultTableModel) tblAlimentosDietaViernes.getModel();
         tblDefaultAlimentoDietaSabado = (DefaultTableModel) tblAlimentosDietaSabado.getModel();
         tblDefaultAlimentoDietaDomingo = (DefaultTableModel) tblAlimentosDietaDomingo.getModel();
-        this.lista= lista;
+        this.lista = lista;
         this.tblAlimentosDietaLunes.setEnabled(false);
         this.tblAlimentosDietaMartes.setEnabled(false);
         this.tblAlimentosDietaMiercoles.setEnabled(false);
@@ -82,25 +84,25 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         txtDescripcion.setText(descripcion);
 
         pnlTab.addChangeListener(this);
-            try {
-                reporte= new ControladorJReport("dieta.jasper");
-            } catch (JRException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if(idSocio==-1){
-                btnImprimir.setEnabled(false);
-                btnEnviarEmail.setEnabled(false);
-            }
+        try {
+            reporte = new ControladorJReport("dieta.jasper");
+        } catch (JRException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (idSocio == -1) {
+            btnImprimir.setEnabled(false);
+            btnEnviarEmail.setEnabled(false);
+        }
             //else
-           // email = Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getString("email");
-        
+        // email = Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getString("email");
+
     }
 
-        private void cargarEnTablaDietaAliemtos(LazyList<AlimentosDietas> lista) {
+    private void cargarEnTablaDietaAliemtos(LazyList<AlimentosDietas> lista) {
         tblDefaultAlimentoDietaLunes.setRowCount(0);
         tblDefaultAlimentoDietaMartes.setRowCount(0);
         tblDefaultAlimentoDietaMiercoles.setRowCount(0);
@@ -122,7 +124,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         while (it.hasNext()) {
 
             AlimentosDietas a = it.next();
-            Alimento alim =Alimento.findById(a.getInteger("alimento_id"));
+            Alimento alim = Alimento.findById(a.getInteger("alimento_id"));
             Object row[] = new Object[9];
             row[0] = a.getString("hora");
             row[1] = alim.getString("nombre");
@@ -162,8 +164,8 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         calcularMacros();
 
     }
-        
-           private void calcularMacros() {
+
+    private void calcularMacros() {
         aguaG = 0;
         proteinasG = 0;
         hcG = 0;
@@ -174,182 +176,182 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
         proteinasKcal = 0;
         calorias = 0;
         Alimento al;
-        switch (pnlTab.getSelectedIndex()){
-        case 0:
-        for (int i = 0; i < tblDefaultAlimentoDietaLunes.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaLunes.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaLunes.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaLunes.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
+        switch (pnlTab.getSelectedIndex()) {
+            case 0:
+                for (int i = 0; i < tblDefaultAlimentoDietaLunes.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaLunes.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaLunes.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaLunes.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
 
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaLunes.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaLunes.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaLunes.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaLunes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaLunes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);
-            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;                
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaLunes.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaLunes.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaLunes.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaLunes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaLunes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);
+                    //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;                
 
+                }
+                break;
+            case 1://Ciclo martes
+                for (int i = 0; i < tblDefaultAlimentoDietaMartes.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaMartes.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaMartes.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaMartes.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaMartes.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaMartes.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaMartes.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaMartes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaMartes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
+
+                }
+                break;
+            case 2://Ciclo miercoles
+                for (int i = 0; i < tblDefaultAlimentoDietaMiercoles.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaMiercoles.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaMiercoles.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaMiercoles.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaMiercoles.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaMiercoles.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaMiercoles.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaMiercoles.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaMiercoles.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
+
+                }
+                break;
+            case 3://Ciclo jueves
+                for (int i = 0; i < tblDefaultAlimentoDietaJueves.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaJueves.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaJueves.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaJueves.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaJueves.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaJueves.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaJueves.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaJueves.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaJueves.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
+
+                }
+                break;
+            case 4://Ciclo viernes
+                for (int i = 0; i < tblDefaultAlimentoDietaViernes.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaViernes.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaViernes.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaViernes.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaViernes.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaViernes.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaViernes.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaViernes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaViernes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
+
+                }
+                break;
+            case 5://Ciclo sabado
+                for (int i = 0; i < tblDefaultAlimentoDietaSabado.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaSabado.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaSabado.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaSabado.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaSabado.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaSabado.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaSabado.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaSabado.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaSabado.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
+
+                }
+                break;
+            case 6://Ciclo domingo
+                for (int i = 0; i < tblDefaultAlimentoDietaDomingo.getRowCount(); i++) {
+                    float porcion;
+                    try {
+                        porcion = (float) tblAlimentosDietaDomingo.getValueAt(i, 7);
+                    } catch (java.lang.ClassCastException ex) {
+                        porcion = Float.valueOf((Integer) tblAlimentosDietaDomingo.getValueAt(i, 7));
+                    }
+                    al = Alimento.findById(tblAlimentosDietaDomingo.getValueAt(i, 8));
+                    float hcGAux = al.getFloat("hc") * porcion;
+                    float protGAux = al.getFloat("prot") * porcion;
+                    float lipGAux = al.getFloat("grasa") * porcion;
+
+                    aguaG += al.getFloat("agua") * porcion;
+                    proteinasG += protGAux;
+                    hcG += hcGAux;
+                    lipidosG += lipGAux;
+                    tblAlimentosDietaDomingo.setValueAt(al.getFloat("agua") * porcion, i, 2);
+                    tblAlimentosDietaDomingo.setValueAt(al.getFloat("prot") * porcion, i, 3);
+                    tblAlimentosDietaDomingo.setValueAt(al.getFloat("hc") * porcion, i, 4);
+                    tblAlimentosDietaDomingo.setValueAt(al.getFloat("grasa") * porcion, i, 5);
+                    tblAlimentosDietaDomingo.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);
+                }
         }
-        break;
-        case 1://Ciclo martes
-        for (int i = 0; i < tblDefaultAlimentoDietaMartes.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaMartes.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaMartes.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaMartes.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaMartes.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaMartes.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaMartes.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaMartes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaMartes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
-
-        }
-        break;
-        case 2://Ciclo miercoles
-        for (int i = 0; i < tblDefaultAlimentoDietaMiercoles.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaMiercoles.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaMiercoles.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaMiercoles.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaMiercoles.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaMiercoles.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaMiercoles.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaMiercoles.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaMiercoles.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
-
-        }
-        break;
-        case 3://Ciclo jueves
-        for (int i = 0; i < tblDefaultAlimentoDietaJueves.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaJueves.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaJueves.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaJueves.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaJueves.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaJueves.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaJueves.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaJueves.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaJueves.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
-
-        }
-        break;
-        case 4://Ciclo viernes
-        for (int i = 0; i < tblDefaultAlimentoDietaViernes.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaViernes.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaViernes.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaViernes.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaViernes.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaViernes.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaViernes.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaViernes.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaViernes.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
-
-        }
-        break;
-        case 5://Ciclo sabado
-        for (int i = 0; i < tblDefaultAlimentoDietaSabado.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaSabado.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaSabado.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaSabado.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaSabado.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaSabado.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaSabado.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaSabado.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaSabado.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);            //aguaL -=(float) tblAlimentosDietaLunes.getValueAt(row, 2)*(float) tblAlimentosDietaLunes.getValueAt(row, 7) ;
-
-        }
-        break;
-        case 6://Ciclo domingo
-        for (int i = 0; i < tblDefaultAlimentoDietaDomingo.getRowCount(); i++) {
-            float porcion;
-            try {
-                porcion = (float) tblAlimentosDietaDomingo.getValueAt(i, 7);
-            } catch (java.lang.ClassCastException ex) {
-                porcion = Float.valueOf((Integer) tblAlimentosDietaDomingo.getValueAt(i, 7));
-            }
-            al = Alimento.findById(tblAlimentosDietaDomingo.getValueAt(i, 8));
-            float hcGAux = al.getFloat("hc") * porcion;
-            float protGAux = al.getFloat("prot") * porcion;
-            float lipGAux = al.getFloat("grasa") * porcion;
-
-            aguaG += al.getFloat("agua") * porcion;
-            proteinasG += protGAux;
-            hcG += hcGAux;
-            lipidosG += lipGAux;
-            tblAlimentosDietaDomingo.setValueAt(al.getFloat("agua") * porcion, i, 2);
-            tblAlimentosDietaDomingo.setValueAt(al.getFloat("prot") * porcion, i, 3);
-            tblAlimentosDietaDomingo.setValueAt(al.getFloat("hc") * porcion, i, 4);
-            tblAlimentosDietaDomingo.setValueAt(al.getFloat("grasa") * porcion, i, 5);
-            tblAlimentosDietaDomingo.setValueAt(hcGAux * 4 + protGAux * 4 + lipGAux * 9, i, 6);
-        }
-    }
         hcKcal = hcG * 4;
         lipidosKcal = lipidosG * 9;
         proteinasKcal = proteinasG * 4;
@@ -743,7 +745,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
 
         pnlTab.addTab("Domingo", jScrollPane11);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         btnEnviarEmail.setText("Enviarle la dieta al email ");
         btnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -807,42 +809,36 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-            try {
-                reporte.mostrarDieta(idSocio, idDieta);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JRException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            reporte.mostrarDieta(idSocio, idDieta);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
-        try {                                               
-            String ruta=reporte.obtenerDieta(idSocio, idDieta);
-            try {
-                boolean res=EnvioEmailControlador.enviarMailManualDieta(ruta,email );
-                if (res) {
-                    JOptionPane.showMessageDialog(this, "Email enviado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Falló el envio, revise la conexión", "Error", JOptionPane.INFORMATION_MESSAGE);
-                }
-                File archivo=new File(ruta); 
-                archivo.delete();
-            } catch (MessagingException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            
+            String ruta = reporte.obtenerDieta(idSocio, idDieta);
+            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getString("MAIL"), "dieta");
+            this.getParent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); //cambio el cursor por si se inicia sesión antes de cargar las cosas
+
+            if (res) {
+                JOptionPane.showMessageDialog(this, "Email enviado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Falló el envio, revise la conexión", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (ClassNotFoundException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JRException ex) {
-                Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            File archivo = new File(ruta);
+            archivo.delete();
+        } catch (ClassNotFoundException | SQLException | JRException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEnviarEmailActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviarEmail;
@@ -893,6 +889,6 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-     calcularMacros();
+        calcularMacros();
     }
 }

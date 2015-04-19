@@ -354,7 +354,7 @@ public class ControladorIngreso implements ActionListener {
             cargarAsistencia();
         }
         if(e.getSource()==ingresoGui.getBtnDietas()){
-            DietasSocioGui dsg= new DietasSocioGui(ingresoGui, true, socio.getInteger("ID_DATOS_PERS"));
+            DietasSocioGui dsg= new DietasSocioGui(ingresoGui, false, socio.getInteger("ID_DATOS_PERS"));
             dsg.setVisible(true);
         }
     }

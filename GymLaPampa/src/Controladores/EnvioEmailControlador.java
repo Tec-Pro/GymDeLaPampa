@@ -12,6 +12,9 @@ import java.util.Calendar;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.swing.JOptionPane;
+import Modelos.Email;
+import Modelos.Envio;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,9 +24,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.swing.JOptionPane;
-import Modelos.Email;
-import Modelos.Envio;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 
@@ -60,125 +60,130 @@ public class EnvioEmailControlador {
 
     public boolean guardarDatos(String email, String pass) throws SQLException {
         emailModel = new Email();
-        
         emailModel.set("email", email, "password", pass);
         Base.openTransaction();
         Email.deleteAll();
         boolean guardado = emailModel.saveIt();
         Base.commitTransaction();
-        
         if (guardado) {
             JOptionPane.showMessageDialog(null, "Los datos han sido Guardados Correctamente!");
         } else {
             JOptionPane.showMessageDialog(null, "No se han realizado los cambios, ocurrió un error");
         }
         return guardado;
-
-
-
-
     }
 
-    public boolean enviarMail(String email, String passw, boolean envio) throws MessagingException {
+    public boolean enviarMail(String email, String passw) throws MessagingException {
         boolean ret = false;
-         Base.openTransaction();
+        Base.openTransaction();
         LazyList<Email> emailsModel = Email.findAll();
         Base.commitTransaction();
-        if (!emailsModel.isEmpty() || !envio) {
-            
-            if (envio) {
-                
-                emailModel = emailsModel.get(0);
-                this.mail = emailModel.getString("email");
-                String contraEncrip = emailModel.getString("password");
-                char arrayD[] = contraEncrip.toCharArray();
-                for (int i = 0; i < arrayD.length; i++) {
-                    arrayD[i] = (char) (arrayD[i] - (char) 5);
-                }
-                this.passwo = String.valueOf(arrayD);
-                
-            } else {
-                this.mail = email;
-                this.passwo = passw;
+        if (!emailsModel.isEmpty()) {
+            emailModel = emailsModel.get(0);
+            this.mail = emailModel.getString("email");
+            String contraEncrip = emailModel.getString("password");
+            char arrayD[] = contraEncrip.toCharArray();
+            for (int i = 0; i < arrayD.length; i++) {
+                arrayD[i] = (char) (arrayD[i] - (char) 5);
             }
-            // se obtiene el objeto Session. La configuración es para
-            // una cuenta de gmail.
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.live.com");
-            props.setProperty("mail.smtp.starttls.enable", "true");
-            props.setProperty("mail.smtp.port", "587");
-            props.setProperty("mail.smtp.user", mail);
-            props.setProperty("mail.smtp.auth", "true");
-
-            Session session = Session.getDefaultInstance(props, null);
-            // session.setDebug(true);
-
-            // Se compone la parte del texto
-            BodyPart texto = new MimeBodyPart();
-            texto.setText("Backup auomatico");
-
-            // Se compone el adjunto con la imagen
-            BodyPart adjunto = new MimeBodyPart();
-            String dir = (new File(System.getProperty("user.dir")).getAbsolutePath());
-
-            adjunto.setDataHandler(
-                    new DataHandler(new FileDataSource(dir + "/backupEmail.sql")));
-            adjunto.setFileName("backUpGymPitbulls.sql");
-
-            // Una MultiParte para agrupar texto e imagen.
-            MimeMultipart multiParte = new MimeMultipart();
-            multiParte.addBodyPart(texto);
-            multiParte.addBodyPart(adjunto);
-
-            // Se compone el correo, dando to, from, subject y el
-            // contenido.
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(mail));
-            message.addRecipient(
-                    Message.RecipientType.TO,
-                    new InternetAddress(mail));
-            message.setSubject("BackUp mensual Gimnasio Personalizado Pitbulls");
-            message.setContent(multiParte);
-
-            // Se envia el correo.
-            Transport t = session.getTransport("smtp");
+            this.passwo = String.valueOf(arrayD);
             try {
-                t.connect(mail, passwo);
-            } catch (javax.mail.AuthenticationFailedException ex) {
-                JOptionPane.showMessageDialog(null, "¡Datos incorrectos, no se ha establecido la conexión!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            ret = t.isConnected();
-            if (envio) {
+                // se obtiene el objeto Session. La configuración es para
+                // una cuenta de gmail.
+                Properties props = new Properties();
+                if (mail.contains("gmail")) {
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                } else {
+                    props.put("mail.smtp.host", "smtp.live.com");
+                }
+                props.setProperty("mail.smtp.starttls.enable", "true");
+                props.setProperty("mail.smtp.port", "587");
+                props.setProperty("mail.smtp.user", mail);
+                props.setProperty("mail.smtp.auth", "true");
+                Session session = Session.getDefaultInstance(props, null);
+                // session.setDebug(true);
+                // Se compone la parte del texto
+                BodyPart texto = new MimeBodyPart();
+                texto.setText("Se adjunta backup mensual. ");
+                // Se compone el adjunto con la imagen
+                BodyPart adjunto = new MimeBodyPart();
+                String dir = (new File(System.getProperty("user.dir")).getAbsolutePath());
+                adjunto.setDataHandler(
+                        new DataHandler(new FileDataSource(dir + "/backupEmail.sql")));
+                adjunto.setFileName("backUpGymPitbulls.sql");
+                // Una MultiParte para agrupar texto e imagen.
+                MimeMultipart multiParte = new MimeMultipart();
+                multiParte.addBodyPart(texto);
+                multiParte.addBodyPart(adjunto);
+                // Se compone el correo, dando to, from, subject y el
+                // contenido.
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(mail));
+                message.addRecipient(
+                        Message.RecipientType.TO,
+                        new InternetAddress(mail));
+                message.setSubject("Backup mensual Gimnasio Personalizado Pitbulls");
+                message.setContent(multiParte);
+                // Se envia el correo.
+                Transport t = session.getTransport("smtp");
+                try {
+                    t.connect(mail, passwo);
+                } catch (javax.mail.AuthenticationFailedException ex) {
+                    JOptionPane.showMessageDialog(null, "¡Datos incorrectos, no se ha establecido la conexión!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
                 try {
                     t.sendMessage(message, message.getAllRecipients());
+                    ret = t.isConnected();
                 } catch (javax.mail.MessagingException ex) {
                     ret = false;
-
                 }
+                if (ret) {
+                    Envio enviarModel = new Envio();
+                    Base.openTransaction();
+                    Envio.deleteAll();
+                    enviarModel.set("fecha", convertirFechaString());
+                    enviarModel.setBoolean("enviado", true);
+                    enviarModel.saveIt();
+                    Base.commitTransaction();
+                }
+                t.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (envio && ret) {
-                
-                Envio enviarModel = new Envio();
-                Base.openTransaction();
-                Envio.deleteAll();
-                enviarModel.set("fecha", convertirFechaString());
-                enviarModel.setBoolean("enviado", true);
-                enviarModel.saveIt();
-                Base.commitTransaction();
-                
-            }
-            t.close();
         } else {
             JOptionPane.showMessageDialog(null, "No hay cofiguración de email guardada, por favor cargue los datos para habilitar el backup mensual");
         }
         return ret;
-
     }
 
+    public boolean probarConexion(String email, String passw) throws MessagingException {
+        Properties props = new Properties();
+        boolean ret = false;
+        if (email.contains("gmail")) {
+            props.put("mail.smtp.host", "smtp.gmail.com");
+        } else {
+            props.put("mail.smtp.host", "smtp.live.com");
+        }
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.user", email);
+        props.setProperty("mail.smtp.auth", "true");
+        Session session = Session.getDefaultInstance(props, null);
+        // Se compone el correo, dando to, from, subject y el
+        // contenido.
+        MimeMessage message = new MimeMessage(session);
+        // Se envia el correo.
+        Transport t = session.getTransport("smtp");
+        try {
+            t.connect(email, passw);
+            ret = true;
+        } catch (javax.mail.AuthenticationFailedException ex) {
+            ret = false;
+        }
+        return ret;
+    }
 
-
- 
-
+    
     public static String convertirFechaString() {
         String fechaString;
         Calendar fechaCalendar = Calendar.getInstance();
@@ -189,141 +194,79 @@ public class EnvioEmailControlador {
         return fechaString;
     }
 
-    public boolean enviarMailManual(String email, String passw, String dir, String para) throws MessagingException {
+    //dietaRutina es para decir que es, así se pone esa palabra
+    public static boolean enviarMailManualDieta(String fileName, String para, String dietaRutina) {
         boolean ret = false;
-
-        this.mail = email;
-        this.passwo = passw;
-
-        // se obtiene el objeto Session. La configuración es para
-        // una cuenta de gmail.
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.live.com");
-        props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.user", mail);
-        props.setProperty("mail.smtp.auth", "true");
-
-        Session session = Session.getDefaultInstance(props, null);
-        // session.setDebug(true);
-
-        // Se compone la parte del texto
-        BodyPart texto = new MimeBodyPart();
-        texto.setText("Texto del mensaje");
-
-        // Se compone el adjunto con la imagen
-        BodyPart adjunto = new MimeBodyPart();
-        adjunto.setDataHandler(
-                new DataHandler(new FileDataSource(dir)));
-        adjunto.setFileName("backUpGymPitbulls.sql");
-
-        // Una MultiParte para agrupar texto e imagen.
-        MimeMultipart multiParte = new MimeMultipart();
-        multiParte.addBodyPart(texto);
-        multiParte.addBodyPart(adjunto);
-
-        // Se compone el correo, dando to, from, subject y el
-        // contenido.
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(mail));
-        message.addRecipient(
-                Message.RecipientType.TO,
-                new InternetAddress(para));
-        message.setSubject("BackUp mensual Gimnasio Personalizado Pitbulls");
-        message.setContent(multiParte);
-
-        // Se envia el correo.
-        Transport t = session.getTransport("smtp");
-        try {
-            t.connect(mail, passwo);
-        } catch (javax.mail.AuthenticationFailedException ex) {
-            JOptionPane.showMessageDialog(null, "¡Datos incorrectos, no se ha establecido la conexión!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (t.isConnected()) {
-            t.sendMessage(message, message.getAllRecipients());
-            ret = t.isConnected();
-        }
-
-        t.close();
-
-        return ret;
-
-    }
-    
-        public static boolean enviarMailManualDieta( String dir, String para) throws MessagingException {
-        boolean ret = false;
-         Base.openTransaction();
+        Base.openTransaction();
         LazyList<Email> emailsModel = Email.findAll();
         Base.commitTransaction();
-        if (!emailsModel.isEmpty() ) {
-                emailModel = emailsModel.get(0);
-                mail = emailModel.getString("email");
-                String contraEncrip = emailModel.getString("password");
-                char arrayD[] = contraEncrip.toCharArray();
-                for (int i = 0; i < arrayD.length; i++) {
-                    arrayD[i] = (char) (arrayD[i] - (char) 5);
+        if (!emailsModel.isEmpty()) {
+            emailModel = emailsModel.get(0);
+            mail = emailModel.getString("email");
+            String contraEncrip = emailModel.getString("password");
+            char arrayD[] = contraEncrip.toCharArray();
+            for (int i = 0; i < arrayD.length; i++) {
+                arrayD[i] = (char) (arrayD[i] - (char) 5);
+            }
+            passwo = String.valueOf(arrayD);
+            try {
+                // se obtiene el objeto Session. La configuración es para
+                // una cuenta de gmail.
+                Properties props = new Properties();
+                if (mail.contains("gmail")) {
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                } else {
+                    props.put("mail.smtp.host", "smtp.live.com");
                 }
-                passwo = String.valueOf(arrayD);
+                props.setProperty("mail.smtp.starttls.enable", "true");
+                props.setProperty("mail.smtp.port", "587");
+                props.setProperty("mail.smtp.user", mail);
+                props.setProperty("mail.smtp.auth", "true");
 
-        // se obtiene el objeto Session. La configuración es para
-        // una cuenta de gmail.
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.live.com");
-        props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.user", mail);
-        props.setProperty("mail.smtp.auth", "true");
+                Session session = Session.getDefaultInstance(props, null);
+            // session.setDebug(true);
 
-        Session session = Session.getDefaultInstance(props, null);
-        // session.setDebug(true);
+                // Se compone la parte del texto
+                BodyPart texto = new MimeBodyPart();
+                texto.setText("Te enviamos la "+dietaRutina+" personalizada. \n Saludos, \n Gimnasio personaliazdo Pitbull's");
 
-        // Se compone la parte del texto
-        BodyPart texto = new MimeBodyPart();
-        texto.setText("Texto del mensaje");
+                // Se compone el adjunto con la imagen
+                BodyPart adjunto = new MimeBodyPart();
+                adjunto.setDataHandler(
+                        new DataHandler(new FileDataSource(fileName)));
+                adjunto.setFileName( dietaRutina+".pdf");
 
-        // Se compone el adjunto con la imagen
-        BodyPart adjunto = new MimeBodyPart();
-        adjunto.setDataHandler(
-                new DataHandler(new FileDataSource(dir)));
-        adjunto.setFileName("dieta.pdf");
+                // Una MultiParte para agrupar texto e imagen.
+                MimeMultipart multiParte = new MimeMultipart();
+                multiParte.addBodyPart(texto);
+                multiParte.addBodyPart(adjunto);
 
-        // Una MultiParte para agrupar texto e imagen.
-        MimeMultipart multiParte = new MimeMultipart();
-        multiParte.addBodyPart(texto);
-        multiParte.addBodyPart(adjunto);
+                // Se compone el correo, dando to, from, subject y el
+                // contenido.
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(mail));
+                message.addRecipient(
+                        Message.RecipientType.TO,
+                        new InternetAddress(para));
+                message.setSubject(dietaRutina+" personalizada de Gimnasio Personalizado Pitbulls");
+                message.setContent(multiParte);
 
-        // Se compone el correo, dando to, from, subject y el
-        // contenido.
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(mail));
-        message.addRecipient(
-                Message.RecipientType.TO,
-                new InternetAddress(para));
-        message.setSubject("Dieta alimenticia del gimnasio Personalizado Pitbull's");
-        message.setContent(multiParte);
-
-        // Se envia el correo.
-        Transport t = session.getTransport("smtp");
-        try {
-            t.connect(mail, passwo);
-        } catch (javax.mail.AuthenticationFailedException ex) {
-            JOptionPane.showMessageDialog(null, "¡Datos incorrectos, no se ha establecido la conexión!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (t.isConnected()) {
-            t.sendMessage(message, message.getAllRecipients());
-            ret = t.isConnected();
-        }
-
-        t.close();
-
-        return ret;
-        }else {
-            JOptionPane.showMessageDialog(null, "No hay cofiguración de email guardada, por favor cargue los datos para habilitar esta funcionalidad");
+                // Se envia el correo.
+                Transport t = session.getTransport("smtp");
+                try {
+                    t.connect(mail, passwo);
+                    ret = true;
+                } catch (javax.mail.AuthenticationFailedException ex) {
+                    JOptionPane.showMessageDialog(null, "¡Datos incorrectos, no se ha establecido la conexión!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                t.sendMessage(message, message.getAllRecipients());
+                t.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay cofiguración de email guardada, por favor cargue los datos para habilitar el backup mensual");
         }
         return ret;
-
     }
-        
 }

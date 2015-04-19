@@ -47,7 +47,7 @@ public class CargarDatosEmail extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cuenta de correo");
 
-        jLabel1.setText("Email (hotmail ):");
+        jLabel1.setText("Email (hotmail o gmail ):");
 
         jLabel2.setText("Contraseña");
 
@@ -74,9 +74,9 @@ public class CargarDatosEmail extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(58, 58, 58)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(email)
                             .addComponent(contrasenia, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)))
@@ -111,7 +111,7 @@ public class CargarDatosEmail extends javax.swing.JDialog {
     private void probarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_probarActionPerformed
 
         try {
-            boolean res = envio.enviarMail(email.getText(), contrasenia.getText(), false);
+            boolean res = envio.probarConexion(email.getText(), contrasenia.getText());
 
             if (res) {
                 JOptionPane.showMessageDialog(this, "Conexión realizada con éxito", "Datos correctos", JOptionPane.INFORMATION_MESSAGE);

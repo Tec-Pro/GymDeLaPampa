@@ -241,20 +241,7 @@ public class ControladorPrincipalGui implements ActionListener {
             cumpleGui.setVisible(true);
             cumpleGui.toFront();
         }
-        if (ae.getSource() == principalGui.getDeclaracion()) {
-
-            try {
-                File path;
-                try {
-                    path = new File(getClass().getResource("/Documentos/declaracion.pdf").toURI());
-                    Desktop.getDesktop().open(path);
-                } catch (URISyntaxException ex) {
-                    Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(principalGui, "Corrobore si tiene instalado un lector PDF \n " + ex, "¡Error!", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+      
         if (ae.getSource() == principalGui.getImpresionAranceles()) {
             try {
                 impresionArancel.mostrarReporte();

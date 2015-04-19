@@ -77,7 +77,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
                     cols[1] = cli.getString("apellido");
                     cols[2] = dateToMySQLDate(cli.getDate("fecha_nac"), true);
                     cols[3] = cli.getString("tel");
-                //    cols[4] = cli.getString("email");
+                    cols[4] = cli.getString("mail");
                     cols[5] = cli.getString("facebook");
                     cols[6] = cli.getString("id");
                     cumpleHoyDefault.addRow(cols);
@@ -97,7 +97,7 @@ public class CumpleaniosGui extends javax.swing.JInternalFrame {
                     cols[1] = cli.getString("apellido");
                     cols[2] = dateToMySQLDate(cli.getDate("fecha_nac"), true);
                     cols[3] = cli.getString("tel");
-                  //  cols[4] = cli.getString("email");
+                    cols[4] = cli.getString("mail");
                     cols[5] = cli.getString("facebook");
                     cols[6] = cli.getString("id");
                      cumpleSemanaDefault.addRow(cols);
