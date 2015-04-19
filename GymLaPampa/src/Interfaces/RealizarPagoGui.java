@@ -6,7 +6,7 @@ package Interfaces;
 
 import Modelos.Categoria;
 import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -26,9 +26,9 @@ import org.javalite.activejdbc.LazyList;
 public class RealizarPagoGui extends javax.swing.JDialog {
 
     Proveedor prov;
-    BigDecimal totalFactura = new BigDecimal(0);
-    BigDecimal totalConDescuentoFloat = new BigDecimal(0);
-    BigDecimal porcentaje = new BigDecimal(0);
+    float totalFactura = 0;
+    float totalConDescuentoFloat = 0;
+    float porcentaje = 0;
     Compra compra;
    // private ControladorJReport controladorReporte;
     //private DecimalFormat formateador = new DecimalFormat("############.##");
@@ -49,7 +49,7 @@ public class RealizarPagoGui extends javax.swing.JDialog {
 
         this.prov = prov;
         
-        String windowsPoneComa=String.valueOf(prov.getBigDecimal("cuenta_corriente").setScale(2, RoundingMode.CEILING));
+        String windowsPoneComa=String.valueOf(prov.getFloat("cuenta_corriente"));
         cuenta.setText(windowsPoneComa);
         
         proveedor.setText(prov.getString("nombre"));
@@ -84,7 +84,7 @@ public class RealizarPagoGui extends javax.swing.JDialog {
             numeroFac.setText(compra.getString("id"));
             monto.setText(compra.getString("monto"));
         }
-        String windowsPoneComa= String.valueOf(prov.getBigDecimal("cuenta_corriente").setScale(2, RoundingMode.CEILING));
+        String windowsPoneComa= String.valueOf(prov.getFloat("cuenta_corriente"));
         cuenta.setText(windowsPoneComa);
         
         proveedor.setText(prov.getString("nombre"));
@@ -402,22 +402,22 @@ public class RealizarPagoGui extends javax.swing.JDialog {
        
         String pagoId = pago.getString("id");
         if (compra == null) {
-            BigDecimal entrega = pago.getBigDecimal("monto").setScale(2, RoundingMode.CEILING);//pago
-            BigDecimal cuentaCorriente = prov.getBigDecimal("cuenta_corriente").setScale(2, RoundingMode.CEILING);//CC
+            float entrega = pago.getFloat("monto");//pago
+             float cuentaCorriente = prov.getFloat("cuenta_corriente");//CC
             //entrega = entrega + cuentaCorriente; //4+(-6)=-2
              Base.openTransaction();
             LazyList<Compra> compras = Compra.where("pago = ? and proveedor_id = ?", 0, prov.getId()).orderBy("fecha");
            Base.commitTransaction();
-            BigDecimal deuda=calcularDeuda(compras);
-            BigDecimal dif= deuda.add(cuentaCorriente);
+            float deuda=calcularDeuda(compras);
+            float dif= deuda+(cuentaCorriente);
             Iterator<Compra> it = compras.iterator();
             boolean sePuedePagar = true;
-            BigDecimal entreMasDif= entrega.add(dif);
+            float entreMasDif= entrega+(dif);
             Compra compraAPagar;
             while (sePuedePagar && it.hasNext()) {
                 sePuedePagar = false;
                 compraAPagar = it.next();
-                if (entreMasDif.compareTo(compraAPagar.getBigDecimal("monto").setScale(2, RoundingMode.CEILING))>=0) {
+                if (entreMasDif>=(compraAPagar.getFloat("monto"))) {
                     sePuedePagar= true;
                     System.out.println("estoy pagando");
                         Base.openTransaction();
@@ -425,13 +425,12 @@ public class RealizarPagoGui extends javax.swing.JDialog {
                         compraAPagar.set("fecha_pago", sqlFecha);
                         compraAPagar.set("pago_id", pagoId);
                         compraAPagar.save();
-                        entreMasDif= entreMasDif.subtract(compraAPagar.getBigDecimal("monto")).setScale(2, RoundingMode.CEILING);
+                        entreMasDif= entreMasDif-compraAPagar.getFloat("monto");
                         Base.commitTransaction();
                 }
             }
                 Base.openTransaction();
-                System.out.println(cuentaCorriente.add(entrega));
-                prov.set("cuenta_corriente", cuentaCorriente.add(entrega));
+                prov.set("cuenta_corriente", cuentaCorriente+(entrega));
                 prov.saveIt();
                 Base.commitTransaction();
             }
@@ -443,7 +442,7 @@ public class RealizarPagoGui extends javax.swing.JDialog {
             compra.set("descuento", porcentaje);
             compra.set("pago_id", pagoId);
             compra.save();
-            prov.set("cuenta_corriente", prov.getBigDecimal("cuenta_corriente").add(compra.getBigDecimal("monto")).setScale(2, RoundingMode.CEILING));
+            prov.set("cuenta_corriente", prov.getFloat("cuenta_corriente")+(compra.getFloat("monto")));
             prov.saveIt();
             Base.commitTransaction();
         }//else{
@@ -475,13 +474,13 @@ public class RealizarPagoGui extends javax.swing.JDialog {
     }//GEN-LAST:event_montoFocusLost
 
     private void descuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descuentoFocusLost
-        totalFactura = BigDecimal.valueOf(Double.valueOf(totalFac.getText())).setScale(2, RoundingMode.CEILING);
+        totalFactura = Float.valueOf(totalFac.getText());
         try {
-            porcentaje = BigDecimal.valueOf(Double.valueOf(descuento.getText())).setScale(2, RoundingMode.CEILING);
-            totalConDescuentoFloat = totalFactura.subtract(porcentaje.multiply(totalFactura).divide(new BigDecimal(100)));
-            String auxComita=String.valueOf(totalConDescuentoFloat.setScale(2, RoundingMode.CEILING));
+            porcentaje = Float.valueOf(descuento.getText());
+            totalConDescuentoFloat = totalFactura-(porcentaje*(totalFactura)/((100)));
+            String auxComita=String.valueOf(totalConDescuentoFloat);
             totalConDescuento.setText(auxComita);
-            String aux2Comita= String.valueOf(totalConDescuentoFloat.setScale(2, RoundingMode.CEILING));
+            String aux2Comita= String.valueOf(totalConDescuentoFloat);
             monto.setText(aux2Comita);
         } catch (NumberFormatException | ClassCastException e) {
             JOptionPane.showMessageDialog(this, "Error en el porcentaje", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -489,13 +488,13 @@ public class RealizarPagoGui extends javax.swing.JDialog {
 
     private void descuentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descuentoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            totalFactura = BigDecimal.valueOf(Double.valueOf((totalFac.getText()))).setScale(2, RoundingMode.CEILING);
+            totalFactura = Float.valueOf((totalFac.getText()));
             try {
-                porcentaje = BigDecimal.valueOf(Double.valueOf(descuento.getText())).setScale(2, RoundingMode.CEILING);
-                totalConDescuentoFloat = totalFactura.subtract(porcentaje.multiply(totalFactura).divide(new BigDecimal(100))).setScale(2, RoundingMode.CEILING);
-               String auxComita=String.valueOf(totalConDescuentoFloat.setScale(2, RoundingMode.CEILING));
+                porcentaje = Float.valueOf(descuento.getText());
+                totalConDescuentoFloat = totalFactura-(porcentaje*(totalFactura)/((100)));
+               String auxComita=String.valueOf(totalConDescuentoFloat);
             totalConDescuento.setText(auxComita);
-                 String aux2Comita=String.valueOf(totalConDescuentoFloat.setScale(2, RoundingMode.CEILING));
+                 String aux2Comita=String.valueOf(totalConDescuentoFloat);
             monto.setText(aux2Comita.replaceAll(",", "."));
             } catch (NumberFormatException | ClassCastException e) {
                 JOptionPane.showMessageDialog(this, "Error en el porcentaje", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -536,12 +535,12 @@ public class RealizarPagoGui extends javax.swing.JDialog {
 
 
     
-    private BigDecimal calcularDeuda(LazyList<Compra> compras){
+    private float calcularDeuda(LazyList<Compra> compras){
         Iterator<Compra> calcularDeuda= compras.iterator();
-            BigDecimal deuda=new BigDecimal(0);
+            float deuda=0;
             while (calcularDeuda.hasNext()){
-                deuda= deuda.add(calcularDeuda.next().getBigDecimal("monto"));
+                deuda= deuda+(calcularDeuda.next().getFloat("monto"));
             }
-            return deuda.setScale(2, RoundingMode.CEILING);
+            return deuda;
     }
 }
