@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Modelos.Arancel;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +16,10 @@ import javax.activation.FileDataSource;
 import javax.swing.JOptionPane;
 import Modelos.Email;
 import Modelos.Envio;
+import Modelos.Socio;
+import Modelos.Socioarancel;
+import java.util.Date;
+import java.util.Iterator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -26,6 +31,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -195,7 +201,7 @@ public class EnvioEmailControlador {
     }
 
     //dietaRutina es para decir que es, así se pone esa palabra
-    public static boolean enviarMailManualDieta(String fileName, String para, String dietaRutina) {
+    public static boolean enviarMailManualDieta(String fileName, Integer idSocio, String dietaRutina) {
         boolean ret = false;
         Base.openTransaction();
         LazyList<Email> emailsModel = Email.findAll();
@@ -210,6 +216,22 @@ public class EnvioEmailControlador {
             }
             passwo = String.valueOf(arrayD);
             try {
+                Socio s= Socio.findFirst("ID_DATOS_PERS = ?", idSocio);
+                String para= s.getString("mail");
+                LazyList l = Socioarancel.where("id_socio = ?", idSocio);
+            Iterator<Socioarancel> i = l.iterator();
+            String act="";
+            while(i.hasNext()){
+                Socioarancel soar = i.next();
+                Arancel ar=Arancel.findById(soar.get("id_arancel"));
+                act=act.concat("-"+ar.getString("nombre")+" ($"+ar.getString("precio")+")\n");
+                
+            }
+                String datosPersonales="Además te recordamos que \n"
+                        + " tu membresia vence el: "+ dateToMySQLDate(s.getDate("FECHA_PROX_PAGO"),true)+"\n"
+                        + "las actividades que realizas son: \n"
+                        + act
+                        +"Tu cuenta corriente es de : $"+s.getString("cuenta_corriente")+"\n";
                 // se obtiene el objeto Session. La configuración es para
                 // una cuenta de gmail.
                 Properties props = new Properties();
@@ -228,7 +250,9 @@ public class EnvioEmailControlador {
 
                 // Se compone la parte del texto
                 BodyPart texto = new MimeBodyPart();
-                texto.setText("Te enviamos la "+dietaRutina+" personalizada. \n Saludos, \n Gimnasio personaliazdo Pitbull's");
+                texto.setText("Te enviamos la "+dietaRutina+" personalizada. \n "
+                        +datosPersonales
+                        + "Saludos, \n Gimnasio personalizado Pitbull's");
 
                 // Se compone el adjunto con la imagen
                 BodyPart adjunto = new MimeBodyPart();
@@ -268,5 +292,22 @@ public class EnvioEmailControlador {
             JOptionPane.showMessageDialog(null, "No hay cofiguración de email guardada, por favor cargue los datos para habilitar el backup mensual");
         }
         return ret;
+    }
+    
+        /*va true si se quiere usar para mostrarla por pantalla es decir 12/12/2014 y false si va 
+     para la base de datos, es decir 2014/12/12*/
+    public static String dateToMySQLDate(Date fecha, boolean paraMostrar) {
+        if (fecha != null) {
+            if (paraMostrar) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                return sdf.format(fecha);
+            } else {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                return sdf.format(fecha);
+            }
+        } else {
+            return "";
+        }
+
     }
 }

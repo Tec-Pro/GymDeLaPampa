@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dieta" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c81a3a9-473a-4c00-b1d4-48a5f9aa941d">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="384"/>
 	<style name="Title" fill="Solid" scaleImage="FillFrame" fontName="SansSerif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
 	<style name="SubTitle" forecolor="#666666" fontName="SansSerif" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="SansSerif" fontSize="12" isBold="true"/>
@@ -162,19 +162,19 @@ WHERE
 		<groupHeader>
 			<band height="40">
 				<textField evaluationTime="Group" evaluationGroup="Group1" isBlankWhenNull="true">
-					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#CC0000" uuid="3999ef67-2b31-41f5-bb5d-28c0b106092d"/>
-					<textElement>
+					<reportElement style="SubTitle" mode="Opaque" x="2" y="13" width="551" height="24" forecolor="#000000" backcolor="#999999" uuid="3999ef67-2b31-41f5-bb5d-28c0b106092d"/>
+					<textElement textAlignment="Center">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{alimentos_dietas_dia}]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="58477374-5f06-4de5-bb94-ef9ac22ace36"/>
-				</rectangle>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="299">
+				<rectangle radius="10">
+					<reportElement mode="Transparent" x="4" y="1" width="547" height="151" backcolor="#E5DFDF" uuid="522b0c24-5cbb-4917-8b92-096b13a9a663"/>
+				</rectangle>
 				<staticText>
 					<reportElement x="0" y="112" width="95" height="20" uuid="915711d1-e837-405d-a33c-9acfc5c3088d"/>
 					<textElement textAlignment="Right">
@@ -365,7 +365,7 @@ WHERE
 					<text><![CDATA[Kcal]]></text>
 				</staticText>
 				<rectangle>
-					<reportElement mode="Transparent" x="6" y="168" width="545" height="121" uuid="2a9fc710-cdea-4087-986b-dc50fee6fc9b"/>
+					<reportElement mode="Transparent" x="6" y="168" width="545" height="121" backcolor="#E1DFDF" uuid="2a9fc710-cdea-4087-986b-dc50fee6fc9b"/>
 				</rectangle>
 				<staticText>
 					<reportElement x="14" y="181" width="92" height="20" uuid="3f5583bd-bb8c-4d03-ba53-68967de1a2d9"/>
@@ -567,7 +567,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{socios_dietas_desde}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="106" y="20" width="449" height="20" uuid="82799c4f-eb51-44fc-b034-b2979f98ec84"/>
+				<reportElement x="134" y="20" width="421" height="20" uuid="82799c4f-eb51-44fc-b034-b2979f98ec84"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -581,7 +581,7 @@ WHERE
 				<text><![CDATA[Desde:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="273" y="0" width="282" height="20" uuid="567d53eb-e162-4aa2-94f3-a8ad7e1b910d"/>
+				<reportElement x="275" y="0" width="280" height="20" uuid="567d53eb-e162-4aa2-94f3-a8ad7e1b910d"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -595,14 +595,14 @@ WHERE
 				<text><![CDATA[Apellido:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="20" width="104" height="20" uuid="e966e8c5-f7b8-43ed-8fc6-8f9d32d42c54"/>
+				<reportElement x="2" y="20" width="132" height="20" uuid="e966e8c5-f7b8-43ed-8fc6-8f9d32d42c54"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre de la dieta]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="71" y="40" width="484" height="20" uuid="570dd7a6-186b-4e89-86ba-ab908edd294a"/>
+				<reportElement x="85" y="40" width="470" height="20" uuid="570dd7a6-186b-4e89-86ba-ab908edd294a"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -630,14 +630,14 @@ WHERE
 				<text><![CDATA[Hasta:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="0" width="170" height="20" uuid="14ac72ef-9217-448f-a1b7-5ddafc9a35ea"/>
+				<reportElement x="55" y="0" width="163" height="20" uuid="14ac72ef-9217-448f-a1b7-5ddafc9a35ea"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{socios_NOMBRE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="2" y="40" width="69" height="20" uuid="9d5c54d3-2e32-47be-a329-4f2e8ad59b0e"/>
+				<reportElement x="2" y="40" width="83" height="20" uuid="9d5c54d3-2e32-47be-a329-4f2e8ad59b0e"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -661,7 +661,7 @@ WHERE
 			</line>
 			<staticText>
 				<reportElement x="114" y="15" width="175" height="20" uuid="d8cb3665-0b3c-4884-a3a7-323e91fcb855"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ALIMENTO]]></text>
@@ -688,7 +688,7 @@ WHERE
 				<text><![CDATA[PORCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="15" width="55" height="20" uuid="30531091-abbf-43bc-a5df-2ebf27826ab2"/>
+				<reportElement x="6" y="15" width="51" height="20" uuid="30531091-abbf-43bc-a5df-2ebf27826ab2"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -715,6 +715,9 @@ WHERE
 				</textElement>
 				<text><![CDATA[Kcal]]></text>
 			</staticText>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="0" y="15" width="551" height="20" uuid="358f923e-f620-49b2-905e-387fd5643b22"/>
+			</rectangle>
 		</band>
 	</columnHeader>
 	<detail>

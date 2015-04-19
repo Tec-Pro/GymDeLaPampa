@@ -824,7 +824,7 @@ public class VerDietaGui extends javax.swing.JDialog implements ChangeListener {
         try {
             
             String ruta = reporte.obtenerDieta(idSocio, idDieta);
-            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getString("MAIL"), "dieta");
+            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?", idSocio).getInteger("ID_DATOS_PERS"), "dieta");
             this.getParent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); //cambio el cursor por si se inicia sesión antes de cargar las cosas
 
             if (res) {
