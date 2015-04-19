@@ -36,7 +36,6 @@ import Interfaces.EstadisticaConocioGui;
 import Interfaces.EstadisticaGui;
 import Interfaces.GastosGui;
 import Interfaces.GuiCrearRutina;
-import Interfaces.GuiCrearRutinas;
 import Interfaces.GuiEjercicios;
 import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;

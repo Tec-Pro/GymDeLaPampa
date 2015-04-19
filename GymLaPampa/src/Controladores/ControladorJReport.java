@@ -131,6 +131,28 @@ public class ControladorJReport {
             jasperViewer.setTitle("Impresión de rutina");
             jasperViewer.toFront();
             jasperViewer.setVisible(true);
+    }
+    
+    public String obtenerRutina(Integer idRutina) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        parametros.put("rutina_id", idRutina);
+         
+         String rutaDestino= ControladorJReport.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+         int i=0;
+         for( i=rutaDestino.length()-2;i>0 && rutaDestino.charAt(i)!='/';i-- ){
+             rutaDestino= rutaDestino.substring(0, i);
+             
+         }
+         if(rutaDestino.charAt(i)=='/'){
+             rutaDestino+="rutina.pdf";
+         }
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, rutaDestino);
+  
+  return rutaDestino;
 
        
         

@@ -10,9 +10,7 @@ import Interfaces.CargarHuellaGui;
 import Interfaces.DietasSocioGui;
 import Interfaces.FichaMedicaGui;
 import Interfaces.FormaDePagoGui;
-import Interfaces.GuiCargarDias;
 import Interfaces.GuiCrearRutina;
-import Interfaces.GuiRutinas;
 import Interfaces.GuiVerRutina;
 import Interfaces.PagoCuentaEfectivo;
 import Interfaces.PrincipalGui;
@@ -541,7 +539,8 @@ public class ControladorAbmCliente implements ActionListener {
                 guiVerRutina.getTablaRutinasDefault().setRowCount(0);
                 guiVerRutina.setVisible(true);
                 guiVerRutina.getTxtSocio().setText(clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
-               // guiVerRutina.getTxtDNI().setText(clienteGui.getDni().getText());
+                Socio s = Socio.first("DNI = ?", clienteGui.getDni().getText());
+                guiVerRutina.getTxtID().setText(s.getString("ID_DATOS_PERS"));
                 guiVerRutina.setTitle("Rutinas de "+clienteGui.getNombre().getText()+" "+clienteGui.getApellido().getText());
                 for(Rutina r : listaRutinas){
                     Object[] row = new Object[3];

@@ -6,11 +6,15 @@
 package Interfaces;
 
 import Controladores.ControladorJReport;
+import Controladores.EnvioEmailControlador;
 import Modelos.Dia;
 import Modelos.DiasEjercicios;
 import Modelos.Ejercicio;
 import Modelos.Rutina;
+import Modelos.Socio;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Cursor;
+import java.io.File;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -79,10 +84,12 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                     limpiarTablas();
                     rutinaSeleccionada();
                     btnImprimir.setEnabled(true);
+                    btnMail.setEnabled(true);
                 } else {
                     limpiarTablas();
                     LimpiarCampos();
                     btnImprimir.setEnabled(false);
+                    btnMail.setEnabled(false);
                 }
             }
         });
@@ -362,6 +369,10 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         return tabsPanel;
     }
 
+    public JTextField getTxtID() {
+        return txtID;
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -437,6 +448,8 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         tablaRutinas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
+        btnMail = new javax.swing.JButton();
+        txtID = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -1064,7 +1077,7 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addGap(26, 26, 26)
                 .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1119,6 +1132,16 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
             }
         });
 
+        btnMail.setText("Enviar por mail");
+        btnMail.setEnabled(false);
+        btnMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMailActionPerformed(evt);
+            }
+        });
+
+        txtID.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1131,12 +1154,16 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSocio))
+                                .addComponent(txtSocio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnMail, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1151,13 +1178,16 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
 
@@ -1182,10 +1212,31 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMailActionPerformed
+        try {
+            int r = tablaRutinas.getSelectedRow();
+            Integer idRutina = Integer.parseInt(String.valueOf(tablaRutinas.getValueAt(r, r)));
+            String ruta = reporte.obtenerRutina(idRutina);
+            boolean res = EnvioEmailControlador.enviarMailManualDieta(ruta, Socio.findFirst("ID_DATOS_PERS = ?",txtID ).getInteger("ID_DATOS_PERS"), "rutina");
+            this.getParent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)); //cambio el cursor por si se inicia sesión antes de cargar las cosas
+
+            if (res) {
+                JOptionPane.showMessageDialog(this, "Email enviado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Falló el envio, revise la conexión", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            File archivo = new File(ruta);
+            archivo.delete();
+        } catch (ClassNotFoundException | SQLException | JRException ex) {
+            Logger.getLogger(VerDietaGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnMailActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObjetivo;
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnMail;
     private com.toedter.calendar.JDateChooser fechaFin;
     private com.toedter.calendar.JDateChooser fechaInicio;
     private javax.swing.JButton jButton1;
@@ -1248,6 +1299,7 @@ public class GuiVerRutina extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaMusculacionViernes;
     private javax.swing.JTable tablaRutinas;
     private javax.swing.JTabbedPane tabsPanel;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtSocio;
     // End of variables declaration//GEN-END:variables
 }
