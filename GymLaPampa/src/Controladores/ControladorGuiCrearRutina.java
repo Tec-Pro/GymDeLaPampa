@@ -550,11 +550,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionLunesDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionLunesDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionLunesDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosLunes.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoLunesDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoLunesDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoLunesDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosLunes.add(ar);
             }
             Dia v = new Dia(listaEjerciciosLunes);
@@ -568,11 +571,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionMartesDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionMartesDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionMartesDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosMartes.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoMartesDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoMartesDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoMartesDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosMartes.add(ar);
             }
             Dia v = new Dia(listaEjerciciosMartes);
@@ -586,11 +592,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionMiercolesDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionMiercolesDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionMiercolesDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosMiercoles.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoMiercolesDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoMiercolesDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoMiercolesDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosMiercoles.add(ar);
             }
             Dia v = new Dia(listaEjerciciosMiercoles);
@@ -604,11 +613,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionJuevesDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionJuevesDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionJuevesDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosJueves.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoJuevesDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoJuevesDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoJuevesDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosJueves.add(ar);
             }
             Dia v = new Dia(listaEjerciciosJueves);
@@ -622,11 +634,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionViernesDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionViernesDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionViernesDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosViernes.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoViernesDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoViernesDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoViernesDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosViernes.add(ar);
             }
             Dia v = new Dia(listaEjerciciosViernes);
@@ -640,11 +655,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionSabadoDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionSabadoDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionSabadoDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosSabado.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoSabadoDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoSabadoDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoSabadoDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosSabado.add(ar);
             }
             Dia v = new Dia(listaEjerciciosSabado);
@@ -658,11 +676,14 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaMusculacionDomingoDefault().getValueAt(i, 0));
                 ar.setRepeticiones(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionDomingoDefault().getValueAt(i, 4))));
                 ar.setSeries(Integer.valueOf(String.valueOf(guiCrearRutina.getTablaMusculacionDomingoDefault().getValueAt(i, 3))));
+                ar.setTiempo("0");
                 listaEjerciciosDomingo.add(ar);
             }
             for (int i = 0; i < guiCrearRutina.getTablaAerobicoDomingoDefault().getRowCount(); i++) {
                 Ejercicio ar = Ejercicio.first("id = ?", guiCrearRutina.getTablaAerobicoDomingoDefault().getValueAt(i, 0));
                 ar.setTiempo(String.valueOf(guiCrearRutina.getTablaAerobicoDomingoDefault().getValueAt(i, 2)));
+                ar.setRepeticiones(0);
+                ar.setSeries(0);
                 listaEjerciciosDomingo.add(ar);
             }
             Dia v = new Dia(listaEjerciciosDomingo);
