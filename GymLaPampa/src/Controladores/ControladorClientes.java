@@ -485,6 +485,8 @@ public class ControladorClientes implements ActionListener {
             altaClienteGui.getDireccion().setText(s.getString("DIR"));
             altaClienteGui.getTxtFacebook().setText(s.getString("FACEBOOK"));
             altaClienteGui.getBoxConocio().setSelectedItem(s.getString("NOSCONOCIOPOR"));
+            altaClienteGui.getTxtCelular().setText(s.getString("CELULAR"));
+            altaClienteGui.getTxtMail().setText(s.getString("MAIL"));
             if (s.getString("SEXO").equals("M")) {
                 altaClienteGui.getSexo().setSelectedIndex(1);
             } else {

@@ -8,6 +8,7 @@ package Controladores;
 import ABMs.ABMVentas;
 import Interfaces.PrincipalGui;
 import Interfaces.CargarVentaGUI;
+import Interfaces.FormaDePagoGui;
 import Modelos.Articulo;
 import Modelos.Socio;
 import Modelos.Venta;
@@ -42,13 +43,14 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
     CargarVentaGUI cargarVentaGUI;
     ABMVentas abmVentas;
     PrincipalGui aplicacionGUI;
+    FormaDePagoGui formaDePago;
 
     public ControladorCargarVentaGUI(CargarVentaGUI cv, PrincipalGui ap) throws JRException, ClassNotFoundException, SQLException {
         aplicacionGUI = ap;
         cargarVentaGUI = cv;
         cargarVentaGUI.setActionListener(this);
         abmVentas = new ABMVentas();
-
+        formaDePago = new FormaDePagoGui(aplicacionGUI, true, false);
         cargarVentaGUI.getBusquedaNombreTxt().addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -232,7 +234,13 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             if (DatosOK()) {
                 if (abmVentas.Alta(ObtenerDatosVenta())) {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Venta registrada exitosamente!");
-                    // VerCargarCuotasGUI();
+                    formaDePago.setVisible(true);
+                    switch(formaDePago.getReturnStatus()){
+                        case FormaDePagoGui.RET_CUENTA:
+                            break;
+                        case FormaDePagoGui.RET_EFECTIVO:
+                            break;
+                    }
                 } else {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Ocurrio un error, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }

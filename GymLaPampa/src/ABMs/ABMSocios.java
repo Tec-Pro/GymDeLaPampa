@@ -38,8 +38,10 @@ public class ABMSocios {
     public boolean alta(Socio s, LinkedList act) {
         if (!findSocio(s)) {
             Base.openTransaction();
-            Socio nuevo = Socio.create("NOMBRE", s.get("NOMBRE"), "APELLIDO", s.get("APELLIDO"), "DNI", s.get("DNI"), "FECHA_NAC", s.get("FECHA_NAC"), "TEL", s.get("TEL"), "SEXO", s.get("SEXO"), "ACTIVO", 1, "DIR", s.get("DIR"), "FACEBOOK", s.get("FACEBOOK"), "NOSCONOCIOPOR", s.get("NOSCONOCIOPOR"), "CELULAR", s.get("CELULAR"),"MAIL", s.get("MAIL"));
+            Socio nuevo = Socio.create("NOMBRE", s.get("NOMBRE"), "APELLIDO", s.get("APELLIDO"), "DNI", s.get("DNI"), "FECHA_NAC", s.get("FECHA_NAC"), "TEL", s.get("TEL"), "SEXO", s.get("SEXO"), "ACTIVO", 1, "DIR", s.get("DIR"), "FACEBOOK", s.get("FACEBOOK"), "NOSCONOCIOPOR", s.get("NOSCONOCIOPOR"));
             nuevo.set("FECHA_ING", getFechaActual());
+            nuevo.set("CELULAR",s.get("CELULAR"));
+            nuevo.set("MAIL",s.get("MAIL"));
             nuevo.saveIt();
             Iterator<Arancel> it = act.iterator();
             while(it.hasNext()){
@@ -73,6 +75,8 @@ public class ABMSocios {
         if (viejo != null) {
             Base.openTransaction();
             viejo.set("DIR",s.get("DIR"), "NOMBRE", s.get("NOMBRE"), "APELLIDO", s.get("APELLIDO"), "DNI", s.get("DNI"), "FECHA_NAC", s.get("FECHA_NAC"), "TEL", s.get("TEL"), "SEXO", s.get("SEXO"), "FACEBOOK", s.get("FACEBOOK"), "NOSCONOCIOPOR", s.get("NOSCONOCIOPOR"));
+            viejo.set("CELULAR",s.get("CELULAR"));
+            viejo.set("MAIL",s.get("MAIL"));
             Socio soc = Socio.first("DNI = ?", dniViejo);
             LazyList l = Socioarancel.where("id_socio = ?", soc.get("ID_DATOS_PERS"));
             Iterator<Socioarancel> i = l.iterator();

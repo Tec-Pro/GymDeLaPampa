@@ -86,7 +86,7 @@ public class ControladorAbmCliente implements ActionListener {
         s.set("FACEBOOK",clienteGui.getTxtFacebook().getText());
         s.set("NOSCONOCIOPOR",clienteGui.getBoxConocio().getSelectedItem());
         s.set("CELULAR",clienteGui.getTxtCelular().getText());
-        s.set("MAIL",clienteGui.getTxtMail());
+        s.set("MAIL",clienteGui.getTxtMail().getText());
         if(clienteGui.getFechaNacimJDate().getCalendar()!=null)
              s.set("FECHA_NAC", dateToMySQLDate(clienteGui.getFechaNacimJDate().getCalendar().getTime(),false));
         if(clienteGui.getSexo().getSelectedIndex()==1){
