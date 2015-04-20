@@ -454,6 +454,7 @@ CREATE TABLE `pventas` (
   `fecha` date DEFAULT NULL,
   `monto` float DEFAULT NULL,
   `modo` varchar(100) DEFAULT NULL,
+  `gasto_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `FK_pventas` (`ID_DATOS_PERS`),

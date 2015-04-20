@@ -43,6 +43,7 @@ import Modelos.User;
 import com.jtattoo.plaf.aero.AeroLookAndFeel;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import java.util.Properties;
@@ -313,7 +314,11 @@ public class ControladorPrincipalGui implements ActionListener {
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
             }
-            gastosGui.calcularCuentasCorrientes();
+            try {
+                gastosGui.calcularCuentasCorrientes();
+            } catch (ParseException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
             gastosGui.setVisible(true);
             gastosGui.toFront();
         }

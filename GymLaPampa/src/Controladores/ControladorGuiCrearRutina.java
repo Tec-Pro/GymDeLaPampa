@@ -480,6 +480,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
 
     public void ActualizarListaSocios() {
         abrirBase();
+        guiCrearRutina.getTablaSociosDefault().setRowCount(0);
         LazyList<Socio> lista = Socio.findAll();
         for (Socio s : lista) {
             Object[] row = new Object[2];
@@ -500,7 +501,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
             row[2] = a.getString("ejercicio");
             guiCrearRutina.getTablaEjerciciosDefault().addRow(row);
         }
-       // guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
+        // guiCrearRutina.getTablaEjercicio().getRowSorter().toggleSortOrder(1);
     }
 
     public void ActualizarListaRutinas() {
@@ -695,15 +696,16 @@ public class ControladorGuiCrearRutina implements ActionListener {
     }
 
     private boolean datosOK() {
-        return ((guiCrearRutina.getTablaSocios().getSelectedRow() != -1)
-                && ((guiCrearRutina.getTablaAerobicoLunes().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionLunes().getSelectedRow() != -1)
+        return /*((*/guiCrearRutina.getTablaSocios().getSelectedRow() != -1;//)
+               /* && ((guiCrearRutina.getTablaAerobicoLunes().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionLunes().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoMartes().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionMartes().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoMiercoles().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionMiercoles().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoJueves().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionJueves().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoViernes().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionViernes().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoSabado().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionSabado().getSelectedRow() != -1)
                 || (guiCrearRutina.getTablaAerobicoDomingo().getSelectedRow() != -1 || guiCrearRutina.getTablaMusculacionDomingo().getSelectedRow() != -1)));
-    }
+*/    
+        }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -748,20 +750,20 @@ public class ControladorGuiCrearRutina implements ActionListener {
             }
         }
         if (ae.getSource().equals(guiCrearRutina.getBotGuardar()) && !guiCrearRutina.isApreteModificar()) {
-            //if(!datosOK())
-            //   JOptionPane.showMessageDialog(guiCrearRutina, "Falta seleccionar cliente o no se han agregado ejercicios.", "Faltan datos obligatorios", JOptionPane.WARNING_MESSAGE);
-            //else{
-            if (abmRutinas.Alta(obtenerDatosRutina()) && abmRutinas.AltaDias(obtenerDatosDias())) {
-                JOptionPane.showMessageDialog(guiCrearRutina, "Rutina registrada exitosamente!.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                guiCrearRutina.setApreteNuevoModificar(false);
-                guiCrearRutina.EstadoInicial();
-                ActualizarListaRutinas();
-                guiCrearRutina.limpiarTablas();
-                guiCrearRutina.getBotEliminarCancelar().setText("Eliminar");
+            if (!datosOK()) {
+                JOptionPane.showMessageDialog(guiCrearRutina, "Falta seleccionar cliente o no se han agregado ejercicios.", "Faltan datos obligatorios", JOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(guiCrearRutina, "Ocurrio un error!.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            //}
+                if (abmRutinas.Alta(obtenerDatosRutina()) && abmRutinas.AltaDias(obtenerDatosDias())) {
+                    JOptionPane.showMessageDialog(guiCrearRutina, "Rutina registrada exitosamente!.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    guiCrearRutina.setApreteNuevoModificar(false);
+                    guiCrearRutina.EstadoInicial();
+                    ActualizarListaRutinas();
+                    guiCrearRutina.limpiarTablas();
+                    guiCrearRutina.getBotEliminarCancelar().setText("Eliminar");
+                } else {
+                    JOptionPane.showMessageDialog(guiCrearRutina, "Ocurrio un error!.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+           }
         } else {
             if (ae.getSource().equals(guiCrearRutina.getBotGuardar()) && guiCrearRutina.isApreteModificar()) {
                 int row = guiCrearRutina.getTablaRutinasSocio().getSelectedRow();
@@ -786,49 +788,49 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 case 0:
                     if (guiCrearRutina.getTablaMusculacionLunes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionLunesDefault().removeRow(guiCrearRutina.getTablaMusculacionLunes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 1:
                     if (guiCrearRutina.getTablaMusculacionMartes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionMartesDefault().removeRow(guiCrearRutina.getTablaMusculacionMartes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 2:
                     if (guiCrearRutina.getTablaMusculacionMiercoles().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionMiercolesDefault().removeRow(guiCrearRutina.getTablaMusculacionMiercoles().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 3:
                     if (guiCrearRutina.getTablaMusculacionJueves().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionJuevesDefault().removeRow(guiCrearRutina.getTablaMusculacionJueves().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 4:
                     if (guiCrearRutina.getTablaMusculacionViernes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionViernesDefault().removeRow(guiCrearRutina.getTablaMusculacionViernes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 5:
                     if (guiCrearRutina.getTablaMusculacionSabado().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionSabadoDefault().removeRow(guiCrearRutina.getTablaMusculacionSabado().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 6:
                     if (guiCrearRutina.getTablaMusculacionDomingo().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaMusculacionDomingoDefault().removeRow(guiCrearRutina.getTablaMusculacionDomingo().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
@@ -840,49 +842,49 @@ public class ControladorGuiCrearRutina implements ActionListener {
                 case 0:
                     if (guiCrearRutina.getTablaAerobicoLunes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoLunesDefault().removeRow(guiCrearRutina.getTablaAerobicoLunes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 1:
                     if (guiCrearRutina.getTablaAerobicoMartes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoMartesDefault().removeRow(guiCrearRutina.getTablaAerobicoMartes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 2:
                     if (guiCrearRutina.getTablaAerobicoMiercoles().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoMiercolesDefault().removeRow(guiCrearRutina.getTablaAerobicoMiercoles().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 3:
                     if (guiCrearRutina.getTablaAerobicoJueves().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoJuevesDefault().removeRow(guiCrearRutina.getTablaAerobicoJueves().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 4:
                     if (guiCrearRutina.getTablaAerobicoViernes().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoViernesDefault().removeRow(guiCrearRutina.getTablaAerobicoViernes().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 5:
                     if (guiCrearRutina.getTablaAerobicoSabado().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoSabadoDefault().removeRow(guiCrearRutina.getTablaAerobicoSabado().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;
                 case 6:
                     if (guiCrearRutina.getTablaAerobicoDomingo().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
                         guiCrearRutina.getTablaAerobicoDomingoDefault().removeRow(guiCrearRutina.getTablaAerobicoDomingo().getSelectedRow());
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(guiCrearRutina, "Primero seleccione el ejercicio a quitar");
                     }
                     break;

@@ -268,12 +268,15 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             monto = monto.add(total);
             g.setBigDecimal("monto", monto);
             res = res && g.saveIt();
+            Pventa p = Pventa.create("ID_DATOS_PERS", cargarVentaGUI.getIdSocioTxt().getText(), "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "monto", cargarVentaGUI.getTotalTxt().getText(), "modo", "PAGO DE VENTA","gasto_id",g.get("id"));
+            res = res && p.saveIt();
         } else {
             Gasto ga = Gasto.create("dato_id", idDato, "monto", total, "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "descrip", "PAGO DE VENTA");
             res = res && ga.saveIt();
+            Pventa p = Pventa.create("ID_DATOS_PERS", cargarVentaGUI.getIdSocioTxt().getText(), "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "monto", cargarVentaGUI.getTotalTxt().getText(), "modo", "PAGO DE VENTA","gasto_id",ga.get("id"));
+            res = res && p.saveIt();
         }
-        Pventa p = Pventa.create("ID_DATOS_PERS", cargarVentaGUI.getIdSocioTxt().getText(), "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "monto", cargarVentaGUI.getTotalTxt().getText(), "modo", "PAGO DE VENTA");
-        res = res && p.saveIt();
+        
         Base.commitTransaction();
         return res;
     }

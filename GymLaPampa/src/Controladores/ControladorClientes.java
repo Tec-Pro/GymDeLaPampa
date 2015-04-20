@@ -13,6 +13,7 @@ import Interfaces.PrincipalGui;
 import Interfaces.TodasAsisGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
+import Modelos.Gasto;
 import Modelos.Pago;
 import Modelos.Pventa;
 import Modelos.Socio;
@@ -22,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
@@ -654,7 +656,14 @@ public class ControladorClientes implements ActionListener {
                 int r = pagosGui.getTablaPagos().getSelectedRow();
                 String modo = (String) pagosGui.getTablaPagos().getValueAt(r, 6);
                 if (modo.equals("PAGO DE VENTA")) {
-                    Pventa.delete("id = ?", pagosGui.getTablaPagos().getValueAt(r, 5));
+                    Object idPagoVenta = pagosGui.getTablaPagos().getValueAt(r, 5);
+                    Pventa pb = Pventa.first("id = ?", idPagoVenta);
+                    Gasto g = Gasto.first("id = ?", pb.get("gasto_id"));
+                    BigDecimal monto = g.getBigDecimal("monto");
+                    monto = monto.subtract(pb.getBigDecimal("monto"));
+                    g.setBigDecimal("monto", monto);
+                    g.saveIt();
+                    Pventa.delete("id = ?", idPagoVenta);
                 } else {
                     Pago.delete("ID_PAGOS = ?", pagosGui.getTablaPagos().getValueAt(pagosGui.getTablaPagos().getSelectedRow(), 5));
                 }

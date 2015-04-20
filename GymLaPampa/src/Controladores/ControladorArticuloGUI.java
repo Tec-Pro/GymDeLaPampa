@@ -117,7 +117,8 @@ public class ControladorArticuloGUI implements ActionListener {
         if ((articulosGUI.getTxtArticulo().equals(""))
                 || (articulosGUI.getTxtCodigo().equals(""))
                 || (articulosGUI.getTxtPrecio().equals(""))
-                || (articulosGUI.getTxtPrecioCompra().equals(""))) {
+                || (articulosGUI.getTxtPrecioCompra().equals(""))
+                || (articulosGUI.getBoxProveedor().getSelectedItem().equals("Seleccionar"))) {
             return false;
         }
         return true;
