@@ -13,6 +13,7 @@ import Interfaces.FormaDePagoGui;
 import Modelos.Articulo;
 import Modelos.Dato;
 import Modelos.Gasto;
+import Modelos.Pventa;
 import Modelos.Socio;
 import Modelos.Venta;
 import Utiles.Triple;
@@ -27,6 +28,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -48,6 +51,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
     PrincipalGui aplicacionGUI;
     FormaDePagoGui formaDePago;
     CalcularVueltoGui calcularVueltoGui;
+    ControladorJReport reporte;
 
     public ControladorCargarVentaGUI(CargarVentaGUI cv, PrincipalGui ap) throws JRException, ClassNotFoundException, SQLException {
         aplicacionGUI = ap;
@@ -57,6 +61,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         formaDePago = new FormaDePagoGui(aplicacionGUI, true, false);
         formaDePago.setLocationRelativeTo(null);
         formaDePago.getBtnCancelar().setEnabled(false);
+        reporte = new ControladorJReport("pagoVenta.jasper");
 
         cargarVentaGUI.getBusquedaNombreTxt().addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
@@ -81,18 +86,16 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
     }
 
     private void busquedaKeyReleased(KeyEvent evt) {
-        /*   abrirBase();
-         List<Socio> listaSocios = busqueda.BuscarSocios(cargarVentaGUI.getBusquedaNombreTxt().getText(), "NOMBRE");
-         cargarVentaGUI.getTablaSociosDefault().setRowCount(0);
-         for (Socio socio : listaSocios) {
-         Object row[] = new String[3];
-         row[0] = socio.getString("id");
-         row[1] =  socio.getString("nombre");
-         row[2] = socio.getString("direccion") + " - " + socio.getString("ciudad");
-         cargarVentaGUI.getTablaSociosDefault().addRow(row);
-         }
-          
-         */
+        abrirBase();
+        cargarVentaGUI.getTablaSociosDefault().setRowCount(0);
+        List<Socio> resul;
+        resul = Socio.where("APELLIDO like ? or NOMBRE like ?", "%" + cargarVentaGUI.getBusquedaNombreTxt().getText() + "%", "%" + cargarVentaGUI.getBusquedaNombreTxt().getText() + "%");
+        for (Socio e : resul) {
+            Object[] row = new Object[2];
+            row[0] = e.getString("NOMBRE") + " " + e.getString("APELLIDO");
+            row[1] = e.getString("DNI");
+            cargarVentaGUI.getTablaSociosDefault().addRow(row);
+        }
     }
 
     private void tablaSocioMouseClicked(MouseEvent evt) {
@@ -216,7 +219,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         for (Socio a : socios) {
             Object[] row = new Object[3];
             row[0] = a.getString("ID_DATOS_PERS");
-            row[1] = a.getString("NOMBRE");
+            row[1] = a.getString("NOMBRE") + " " + a.getString("APELLIDO");
             row[2] = a.getString("DIR");
             cargarVentaGUI.getTablaSociosDefault().addRow(row);
         }
@@ -233,7 +236,7 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         BigDecimal r = s.getBigDecimal("CUENTA_CORRIENTE").subtract(total);
         s.setBigDecimal("CUENTA_CORRIENTE", r);
         res = res && s.saveIt();
-       //categoria_id = 7 es el id de la categoria VENTA 
+        //categoria_id = 7 es el id de la categoria VENTA 
         //Dato d = Dato.create("descripcion","PAGO DE VENTA","categoria_id",7,"ingreso_egreso","ingreso");
         //res = res && d.saveIt();
         int idDato = 15;//d.getInteger("id");
@@ -251,8 +254,8 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
         Base.commitTransaction();
         return res;
     }
-    
-    private boolean pagoEfectivo(){
+
+    private boolean pagoEfectivo() {
         abrirBase();
         Base.openTransaction();
         boolean res = true;
@@ -269,7 +272,8 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
             Gasto ga = Gasto.create("dato_id", idDato, "monto", total, "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "descrip", "PAGO DE VENTA");
             res = res && ga.saveIt();
         }
-
+        Pventa p = Pventa.create("ID_DATOS_PERS", cargarVentaGUI.getIdSocioTxt().getText(), "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "monto", cargarVentaGUI.getTotalTxt().getText(), "modo", "PAGO DE VENTA");
+        res = res && p.saveIt();
         Base.commitTransaction();
         return res;
     }
@@ -307,10 +311,19 @@ public class ControladorCargarVentaGUI implements ActionListener, CellEditorList
                             calcularVueltoGui.setVisible(true);
                             calcularVueltoGui.setLocationRelativeTo(null);
                             calcularVueltoGui.getCancelButton().setEnabled(false);
-                            switch(calcularVueltoGui.getReturnStatus()){
+                            switch (calcularVueltoGui.getReturnStatus()) {
                                 case CalcularVueltoGui.RET_OK:
-                                    if(pagoEfectivo()){
+                                    if (pagoEfectivo()) {
                                         JOptionPane.showMessageDialog(formaDePago, "Se cargo el pago correctamente.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                        try {
+                                            reporte.mostrarTicketVenta(abmVentas.getIdVenta());
+                                        } catch (ClassNotFoundException ex) {
+                                            Logger.getLogger(ControladorCargarVentaGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                        } catch (SQLException ex) {
+                                            Logger.getLogger(ControladorCargarVentaGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                        } catch (JRException ex) {
+                                            Logger.getLogger(ControladorCargarVentaGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                         cargarVentaGUI.setVisible(false);
                                     }
                                     break;

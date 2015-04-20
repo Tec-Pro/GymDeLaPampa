@@ -28,10 +28,10 @@
      socios.`APELLIDO` AS socios_APELLIDO,
      socios.`DNI` AS socios_DNI
 FROM
-     `socios` socios INNER JOIN `rutinas` rutinas ON socios.`ID_DATOS_PERS` = rutinas.`socio_id`
-     INNER JOIN `dias` dias ON rutinas.`id` = dias.`rutina_id`
+     `rutinas` rutinas INNER JOIN `dias` dias ON rutinas.`id` = dias.`rutina_id`
      INNER JOIN `dias_ejercicios` dias_ejercicios ON dias.`id` = dias_ejercicios.`dia_id`
      INNER JOIN `ejercicios` ejercicios ON dias_ejercicios.`ejercicio_id` = ejercicios.`id`
+     INNER JOIN `socios` socios ON rutinas.`socio_id` = socios.`DNI`
 WHERE
      rutinas.`id` = $P{rutina_id}]]>
 	</queryString>

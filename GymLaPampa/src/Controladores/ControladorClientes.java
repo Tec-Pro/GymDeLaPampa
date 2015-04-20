@@ -14,6 +14,7 @@ import Interfaces.TodasAsisGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
 import Modelos.Pago;
+import Modelos.Pventa;
 import Modelos.Socio;
 import Modelos.Socioarancel;
 import com.toedter.calendar.JDateChooser;
@@ -64,7 +65,7 @@ public class ControladorClientes implements ActionListener {
     private boolean verTodas = false;
 
     PrincipalGui principal;
-    
+
     public ControladorClientes(BusquedaGui clientes, PrincipalGui prin, ActualizarDatos actualizarDatos) throws JRException, ClassNotFoundException, SQLException {
         principal = prin;
         this.clientesGui = clientes;
@@ -75,13 +76,11 @@ public class ControladorClientes implements ActionListener {
         controladorAbmCliente = new ControladorAbmCliente(altaClienteGui, actualizarDatos, principal);
         principal.getDesktop().add(altaClienteGui);
         pagosGui = new PagosGui();
-        
+
        // pagosGui.getCActiv().addItem("TODOS");
-      //  pagosGui.getCActiv().addActionListener(new ActionListener() { 
+        //  pagosGui.getCActiv().addActionListener(new ActionListener() { 
         //public void actionPerformed(ActionEvent e){
-           
-            
-       // }}); 
+        // }}); 
         asisGui = new TodasAsisGui();
         asisGui.setActionListener(this);
         principal.getDesktop().add(asisGui);
@@ -145,16 +144,16 @@ public class ControladorClientes implements ActionListener {
         calenDesdeA.setDate(new Date(110, 1, 1));
         //////2
         calenDesde.getJCalendar().addPropertyChangeListener("calendar", new PropertyChangeListener() {
-        
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 calenDesdePropertyChange(evt);
             }
         });
-        
+
         //////////////////1
         calenDesdeA.getJCalendar().addPropertyChangeListener("calendar", new PropertyChangeListener() {
-        
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 calenDesdeAPropertyChange(evt);
@@ -173,7 +172,7 @@ public class ControladorClientes implements ActionListener {
                 calenHastaPropertyChange(e);
             }
         });
-        
+
         /////////1
         calenHastaA.getJCalendar().addPropertyChangeListener("calendar", new PropertyChangeListener() {
             @Override
@@ -186,8 +185,8 @@ public class ControladorClientes implements ActionListener {
     }
 
     public void calenDesdePropertyChange(PropertyChangeEvent e) {
-                dateHasta= dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
-                dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
+        dateHasta = dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
+        dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
         Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
         String idCli = "nuul";
         if (s != null) {
@@ -195,11 +194,11 @@ public class ControladorClientes implements ActionListener {
         }
         actualizarPagos(idCli, dateDesde, dateHasta, verTodos);
     }
-    
+
     ////////////1
-     public void calenDesdeAPropertyChange(PropertyChangeEvent e) {
-                dateHastaA= dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
-                dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
+    public void calenDesdeAPropertyChange(PropertyChangeEvent e) {
+        dateHastaA = dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
+        dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
         Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
         String idCli = "nuul";
         if (s != null) {
@@ -211,8 +210,8 @@ public class ControladorClientes implements ActionListener {
 
     public void calenHastaPropertyChange(PropertyChangeEvent e) {
         final Calendar c = (Calendar) e.getNewValue();
-                dateHasta= dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
-                dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
+        dateHasta = dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
+        dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
         Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
         String idCli = "nuul";
         if (s != null) {
@@ -220,12 +219,12 @@ public class ControladorClientes implements ActionListener {
         }
         actualizarPagos(idCli, dateDesde, dateHasta, verTodos);
     }
-    
+
     ///////////1
     public void calenHastaAPropertyChange(PropertyChangeEvent e) {
         final Calendar c = (Calendar) e.getNewValue();
-                dateHastaA= dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
-                dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
+        dateHastaA = dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
+        dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
         Socio s = Socio.first("DNI = ?", tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2));
         String idCli = "nuul";
         if (s != null) {
@@ -234,8 +233,6 @@ public class ControladorClientes implements ActionListener {
         actualizarAsis(idCli, dateDesdeA, dateHastaA, verTodas);
     }
     ////////////2
-    
-    
 
     public void cargarSociosActiv(List lista, boolean inactivo, boolean morosos, boolean soloNombre) {
         tablaSocDefault.setRowCount(0);
@@ -256,14 +253,14 @@ public class ControladorClientes implements ActionListener {
             }
             clientesGui.getLabelResult3().setText(Integer.toString(ListSocios.size()));
             /*LazyList lista3 = Arancel.where("ACTIVO = ?", 1);
-            Iterator<Arancel> iter = lista3.iterator();
-            String d[] = new String[100];
-            int i = 1;
-            while (iter.hasNext()) {
-                Arancel a = iter.next();
-                d[i] = a.getString("nombre");
-                i++;
-            }*/
+             Iterator<Arancel> iter = lista3.iterator();
+             String d[] = new String[100];
+             int i = 1;
+             while (iter.hasNext()) {
+             Arancel a = iter.next();
+             d[i] = a.getString("nombre");
+             i++;
+             }*/
             //clientesGui.getActividades().setListData(d);
             //ABMSocios abm = new ABMSocios();
         } else {
@@ -402,7 +399,7 @@ public class ControladorClientes implements ActionListener {
                 }
             }
         }
-                clientesGui.getLabelResult3().setText(Integer.toString(clientesGui.getTablaClientes().getRowCount()));
+        clientesGui.getLabelResult3().setText(Integer.toString(clientesGui.getTablaClientes().getRowCount()));
 
     }
 
@@ -459,7 +456,7 @@ public class ControladorClientes implements ActionListener {
         } else {
             cargarSociosActiv(actividadesSelecc, false, false, true);
         }
-        
+
         clientesGui.getLabelResult3().setText(Integer.toString(clientesGui.getTablaClientes().getRowCount()));
 
     }
@@ -570,7 +567,6 @@ public class ControladorClientes implements ActionListener {
                 LazyList ListPagos = Pago.where("ID_DATOS_PERS = ?", s.getString("ID_DATOS_PERS"));
                 pagosGui.getTablaPagosDefault().setRowCount(0);
                 Iterator<Pago> it = ListPagos.iterator();
-
                 while (it.hasNext()) {
                     Pago p = it.next();
                     Object row[] = new Object[7];
@@ -583,8 +579,20 @@ public class ControladorClientes implements ActionListener {
                     row[6] = p.getString("DESCRIPCION");
                     pagosGui.getTablaPagosDefault().addRow(row);
                 }
+                LazyList<Pventa> pagosv = Pventa.where("ID_DATOS_PERS = ?", s.getString("ID_DATOS_PERS"));
+                for (Pventa pv : pagosv) {
+                    Object row[] = new Object[7];
+                    row[0] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
+                    row[1] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1);
+                    row[2] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2);
+                    row[3] = dateToMySQLDate(pv.getDate("fecha"), true);
+                    row[4] = pv.getFloat("monto");
+                    row[5] = pv.getInteger("id");
+                    row[6] = pv.getString("modo");
+                    pagosGui.getTablaPagosDefault().addRow(row);
+                }
                 pagosGui.setVisible(true);
-                
+
                 pagosGui.toFront();
             }
 
@@ -606,15 +614,15 @@ public class ControladorClientes implements ActionListener {
                     row[2] = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 2);
                     row[3] = dateToMySQLDate(p.getDate("FECHA"), true);
                     //row[4] = p.getFloat("MONTO");
-                    Arancel ar= Arancel.findFirst("id = ?", p.get("ID_ACTIV"));
-                     String nombreActiv= ar.getString("nombre");
-                      String nombreActivCombo="";
-                      if(p.get("ID_ACTIV_COMBO")!=null){
-                            ar= Arancel.findFirst("id = ?", p.get("ID_ACTIV_COMBO"));
-                            nombreActivCombo=ar.getString("nombre");
-                         }
-                      row[4] = nombreActiv;
-                      row[5] = nombreActivCombo;
+                    Arancel ar = Arancel.findFirst("id = ?", p.get("ID_ACTIV"));
+                    String nombreActiv = ar.getString("nombre");
+                    String nombreActivCombo = "";
+                    if (p.get("ID_ACTIV_COMBO") != null) {
+                        ar = Arancel.findFirst("id = ?", p.get("ID_ACTIV_COMBO"));
+                        nombreActivCombo = ar.getString("nombre");
+                    }
+                    row[4] = nombreActiv;
+                    row[5] = nombreActivCombo;
                     row[6] = p.getInteger("ID_ASISTENCIA");
                     asisGui.getTablaAsisDefault().addRow(row);
                 }
@@ -626,35 +634,40 @@ public class ControladorClientes implements ActionListener {
         if (ae.getSource() == asisGui.getBotBorrarAsis()) {
             int ret = JOptionPane.showConfirmDialog(asisGui, "¿Desea eliminar la asistencia seleccionada?", null, JOptionPane.YES_NO_OPTION);
             if (ret == JOptionPane.YES_OPTION) {
-                
+
                 Asistencia.delete("ID_ASISTENCIA = ?", asisGui.getTablaAsis().getValueAt(asisGui.getTablaAsis().getSelectedRow(), 6));
-                dateHasta= dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
+                dateHasta = dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
                 dateDesde = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
                 actualizarAsis(dateDesde, dateDesde, dateHasta, verTodas);
             }
         }
         if (ae.getSource() == asisGui.getBotVerTodos()) {
             verTodas = true;
-             dateHastaA= dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
-             dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
+            dateHastaA = dateToMySQLDate(asisGui.getHasta().getCalendar().getTime(), false);
+            dateDesdeA = dateToMySQLDate(asisGui.getDesde().getCalendar().getTime(), false);
             actualizarAsis("no me importa", dateDesdeA, dateHastaA, verTodas);
 
         }
         if (ae.getSource() == pagosGui.getBotBorrarPago()) {
             int ret = JOptionPane.showConfirmDialog(pagosGui, "¿Desea eliminar el pago seleccionado?", null, JOptionPane.YES_NO_OPTION);
             if (ret == JOptionPane.YES_OPTION) {
-                
-                Pago.delete("ID_PAGOS = ?", pagosGui.getTablaPagos().getValueAt(pagosGui.getTablaPagos().getSelectedRow(), 5));
-                dateHasta= dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
+                int r = pagosGui.getTablaPagos().getSelectedRow();
+                String modo = (String) pagosGui.getTablaPagos().getValueAt(r, 6);
+                if (modo.equals("PAGO DE VENTA")) {
+                    Pventa.delete("id = ?", pagosGui.getTablaPagos().getValueAt(r, 5));
+                } else {
+                    Pago.delete("ID_PAGOS = ?", pagosGui.getTablaPagos().getValueAt(pagosGui.getTablaPagos().getSelectedRow(), 5));
+                }
+                dateHasta = dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
                 dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
                 actualizarPagos(dateDesde, dateDesde, dateHasta, verTodos);
             }
         }
         if (ae.getSource() == pagosGui.getBotVerTodos()) {
             verTodos = true;
-            dateHasta= dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
+            dateHasta = dateToMySQLDate(pagosGui.getHasta().getCalendar().getTime(), false);
             dateDesde = dateToMySQLDate(pagosGui.getDesde().getCalendar().getTime(), false);
-            
+
             actualizarPagos("no me importa", dateDesde, dateHasta, verTodos);
 
         }
@@ -706,10 +719,13 @@ public class ControladorClientes implements ActionListener {
 
     private void actualizarPagos(String idcliente, String desde, String hasta, boolean todos) {
         LazyList<Pago> ListPagos;
+        LazyList<Pventa> lista;
         if (!todos) {
             ListPagos = Pago.where("ID_DATOS_PERS = ? and FECHA between ? and ?", idcliente, desde, hasta);
+            lista = Pventa.where("ID_DATOS_PERS = ? and FECHA between ? and ?", idcliente, desde, hasta);
         } else {
             ListPagos = Pago.where("FECHA between ? and ?", desde, hasta);
+            lista = Pventa.where("FECHA between ? and ?", desde, hasta);
         }
         pagosGui.getTablaPagosDefault().setRowCount(0);
         if (ListPagos != null) {
@@ -728,8 +744,22 @@ public class ControladorClientes implements ActionListener {
                 pagosGui.getTablaPagosDefault().addRow(row);
             }
         }
+        if(lista != null){
+            Socio s;
+            for(Pventa p : lista){
+                s = Socio.findFirst("ID_DATOS_PERS =?", p.getString("ID_DATOS_PERS"));
+                Object row[] = new Object[6];
+                row[0] = s.getString("NOMBRE");
+                row[1] = s.getString("APELLIDO");
+                row[2] = s.getString("DNI");
+                row[3] = dateToMySQLDate(p.getDate("fecha"), true);
+                row[4] = p.getFloat("monto");
+                row[5] = p.getInteger("id");
+                pagosGui.getTablaPagosDefault().addRow(row);
+            }
+        }
     }
-    
+
     private void actualizarAsis(String idcliente, String desde, String hasta, boolean todos) {
         LazyList<Asistencia> ListAsis;
         if (!todos) {
@@ -749,18 +779,18 @@ public class ControladorClientes implements ActionListener {
                 row[1] = s.getString("APELLIDO");
                 row[2] = s.getString("DNI");
                 row[3] = dateToMySQLDate(p.getDate("FECHA"), true);
-               // row[4] = p.getFloat("MONTO");
-                Arancel ar= Arancel.findFirst("id = ?", p.get("ID_ACTIV"));
-                if(ar != null){
-                     String nombreActiv= ar.getString("nombre");
-                      String nombreActivCombo="";
-                      if(p.get("ID_ACTIV_COMBO")!=null){
-                            ar= Arancel.findFirst("id = ?", p.get("ID_ACTIV_COMBO"));
-                            nombreActivCombo=ar.getString("nombre");
-                         }
-                      row[4] = nombreActiv;
-                      row[5] = nombreActivCombo;
-                }     
+                // row[4] = p.getFloat("MONTO");
+                Arancel ar = Arancel.findFirst("id = ?", p.get("ID_ACTIV"));
+                if (ar != null) {
+                    String nombreActiv = ar.getString("nombre");
+                    String nombreActivCombo = "";
+                    if (p.get("ID_ACTIV_COMBO") != null) {
+                        ar = Arancel.findFirst("id = ?", p.get("ID_ACTIV_COMBO"));
+                        nombreActivCombo = ar.getString("nombre");
+                    }
+                    row[4] = nombreActiv;
+                    row[5] = nombreActivCombo;
+                }
                 row[6] = p.getInteger("ID_ASISTENCIA");
                 asisGui.getTablaAsisDefault().addRow(row);
             }
@@ -775,6 +805,4 @@ public class ControladorClientes implements ActionListener {
         return altaClienteGui;
     }
 
- 
-    
 }

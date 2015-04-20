@@ -442,6 +442,26 @@ CREATE TABLE `pagoproveedors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `pagosventas`
+--
+
+DROP TABLE IF EXISTS `pventas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pventas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_DATOS_PERS` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `monto` float DEFAULT NULL,
+  `modo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_pventas` (`ID_DATOS_PERS`),
+  CONSTRAINT `FK_pventas` FOREIGN KEY (`ID_DATOS_PERS`) REFERENCES `socios` (`ID_DATOS_PERS`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `pagos`
 --
 

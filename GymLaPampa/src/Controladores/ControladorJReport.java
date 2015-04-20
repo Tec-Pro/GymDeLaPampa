@@ -159,5 +159,16 @@ public class ControladorJReport {
        
         
     }
+    
+    public void mostrarTicketVenta(Integer idVenta) throws ClassNotFoundException, SQLException, JRException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/GYM", "root", "root");
+        Map parametros = new HashMap();
+        parametros.clear();
+        parametros.put("id_venta", idVenta);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
+        JasperViewer.viewReport(jasperPrint, false);
+        connection.close();
+    }
 
 }

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketPagoMembresia" language="groovy" pageWidth="300" pageHeight="500" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="7b4002c9-a221-4530-8f8e-3ca9bb8b5a23">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_venta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ventas.`id` AS ventas_id,
+     ventas.`monto` AS ventas_monto,
+     ventas.`socio_id` AS ventas_socio_id,
+     ventas.`fecha` AS ventas_fecha,
+     ventas.`forma_pago` AS ventas_forma_pago,
+     socios.`ID_DATOS_PERS` AS socios_ID_DATOS_PERS,
+     socios.`NOMBRE` AS socios_NOMBRE,
+     socios.`APELLIDO` AS socios_APELLIDO,
+     socios.`DNI` AS socios_DNI,
+     articulos_ventas.`id` AS articulos_ventas_id,
+     articulos_ventas.`venta_id` AS articulos_ventas_venta_id,
+     articulos_ventas.`articulo_id` AS articulos_ventas_articulo_id,
+     articulos_ventas.`cantidad` AS articulos_ventas_cantidad,
+     articulos_ventas.`precio_final` AS articulos_ventas_precio_final,
+     articulos.`id` AS articulos_id,
+     articulos.`articulo` AS articulos_articulo
+FROM
+     `socios` socios INNER JOIN `ventas` ventas ON socios.`ID_DATOS_PERS` = ventas.`socio_id`
+     INNER JOIN `articulos_ventas` articulos_ventas ON ventas.`id` = articulos_ventas.`venta_id`
+     INNER JOIN `articulos` articulos ON articulos_ventas.`articulo_id` = articulos.`id`
+WHERE
+     ventas.`id` = $P{id_venta}]]>
+	</queryString>
+	<field name="ventas_id" class="java.lang.Integer"/>
+	<field name="ventas_monto" class="java.lang.Float"/>
+	<field name="ventas_socio_id" class="java.lang.Integer"/>
+	<field name="ventas_fecha" class="java.sql.Date"/>
+	<field name="ventas_forma_pago" class="java.lang.String"/>
+	<field name="socios_ID_DATOS_PERS" class="java.lang.Integer"/>
+	<field name="socios_NOMBRE" class="java.lang.String"/>
+	<field name="socios_APELLIDO" class="java.lang.String"/>
+	<field name="socios_DNI" class="java.lang.String"/>
+	<field name="articulos_ventas_id" class="java.lang.Integer"/>
+	<field name="articulos_ventas_venta_id" class="java.lang.Integer"/>
+	<field name="articulos_ventas_articulo_id" class="java.lang.Integer"/>
+	<field name="articulos_ventas_cantidad" class="java.lang.Integer"/>
+	<field name="articulos_ventas_precio_final" class="java.lang.Integer"/>
+	<field name="articulos_id" class="java.lang.Integer"/>
+	<field name="articulos_articulo" class="java.lang.String"/>
+	<variable name="total" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="260" height="27" uuid="f00a2c39-f700-4068-9a1d-be1eae3f14a3"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gimnasio personalizado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="260" height="27" uuid="1407b9da-41f8-4378-94d5-663643b14fc0"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pitbull's]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="143" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="260" height="20" uuid="599f8682-41fc-4f8d-b895-333c443cb378"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion: calle 17 General pico-La Pampa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="20" width="42" height="20" uuid="65f5aeac-5d39-4e3a-9649-1cb5c911b6b3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="44" width="61" height="20" uuid="afe50cf4-4311-4d60-a166-1294d809abac"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="64" width="59" height="20" uuid="7225af14-a205-4ea3-a4aa-3ba2c2caee05"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="83" width="25" height="20" uuid="aabbdfca-3b46-4193-987d-b023c6f14ba4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="141" width="260" height="1" uuid="d8c65c12-6045-4637-9749-5909cc4193e8"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="120" width="259" height="1" uuid="8658a779-87f3-4ec8-bc2a-818a4560ed43"/>
+			</line>
+			<textField>
+				<reportElement x="44" y="23" width="100" height="20" uuid="e8f9ac43-8e66-4904-be2d-acce785eeaa8"/>
+				<textFieldExpression><![CDATA[$F{ventas_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="44" width="100" height="20" uuid="4417bafa-15c1-403b-899f-2f7696db2085"/>
+				<textFieldExpression><![CDATA[$F{socios_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="63" width="100" height="20" uuid="da1a6203-934b-430b-89f5-cb28415a9317"/>
+				<textFieldExpression><![CDATA[$F{socios_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="83" width="100" height="20" uuid="af82ba7b-9d2c-4cd8-b7ee-d43f6110e4eb"/>
+				<textFieldExpression><![CDATA[$F{socios_DNI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="121" width="100" height="20" uuid="67e80a1d-81e3-4fd2-82f5-e334bf007d45"/>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="121" width="46" height="20" uuid="a9b2f601-9363-419c-901c-a8dd334a37b1"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="122" width="53" height="20" uuid="d8b60555-8e01-40dd-8b37-228db6d48fdb"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="217" y="1" width="41" height="20" uuid="48bce5ac-ac68-4b55-a82b-85e576ddaada"/>
+				<textFieldExpression><![CDATA[$F{articulos_ventas_precio_final}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="148" height="20" uuid="d9867422-8113-43b7-aafd-303bc45fb808"/>
+				<textFieldExpression><![CDATA[$F{articulos_articulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="161" y="4" width="33" height="20" uuid="35255297-3d43-410d-b67f-5bb081a203b6"/>
+				<textFieldExpression><![CDATA[$F{articulos_ventas_cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="1" width="259" height="1" uuid="ab65e8e9-4cbc-4ef2-b9ab-59ee1a568c61"/>
+			</line>
+			<staticText>
+				<reportElement x="185" y="2" width="33" height="20" uuid="dc2785a8-8611-49e6-b56b-0727d9a87acd"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="2" width="43" height="20" uuid="28728c2f-e63f-431e-8578-a49d92406501"/>
+				<textFieldExpression><![CDATA[$F{ventas_monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
