@@ -20,14 +20,17 @@ import Interfaces.VerDietaEditarGui;
 import Interfaces.VerDietaGui;
 import Modelos.Arancel;
 import Modelos.Ficha;
+import Modelos.Gasto;
 import Modelos.Pago;
 import Modelos.Rutina;
 import Modelos.Socio;
 import Modelos.Socioarancel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -469,7 +472,17 @@ public class ControladorAbmCliente implements ActionListener {
                                                 s.setBigDecimal("cuenta_corriente", s.getBigDecimal("cuenta_corriente").add(pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING)));
                                                 s.saveIt();
                                                 Pago.createIt("ID_DATOS_PERS", s.getString("ID_DATOS_PERS"), "FECHA", dateToMySQLDate(pagoEfectivo.getFecha().getDate(), false), "MONTO", pagoEfectivo.getPago().setScale(2, RoundingMode.CEILING),"MODO","EFECTIVO ANTERIOR","DESCRIPCION","PAGO PARA SALDAR CUENTA CUENTA CORRIENTE");
-
+                                                int idDato = 16;//d.getInteger("id"); id del dato de PAGO DE VENTA
+                                                Gasto g = Gasto.first("dato_id = ? and fecha = ?", idDato, dateToMySQLDate(Calendar.getInstance().getTime(), false));
+                                                if (g != null) {
+                                                    BigDecimal monto = g.getBigDecimal("monto");
+                                                    monto = monto.add(pagoEfectivo.getPago());
+                                                    g.setBigDecimal("monto", monto);
+                                                    g.saveIt();
+                                                } else {
+                                                    Gasto ga = Gasto.create("dato_id", idDato, "monto", pagoEfectivo.getPago(), "fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false), "descrip", "PAGO DE CUENTA CORRIENTE");
+                                                    ga.saveIt();
+                                                }
                                                 Base.commitTransaction();
                                             }
                                             break;

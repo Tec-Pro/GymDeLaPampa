@@ -74,6 +74,10 @@ WHERE
 	</title>
 	<pageHeader>
 		<band height="143" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="260" height="143" uuid="56ac5242-d8bc-430f-9468-223a6b71f2f9"/>
+				<imageExpression><![CDATA["logoTrans.png"]]></imageExpression>
+			</image>
 			<staticText>
 				<reportElement x="0" y="0" width="260" height="20" uuid="599f8682-41fc-4f8d-b895-333c443cb378"/>
 				<textElement>
@@ -152,7 +156,7 @@ WHERE
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="217" y="1" width="41" height="20" uuid="48bce5ac-ac68-4b55-a82b-85e576ddaada"/>
 				<textFieldExpression><![CDATA[$F{articulos_ventas_precio_final}]]></textFieldExpression>
 			</textField>
@@ -175,7 +179,7 @@ WHERE
 				<reportElement x="185" y="2" width="33" height="20" uuid="dc2785a8-8611-49e6-b56b-0727d9a87acd"/>
 				<text><![CDATA[Total]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="218" y="2" width="43" height="20" uuid="28728c2f-e63f-431e-8578-a49d92406501"/>
 				<textFieldExpression><![CDATA[$F{ventas_monto}]]></textFieldExpression>
 			</textField>

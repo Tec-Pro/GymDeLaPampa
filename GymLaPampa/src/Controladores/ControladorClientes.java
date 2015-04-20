@@ -734,13 +734,14 @@ public class ControladorClientes implements ActionListener {
             while (it.hasNext()) {
                 Pago p = it.next();
                 s = Socio.findFirst("ID_DATOS_PERS =?", p.getString("ID_DATOS_PERS"));
-                Object row[] = new Object[6];
+                Object row[] = new Object[7];
                 row[0] = s.getString("NOMBRE");
                 row[1] = s.getString("APELLIDO");
                 row[2] = s.getString("DNI");
                 row[3] = dateToMySQLDate(p.getDate("FECHA"), true);
                 row[4] = p.getFloat("MONTO");
                 row[5] = p.getInteger("ID_PAGOS");
+                row[6] = p.getString("DESCRIPCION");
                 pagosGui.getTablaPagosDefault().addRow(row);
             }
         }
@@ -748,13 +749,14 @@ public class ControladorClientes implements ActionListener {
             Socio s;
             for(Pventa p : lista){
                 s = Socio.findFirst("ID_DATOS_PERS =?", p.getString("ID_DATOS_PERS"));
-                Object row[] = new Object[6];
+                Object row[] = new Object[7];
                 row[0] = s.getString("NOMBRE");
                 row[1] = s.getString("APELLIDO");
                 row[2] = s.getString("DNI");
                 row[3] = dateToMySQLDate(p.getDate("fecha"), true);
                 row[4] = p.getFloat("monto");
                 row[5] = p.getInteger("id");
+                row[6] = p.getString("modo");
                 pagosGui.getTablaPagosDefault().addRow(row);
             }
         }

@@ -41,6 +41,7 @@ import Interfaces.MovimientosDelDiaGui;
 import Interfaces.ProveedorGui;
 import Modelos.User;
 import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
@@ -191,6 +192,11 @@ public class ControladorPrincipalGui implements ActionListener {
             }
         }
         if (ae.getSource() == principalGui.getBotSocios()) {
+            try {
+                socios.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
             socios.setVisible(true);
             socios.toFront();
             //controladorClientes.cargarSocios();
@@ -202,6 +208,11 @@ public class ControladorPrincipalGui implements ActionListener {
         }
         if (ae.getSource() == principalGui.getBotActividades()) {
             controladorActividades.bloquearNoAdmin();
+            try {
+                actividadesGui.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
             actividadesGui.setVisible(true);
             actividadesGui.toFront();
             actividadesGui.getTablaActividadesDefault().setRowCount(0);
@@ -236,6 +247,11 @@ public class ControladorPrincipalGui implements ActionListener {
             ingresoGui.setLocationRelativeTo(null);
         }
         if (ae.getSource() == principalGui.getBotCumple()) {
+            try {
+                cumpleGui.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
             cumpleGui.cargarCumple();
             cumpleGui.setVisible(true);
             cumpleGui.toFront();
@@ -264,6 +280,11 @@ public class ControladorPrincipalGui implements ActionListener {
         }
 
         if (ae.getSource().equals(principalGui.getBtnArticulos())) {
+            try {
+                articulosGUI.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
             articulosGUI.setVisible(true);
             articulosGUI.toFront();
             articulosGUI.reClick();
@@ -287,6 +308,12 @@ public class ControladorPrincipalGui implements ActionListener {
             compraGui.toFront();
         }
         if (ae.getSource() == principalGui.getBtnGastos()) {
+            try {
+                gastosGui.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(ControladorPrincipalGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            gastosGui.calcularCuentasCorrientes();
             gastosGui.setVisible(true);
             gastosGui.toFront();
         }
