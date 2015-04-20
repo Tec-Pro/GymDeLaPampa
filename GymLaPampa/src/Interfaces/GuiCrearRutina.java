@@ -1215,7 +1215,7 @@ public class GuiCrearRutina extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "DNI"
+                "Nombre", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {

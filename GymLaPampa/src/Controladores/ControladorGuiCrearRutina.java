@@ -473,7 +473,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
         for (Socio e : resul) {
             Object[] row = new Object[2];
             row[0] = e.getString("NOMBRE") + " " + e.getString("APELLIDO");
-            row[1] = e.getString("DNI");
+            row[1] = e.getString("ID_DATOS_PERS");
             guiCrearRutina.getTablaSociosDefault().addRow(row);
         }
     }
@@ -485,7 +485,7 @@ public class ControladorGuiCrearRutina implements ActionListener {
         for (Socio s : lista) {
             Object[] row = new Object[2];
             row[0] = s.get("NOMBRE") + " " + s.get("APELLIDO");
-            row[1] = s.get("DNI");
+            row[1] = s.get("ID_DATOS_PERS");
             guiCrearRutina.getTablaSociosDefault().addRow(row);
         }
     }

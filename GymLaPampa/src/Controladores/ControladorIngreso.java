@@ -10,12 +10,14 @@ import BD.ConexionBD;
 import Interfaces.AsistenciasGui;
 import Interfaces.DietasSocioGui;
 import Interfaces.FelizCumpleGui;
+import Interfaces.GuiVerRutinas;
 import Interfaces.IngresoGui;
 import Interfaces.RegistrarPagoGui;
 import Interfaces.asistenciaCombo;
 import Interfaces.busquedaManualGui;
 import Modelos.Arancel;
 import Modelos.Asistencia;
+import Modelos.Rutina;
 import Modelos.Socio;
 import Modelos.Socioarancel;
 import com.digitalpersona.onetouch.DPFPDataPurpose;
@@ -67,6 +69,7 @@ import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import net.sf.jasperreports.engine.JRException;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -78,6 +81,8 @@ import org.javalite.activejdbc.Model;
 public class ControladorIngreso implements ActionListener {
 //Varible que permite iniciar el dispositivo de lector de huella conectado
 // con sus distintos metodos.
+
+    
 
     public static DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
 //Varible que permite establecer las capturas de la huellas, para determina sus caracteristicas
@@ -104,6 +109,7 @@ public class ControladorIngreso implements ActionListener {
 
     public ControladorIngreso(IngresoGui ingresoGui) throws Exception {
         this.ingresoGui = ingresoGui;
+
         ingresoGui.limpiar();
         ingresoGui.setActionListener(this);
         Iniciar();
@@ -353,9 +359,41 @@ public class ControladorIngreso implements ActionListener {
             ingresoGui.limpiarAsistencias();
             cargarAsistencia();
         }
-        if(e.getSource()==ingresoGui.getBtnDietas()){
-            DietasSocioGui dsg= new DietasSocioGui(ingresoGui, false, socio.getInteger("ID_DATOS_PERS"));
+        if (e.getSource() == ingresoGui.getBtnDietas()) {
+            DietasSocioGui dsg = new DietasSocioGui(ingresoGui, false, socio.getInteger("ID_DATOS_PERS"));
             dsg.setVisible(true);
+        }
+        if (e.getSource() == ingresoGui.getBtnRutinas()) {
+            abrirBase();
+            LazyList<Rutina> listaRutinas = Rutina.where("socio_id = ?", socio.get("ID_DATOS_PERS"));
+            if (listaRutinas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Este socio no posee rutinas.", null, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                GuiVerRutinas guiVerRutina;
+                try {
+                    guiVerRutina = new GuiVerRutinas(ingresoGui, false);
+                    guiVerRutina.getTablaRutinasDefault().setRowCount(0);
+                    guiVerRutina.getTxtSocio().setText(socio.getString("NOMBRE") + " " + socio.getString("APELLIDO"));
+                    guiVerRutina.getTxtID().setText(socio.getString("ID_DATOS_PERS"));
+                    guiVerRutina.setTitle("Rutinas de " + socio.getString("NOMBRE") + " " + socio.getString("APELLIDO"));
+                    for (Rutina r : listaRutinas) {
+                        Object[] row = new Object[3];
+                        row[0] = r.get("id");
+                        //row[1] = r.get("dia");
+                        row[1] = dateToMySQLDate(r.getDate("fecha_inicio"), true);
+                        row[2] = dateToMySQLDate(r.getDate("fecha_fin"), true);
+                        guiVerRutina.getTablaRutinasDefault().addRow(row);
+                    }
+                    guiVerRutina.setVisible(true);
+                } catch (JRException ex) {
+                    Logger.getLogger(ControladorAbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ControladorAbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControladorAbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
         }
     }
 
@@ -437,9 +475,10 @@ public class ControladorIngreso implements ActionListener {
                     }
                 }
                 if (socio.getBoolean("ACTIVO")) {
-                    int i= JOptionPane.NO_OPTION;
-                    if(vencido)
+                    int i = JOptionPane.NO_OPTION;
+                    if (vencido) {
                         i = JOptionPane.showConfirmDialog(ingresoGui, "Desea cargar igual la asistencia?", "Socio vencido", JOptionPane.YES_NO_OPTION);
+                    }
                     if (i == JOptionPane.YES_OPTION || !vencido) {
                         LazyList<Socioarancel> socioArancel = Socioarancel.where("id_socio = ?", idCliente);
                         boolean comboSolo = false;
@@ -494,9 +533,11 @@ public class ControladorIngreso implements ActionListener {
                     RegistrarPagoGui pagoGui = new RegistrarPagoGui(ingresoGui, true, socio);
                     pagoGui.setLocationRelativeTo(null);
                     pagoGui.setVisible(true);
+
                 }
             } catch (Exception ex) {
-                Logger.getLogger(ControladorIngreso.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ControladorIngreso.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {
@@ -505,10 +546,11 @@ public class ControladorIngreso implements ActionListener {
 
         ingresoGui.getDarDeAlta().setEnabled(!socio.getBoolean("ACTIVO"));
         ingresoGui.getGestAsis().setEnabled(socio.getBoolean("ACTIVO"));
-               ingresoGui.getBtnDietas().setEnabled(true);
-       ingresoGui.getBtnRutinas().setEnabled(true);
-        if( socio.getDate("fecha_nac").getDay()==Calendar.getInstance().getTime().getDay() && socio.getDate("fecha_nac").getMonth()==Calendar.getInstance().getTime().getMonth())
+        ingresoGui.getBtnDietas().setEnabled(true);
+        ingresoGui.getBtnRutinas().setEnabled(true);
+        if (socio.getDate("fecha_nac").getDay() == Calendar.getInstance().getTime().getDay() && socio.getDate("fecha_nac").getMonth() == Calendar.getInstance().getTime().getMonth()) {
             new FelizCumpleGui(ingresoGui, true, socio.getString("nombre"), socio.getString("apellido")).setVisible(true);
+        }
         timer.start();
 
     }
@@ -520,9 +562,12 @@ public class ControladorIngreso implements ActionListener {
         DataLine.Info info = new DataLine.Info(Clip.class, format);
 
         Clip clip = (Clip) AudioSystem.getLine(info);
+
         clip.open(soundIn);
-        //clip.start();
-        clip.loop(1);
+
+    //clip.start();
+        clip.loop(
+                1);
         {
             //    Thread.yield();
         }
