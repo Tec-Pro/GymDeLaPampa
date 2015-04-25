@@ -76,7 +76,7 @@ public class DietasSocioGui extends javax.swing.JDialog {
 
                 int row = tblDietas.getSelectedRow();
                 if (row > -1) {
-                   VerDietaEditarGui d= new VerDietaEditarGui(parent, false);
+                   VerDietaEditarGui d= new VerDietaEditarGui(parent, true);
                    d.setLocationRelativeTo(estaVentana);
                    d.setVisible(true);
                    switch (d.getReturnStatus()){

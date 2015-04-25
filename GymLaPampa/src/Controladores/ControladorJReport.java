@@ -4,12 +4,16 @@
  */
 package Controladores;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -99,17 +103,20 @@ public class ControladorJReport {
         Map parametros = new HashMap();
         parametros.clear();
          parametros.put("id_socio", idSocio);
-         parametros.put("id_dieta", idDieta);
+         parametros.put("id_dieta", idDieta); 
+         String rutaDestino= System.getProperty("user.dir");
+
+        try {
+            System.err.println(new File(".").getCanonicalFile());
+        } catch (IOException ex) {
+            Logger.getLogger(ControladorJReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+System.err.println(new File(".").getParentFile());
          
-         String rutaDestino= ControladorJReport.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-         int i=0;
-         for( i=rutaDestino.length()-2;i>0 && rutaDestino.charAt(i)!='/';i-- ){
-             rutaDestino= rutaDestino.substring(0, i);
-             
-         }
-         if(rutaDestino.charAt(i)=='/'){
-             rutaDestino+="dieta.pdf";
-         }
+         
+             rutaDestino+="/dieta.pdf";
+//         }
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         JasperExportManager.exportReportToPdfFile(jasperPrint, rutaDestino);
   
@@ -142,15 +149,15 @@ public class ControladorJReport {
         parametros.clear();
         parametros.put("rutina_id", idRutina);
          
-         String rutaDestino= ControladorJReport.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-         int i=0;
-         for( i=rutaDestino.length()-2;i>0 && rutaDestino.charAt(i)!='/';i-- ){
-             rutaDestino= rutaDestino.substring(0, i);
-             
-         }
-         if(rutaDestino.charAt(i)=='/'){
-             rutaDestino+="rutina.pdf";
-         }
+         String rutaDestino= System.getProperty("user.dir");
+//         int i=0;
+//         for( i=rutaDestino.length()-2;i>0 && rutaDestino.charAt(i)!='/';i-- ){
+//             rutaDestino= rutaDestino.substring(0, i);
+//             
+//         }
+        // if(rutaDestino.charAt(i)=='/'){
+             rutaDestino+="/rutina.pdf";
+         //}
         JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, connection);
         JasperExportManager.exportReportToPdfFile(jasperPrint, rutaDestino);
   
